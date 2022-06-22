@@ -44,6 +44,22 @@ func (util *Utils) FillText(ctx *gg.Context, s string, x, y, width, height, spac
 	}
 }
 
+func (util *Utils) FillStrokedText(ctx *gg.Context, s string, x, y, width, height, spacing, n int, stroke, color string, anchor float64) {
+	lines := ctx.WordWrap(s, float64(width))
+	var tbd []string
+
+	for len(lines) > 0 && canFitHeightWise(ctx, append(tbd, lines[0]), height, spacing) {
+		tbd = append(tbd, lines[0])
+		lines = lines[1:]
+	}
+
+	currentY := y
+	for _, text := range tbd {
+		util.StrokeText(ctx, text, x, currentY, n, stroke, color, anchor)
+		currentY += spacing
+	}
+}
+
 func (util *Utils) GetFontPath(name string) string {
 	workdir, err := os.Getwd()
 

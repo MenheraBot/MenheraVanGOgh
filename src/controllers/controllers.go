@@ -73,3 +73,13 @@ func Macetava(c *fiber.Ctx) error {
 
 	return encoder.Encode(c.Context(), res)
 }
+
+func Eightball(c *fiber.Ctx) error {
+	data := new(renderers.EightballData)
+
+	c.BodyParser(data)
+
+	res := renderers.RenderEightball(data, utilities)
+
+	return encoder.Encode(c.Context(), res)
+}
