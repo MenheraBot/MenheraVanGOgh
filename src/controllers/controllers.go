@@ -20,7 +20,7 @@ func Astolfo(c *fiber.Ctx) error {
 	c.BodyParser(data)
 
 	res := renderers.RenderAstolfo(data, utilities)
-	
+
 	return encoder.Encode(c.Context(), res)
 }
 
@@ -30,7 +30,7 @@ func Philo(c *fiber.Ctx) error {
 	c.BodyParser(data)
 
 	res := renderers.RenderPhilo(data, utilities)
-	
+
 	return encoder.Encode(c.Context(), res)
 }
 
@@ -40,7 +40,7 @@ func Trisal(c *fiber.Ctx) error {
 	c.BodyParser(data)
 
 	res := renderers.RenderTrisal(data, utilities)
-	
+
 	return encoder.Encode(c.Context(), res)
 }
 
@@ -50,6 +50,16 @@ func Ship(c *fiber.Ctx) error {
 	c.BodyParser(data)
 
 	res := renderers.RenderShip(data, utilities)
-	
+
+	return encoder.Encode(c.Context(), res)
+}
+
+func Gado(c *fiber.Ctx) error {
+	data := new(renderers.GadoData)
+
+	c.BodyParser(data)
+
+	res := renderers.RenderGado(data, utilities)
+
 	return encoder.Encode(c.Context(), res)
 }
