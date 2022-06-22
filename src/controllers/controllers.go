@@ -63,3 +63,13 @@ func Gado(c *fiber.Ctx) error {
 
 	return encoder.Encode(c.Context(), res)
 }
+
+func Macetava(c *fiber.Ctx) error {
+	data := new(renderers.MacetavaData)
+
+	c.BodyParser(data)
+
+	res := renderers.RenderMacetava(data, utilities)
+
+	return encoder.Encode(c.Context(), res)
+}

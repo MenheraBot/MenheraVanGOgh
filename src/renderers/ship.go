@@ -55,7 +55,7 @@ func RenderShip(data *ShipData, util utils.Utils) image.Image {
 
 	ctx.LoadFontFace(util.GetFontPath("Arial"), 58)
 
-	util.StrokeText(ctx, fmt.Sprint(data.ShipValue, "%"), 256, 330, 4, "#000", "#FFF")
+	util.StrokeText(ctx, fmt.Sprint(data.ShipValue, "%"), 256, 330, 4, "#000", "#FFF", 0.5)
 
 	return ctx.Image()
 }
