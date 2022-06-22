@@ -153,7 +153,7 @@ func (util *Utils) GetAsset(path string) image.Image {
 	return img
 }
 
-func (util *Utils) ReadImageFromURL(url string, x, y int) image.Image {
+func (util *Utils) GetImageFromURL(url string, x, y int) image.Image {
 	var imagem image.Image = nil
 	getImage, ok := util.ttl_images_cache.Get(url)
 

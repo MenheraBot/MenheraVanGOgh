@@ -45,8 +45,8 @@ func rainbowColorPercentage(percentage uint16) image.Image {
 func RenderShip(data *ShipData, util utils.Utils) image.Image {
 	ctx := gg.NewContext(512, 350)
 
-	firstAvatar := util.ReadImageFromURL(data.LinkOne, 256, 256)
-	secondAvatar := util.ReadImageFromURL(data.LinkTwo, 256, 256)
+	firstAvatar := util.GetImageFromURL(data.LinkOne, 256, 256)
+	secondAvatar := util.GetImageFromURL(data.LinkTwo, 256, 256)
 	shipLoadedImage := rainbowColorPercentage(data.ShipValue)
 
 	ctx.DrawImage(firstAvatar, 0, 0)

@@ -83,3 +83,13 @@ func Eightball(c *fiber.Ctx) error {
 
 	return encoder.Encode(c.Context(), res)
 }
+
+func Vasco(c *fiber.Ctx) error {
+	data := new(renderers.VascoData)
+
+	c.BodyParser(data)
+
+	res := renderers.RenderVasco(data, utilities)
+
+	return encoder.Encode(c.Context(), res)
+}

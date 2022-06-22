@@ -9,13 +9,13 @@ import (
 )
 
 type GadoData struct {
-	Image   string `json:"image"`
+	Image string `json:"image"`
 }
 
 func RenderGado(data *GadoData, util utils.Utils) image.Image {
 	ctx := gg.NewContext(1200, 526)
 
-	userImage := util.ReadImageFromURL(data.Image, 455, 500)
+	userImage := util.GetImageFromURL(data.Image, 455, 500)
 	gadoImage := util.GetAsset("/images/gado.png")
 
 	ctx.DrawImage(userImage, 695, 0)
