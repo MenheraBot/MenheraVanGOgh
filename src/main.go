@@ -2,12 +2,13 @@ package main
 
 import (
 	"log"
-	"os"
 	"time"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/MenheraBot/MenheraVanGOgh/src/controllers"
 )
 
 type Http struct {
@@ -15,9 +16,9 @@ type Http struct {
 }
 
 type Ws struct {
-	Id     uint8 `json:"id"`
+	Id     uint8  `json:"id"`
 	Ping   uint16 `json:"ping"`
-	Uptime int64 `json:"uptime"`
+	Uptime int64  `json:"uptime"`
 }
 
 type PingStruct struct {
@@ -28,9 +29,8 @@ type PingStruct struct {
 func main() {
 	app := fiber.New(fiber.Config{
 		DisableStartupMessage: true,
-		ReduceMemoryUsage: true,
-		StreamRequestBody: true,
-		Prefork: true,
+		ReduceMemoryUsage:     true,
+		StreamRequestBody:     true,
 	})
 
 	app.Use(cors.New())
@@ -46,14 +46,26 @@ func main() {
 	})
 
 	app.Use(func(c *fiber.Ctx) error {
-		return c.SendStatus(404) // => 404 "Not Found"
+		token := c.Get(fiber.HeaderAuthorization)
+
+		if token != os.Getenv("TOKEN") {
+			return c.SendStatus(401)
+		}	
+
+		c.Set("Content-Type", "image/png")
+
+		return c.Next()
 	})
 
-	if fiber.IsChild() {
-		log.Printf("[%d] Child Running\n", os.Getpid())
-	} else {
-		log.Printf("[%d] Master Running Port 2080\n", os.Getpid())
-	}
+	app.Post("/astolfo", controllers.Astolfo)
+	app.Post("/philo", controllers.Philo)
+
+	app.Use(func(c *fiber.Ctx) error {
+		c.Set("Content-Type", "text")
+		return c.Status(404).SendString("Welp, there is nothing for you right here")
+	})
+
+	log.Println("Server Running Port 2080")
 
 	log.Fatal(app.Listen(":2080"))
 }
