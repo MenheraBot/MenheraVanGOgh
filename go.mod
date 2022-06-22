@@ -3,9 +3,12 @@ module github.com/MenheraBot/MenheraVanGOgh
 go 1.18
 
 require (
+	github.com/disintegration/imaging v1.6.2
 	github.com/fogleman/gg v1.3.0
 	github.com/gofiber/fiber/v2 v2.34.1
+	github.com/patrickmn/go-cache v2.1.0+incompatible
 )
+
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
@@ -15,6 +18,6 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.37.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
-	golang.org/x/image v0.0.0-20220617043117-41969df76e82 // indirect
+	golang.org/x/image v0.0.0-20220617043117-41969df76e82
 	golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9 // indirect
 )

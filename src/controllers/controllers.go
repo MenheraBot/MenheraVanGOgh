@@ -33,3 +33,13 @@ func Philo(c *fiber.Ctx) error {
 	
 	return encoder.Encode(c.Context(), res)
 }
+
+func Trisal(c *fiber.Ctx) error {
+	data := new(renderers.TrisalData)
+
+	c.BodyParser(data)
+
+	res := renderers.RenderTrisal(data, utilities)
+	
+	return encoder.Encode(c.Context(), res)
+}

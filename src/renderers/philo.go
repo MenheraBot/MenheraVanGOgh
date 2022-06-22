@@ -6,7 +6,6 @@ import (
 	"github.com/fogleman/gg"
 
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
-	"github.com/nfnt/resize"
 )
 
 type PhiloData struct {
@@ -22,9 +21,9 @@ func RenderPhilo(data *PhiloData, util utils.Utils) image.Image {
 
 	util.FillText(ctx, data.Text, 0, 100, 720, 412, 50)
 
-	philoImage := util.GetAsset("images/philo.png")
+	philoImage := util.GetResizedAsset("images/philo.png", 720, 420)
 
-	ctx.DrawImage(resize.Resize(720, 420, philoImage, resize.Lanczos3), 0, 300)
+	ctx.DrawImage(philoImage, 0, 300)
 
 	return ctx.Image()
 }

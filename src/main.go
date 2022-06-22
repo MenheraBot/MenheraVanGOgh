@@ -59,6 +59,7 @@ func main() {
 
 	app.Post("/astolfo", controllers.Astolfo)
 	app.Post("/philo", controllers.Philo)
+	app.Post("/trisal", controllers.Trisal)
 
 	app.Use(func(c *fiber.Ctx) error {
 		c.Set("Content-Type", "text")
