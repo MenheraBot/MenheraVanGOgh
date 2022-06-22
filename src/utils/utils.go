@@ -1,10 +1,13 @@
 package utils
 
 import (
+	"fmt"
 	"image"
 	"log"
+	"math"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/disintegration/imaging"
@@ -189,6 +192,57 @@ func (util *Utils) GetImageFromURL(url string, x, y int) image.Image {
 	}
 
 	return imagem
+}
+
+func (util *Utils) ShadeColor(color string, percent float64) string {
+	num, err := strconv.ParseInt(trimLeftChar(color), 16, 32)
+	if err != nil {
+		return color
+	}
+
+	amt := math.Round(2.55 * percent)
+
+	R := (num >> 16) + int64(amt)
+	G := (num >> 8 & 0x00FF) + int64(amt)
+	B := (num & 0x0000FF) + int64(amt)
+
+	if R < 255 {
+		if R < 1 {
+			R = 0
+		}
+	} else {
+		R = 255
+	}
+
+	if G < 255 {
+		if G < 1 {
+			G = 0
+		}
+	} else {
+		G = 255
+	}
+
+	if B < 255 {
+		if B < 1 {
+			B = 0
+		}
+	} else {
+		B = 255
+	}
+
+	R *= 0x10000
+	G *= 0x100
+
+	return "#" + trimLeftChar(fmt.Sprintf("%x", 0x1000000+R+G+B))
+}
+
+func trimLeftChar(s string) string {
+	for i := range s {
+		if i > 0 {
+			return s[i:]
+		}
+	}
+	return s[:0]
 }
 
 func New() Utils {
