@@ -57,7 +57,7 @@ func getFontColorByTheme(theme string) string {
 func RenderBlackjack(data *BlackjackData, util utils.Utils) image.Image {
 	ctx := gg.NewContext(630, 460)
 
-	tableImage := util.GetResizedAsset("tables/"+data.TableTheme+".png", 630, 460)
+	tableImage, _ := util.GetResizedAsset("tables/"+data.TableTheme+".png", 630, 460)
 
 	ctx.DrawImage(tableImage, 0, 0)
 
@@ -86,15 +86,15 @@ func RenderBlackjack(data *BlackjackData, util utils.Utils) image.Image {
 	for i, card := range data.MenheraCards {
 		var cardImage image.Image
 		if card.Hidden {
-			cardImage = util.GetResizedAsset("card_backgrounds/" + data.BackgroundCardTheme + ".png", 72, 84)
+			cardImage, _ = util.GetResizedAsset("card_backgrounds/" + data.BackgroundCardTheme + ".png", 72, 84)
 		} else {
-			cardImage = util.GetResizedAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", 72, 84)
+			cardImage, _ = util.GetResizedAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", 72, 84)
 		}
 		ctx.DrawImage(cardImage, menheraStartW+(80*i), 93)
 	}
 
 	for i, card := range data.UserCards {
-		cardImage := util.GetResizedAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", 72, 84)
+		cardImage, _ := util.GetResizedAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", 72, 84)
 		ctx.DrawImage(cardImage, userStartW+(80*i), 360)
 	}
 

@@ -59,13 +59,14 @@ func main() {
 
 	app.Post("/astolfo", controllers.Astolfo)
 	app.Post("/philo", controllers.Philo)
-	app.Post("/trisal", controllers.Trisal)
 	app.Post("/ship", controllers.Ship)
+	app.Post("/trisal", controllers.Trisal)
 	app.Post("/gado", controllers.Gado)
 	app.Post("/macetava", controllers.Macetava)
+	app.Post("/blackjack", controllers.Blackjack)
 	app.Post("/8ball", controllers.Eightball)
 	app.Post("/vasco", controllers.Vasco)
-	app.Post("/blackjack", controllers.Blackjack)
+	app.Post("/profile", controllers.Profile)
 
 	app.Use(func(c *fiber.Ctx) error {
 		c.Set("Content-Type", "text")

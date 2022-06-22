@@ -1,9 +1,11 @@
 package controllers
 
 import (
+	"image"
 	"image/png"
 
 	"github.com/MenheraBot/MenheraVanGOgh/src/renderers"
+	"github.com/MenheraBot/MenheraVanGOgh/src/renderers/profiles"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 	"github.com/gofiber/fiber/v2"
 )
@@ -100,6 +102,37 @@ func Blackjack(c *fiber.Ctx) error {
 	c.BodyParser(data)
 
 	res := renderers.RenderBlackjack(data, utilities)
+
+	return encoder.Encode(c.Context(), res)
+}
+
+func Profile(c *fiber.Ctx) error {
+	data := new(utils.ProfileData)
+
+	c.BodyParser(data)
+
+	var res image.Image
+
+	switch data.Type {
+	/* 	case "kawaii":
+	   		res = kawaiiProfileImage(data, utilities)
+	   	case "fortification":
+	   		res = fortificaçãoProfileImage(data, utilities)
+	   	case "warrior":
+	   		res = guerreiroProfileImage(data, utilities)
+	   	case "christmas_2021":
+	   		res = christmasProfileImage(data, utilities)
+	   	case "upsidedown":
+	   		res = upsideDownProfile(data, utilities)
+	   	case "id03":
+	   		res = iD03ProfileImage(data, utilities)
+	   	case "without_soul":
+	   		res = withoutSoulProfileImage(data, utilities) */
+	case "default":
+		res = profiles.RenderDefault(&data.User, &data.UsageCommands, &data.I18n, utilities)
+	default:
+		res = profiles.RenderDefault(&data.User, &data.UsageCommands, &data.I18n, utilities)
+	}
 
 	return encoder.Encode(c.Context(), res)
 }

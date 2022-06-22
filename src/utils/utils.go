@@ -75,23 +75,23 @@ func (util *Utils) GetFontPath(name string) string {
 
 }
 
-func (util *Utils) GetResizedAsset(path string, w, h int) image.Image {
+func (util *Utils) GetResizedAsset(path string, w, h int) (image.Image, bool) {
 	v, ok := util.images_cache[path]
 
 	if ok {
-		return v
+		return v, true
 	}
 
 	workdir, err := os.Getwd()
 	if err != nil {
 		log.Println(err)
-		return util.default_image
+		return util.default_image, false
 	}
 
 	img_reader, err := os.Open(workdir + "/assets/" + path)
 	if err != nil {
 		log.Println(err)
-		return util.default_image
+		return util.default_image, false
 	}
 
 	defer img_reader.Close()
@@ -99,13 +99,13 @@ func (util *Utils) GetResizedAsset(path string, w, h int) image.Image {
 	img, _, err := image.Decode(img_reader)
 	if err != nil {
 		log.Println(err)
-		return util.default_image
+		return util.default_image, false
 	}
 
 	resized := imaging.Resize(img, w, h, imaging.Lanczos)
 
 	util.images_cache[path] = resized
-	return resized
+	return resized, true
 }
 
 func (util *Utils) StrokeText(ctx *gg.Context, s string, x, y, n int, stroke, color string, anchor float64) {

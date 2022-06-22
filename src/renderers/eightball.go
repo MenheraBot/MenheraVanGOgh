@@ -42,8 +42,8 @@ func RenderEightball(data *EightballData, util utils.Utils) image.Image {
 
 	bedroomImage := util.GetAsset("images/bedroom.png")
 	textBoxImage := util.GetAsset("images/text_box.png")
-	responseBoxImage := util.GetResizedAsset("images/response_box.png", 400, 250)
-	menheraImage := util.GetResizedAsset("menheras/"+data.Type+"_"+strconv.Itoa(getRandomBasedOnType(data.Type))+".png", 387, 440)
+	responseBoxImage, _ := util.GetResizedAsset("images/response_box.png", 400, 250)
+	menheraImage, _ := util.GetResizedAsset("menheras/"+data.Type+"_"+strconv.Itoa(getRandomBasedOnType(data.Type))+".png", 387, 440)
 
 	ctx.DrawImage(bedroomImage, 0, 0)
 	ctx.DrawImage(menheraImage, 10, 10)

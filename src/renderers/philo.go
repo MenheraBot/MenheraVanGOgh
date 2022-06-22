@@ -21,7 +21,7 @@ func RenderPhilo(data *PhiloData, util utils.Utils) image.Image {
 
 	util.FillText(ctx, data.Text, 0, 100, 720, 412, 50)
 
-	philoImage := util.GetResizedAsset("images/philo.png", 720, 420)
+	philoImage, _ := util.GetResizedAsset("images/philo.png", 720, 420)
 
 	ctx.DrawImage(philoImage, 0, 300)
 
