@@ -89,6 +89,23 @@ func (util *Utils) GetResizedAsset(path string, w, h int) image.Image {
 	return resized
 }
 
+func (util *Utils) StrokeText(ctx *gg.Context, s string, x, y, n int, stroke, color string) {
+	ctx.SetHexColor(stroke)
+	for dy := -n; dy <= n; dy++ {
+		for dx := -n; dx <= n; dx++ {
+			if dx*dx+dy*dy >= n*n {
+				// give it rounded corners
+				continue
+			}
+			x := x + dx
+			y := y + dy
+			ctx.DrawStringAnchored(s, float64(x), float64(y), 0.5, 0)
+		}
+	}
+	ctx.SetHexColor(color)
+	ctx.DrawStringAnchored(s, float64(x), float64(y), 0.5, 0)
+}
+
 func (util *Utils) GetAsset(path string) image.Image {
 	v, ok := util.images_cache[path]
 

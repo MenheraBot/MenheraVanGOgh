@@ -9,7 +9,7 @@ import (
 )
 
 type AstolfoData struct {
-	Text string `json:"text" form:"text"`
+	Text string `json:"text"`
 }
 
 func RenderAstolfo(data *AstolfoData, util utils.Utils) image.Image {

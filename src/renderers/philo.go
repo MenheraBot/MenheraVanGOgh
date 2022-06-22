@@ -9,7 +9,7 @@ import (
 )
 
 type PhiloData struct {
-	Text string `json:"text" form:"text"`
+	Text string `json:"text"`
 }
 
 func RenderPhilo(data *PhiloData, util utils.Utils) image.Image {
