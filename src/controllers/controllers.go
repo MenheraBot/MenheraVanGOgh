@@ -7,7 +7,7 @@ import (
 	"github.com/MenheraBot/MenheraVanGOgh/src/renderers"
 	"github.com/MenheraBot/MenheraVanGOgh/src/renderers/profiles"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
 )
 
 var encoder = png.Encoder{
@@ -16,100 +16,100 @@ var encoder = png.Encoder{
 
 var utilities = utils.New()
 
-func Astolfo(c *fiber.Ctx) error {
+func Astolfo(c *gin.Context) {
 	data := new(renderers.AstolfoData)
 
-	c.BodyParser(data)
+	c.BindJSON(data)
 
 	res := renderers.RenderAstolfo(data, utilities)
 
-	return encoder.Encode(c.Context(), res)
+	encoder.Encode(c.Writer, res)
 }
 
-func Philo(c *fiber.Ctx) error {
+func Philo(c *gin.Context) {
 	data := new(renderers.PhiloData)
 
-	c.BodyParser(data)
+	c.BindJSON(data)
 
 	res := renderers.RenderPhilo(data, utilities)
 
-	return encoder.Encode(c.Context(), res)
+	encoder.Encode(c.Writer, res)
 }
 
-func Trisal(c *fiber.Ctx) error {
+func Trisal(c *gin.Context) {
 	data := new(renderers.TrisalData)
 
-	c.BodyParser(data)
+	c.BindJSON(data)
 
 	res := renderers.RenderTrisal(data, utilities)
 
-	return encoder.Encode(c.Context(), res)
+	encoder.Encode(c.Writer, res)
 }
 
-func Ship(c *fiber.Ctx) error {
+func Ship(c *gin.Context) {
 	data := new(renderers.ShipData)
 
-	c.BodyParser(data)
+	c.BindJSON(data)
 
 	res := renderers.RenderShip(data, utilities)
 
-	return encoder.Encode(c.Context(), res)
+	encoder.Encode(c.Writer, res)
 }
 
-func Gado(c *fiber.Ctx) error {
+func Gado(c *gin.Context) {
 	data := new(renderers.GadoData)
 
-	c.BodyParser(data)
+	c.BindJSON(data)
 
 	res := renderers.RenderGado(data, utilities)
 
-	return encoder.Encode(c.Context(), res)
+	encoder.Encode(c.Writer, res)
 }
 
-func Macetava(c *fiber.Ctx) error {
+func Macetava(c *gin.Context) {
 	data := new(renderers.MacetavaData)
 
-	c.BodyParser(data)
+	c.BindJSON(data)
 
 	res := renderers.RenderMacetava(data, utilities)
 
-	return encoder.Encode(c.Context(), res)
+	encoder.Encode(c.Writer, res)
 }
 
-func Eightball(c *fiber.Ctx) error {
+func Eightball(c *gin.Context) {
 	data := new(renderers.EightballData)
 
-	c.BodyParser(data)
+	c.BindJSON(data)
 
 	res := renderers.RenderEightball(data, utilities)
 
-	return encoder.Encode(c.Context(), res)
+	encoder.Encode(c.Writer, res)
 }
 
-func Vasco(c *fiber.Ctx) error {
+func Vasco(c *gin.Context) {
 	data := new(renderers.VascoData)
 
-	c.BodyParser(data)
+	c.BindJSON(data)
 
 	res := renderers.RenderVasco(data, utilities)
 
-	return encoder.Encode(c.Context(), res)
+	encoder.Encode(c.Writer, res)
 }
 
-func Blackjack(c *fiber.Ctx) error {
+func Blackjack(c *gin.Context) {
 	data := new(renderers.BlackjackData)
 
-	c.BodyParser(data)
+	c.BindJSON(data)
 
 	res := renderers.RenderBlackjack(data, utilities)
 
-	return encoder.Encode(c.Context(), res)
+	encoder.Encode(c.Writer, res)
 }
 
-func Profile(c *fiber.Ctx) error {
+func Profile(c *gin.Context) {
 	data := new(utils.ProfileData)
 
-	c.BodyParser(data)
+	c.BindJSON(data)
 
 	var res image.Image
 
@@ -135,5 +135,5 @@ func Profile(c *fiber.Ctx) error {
 		res = profiles.RenderDefault(&data.User, &data.I18n, utilities)
 	}
 
-	return encoder.Encode(c.Context(), res)
+	encoder.Encode(c.Writer, res)
 }

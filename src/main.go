@@ -2,13 +2,13 @@ package main
 
 import (
 	"log"
-	"time"
 	"os"
+	"time"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/compress"
-	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/MenheraBot/MenheraVanGOgh/src/controllers"
+	"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/gzip"
+	"github.com/gin-gonic/gin"
 )
 
 type Http struct {
@@ -27,58 +27,52 @@ type PingStruct struct {
 }
 
 func main() {
-	app := fiber.New(fiber.Config{
-		DisableStartupMessage: true,
-		ReduceMemoryUsage:     true,
-		StreamRequestBody:     true,
-	})
 
-	app.Use(cors.New())
+	router := gin.New()
+	router.Use(gin.Recovery())
+	router.Use(cors.Default())
+	router.Use(gzip.Gzip(gzip.BestSpeed))
 
-	app.Use(compress.New(compress.Config{
-		Level: compress.LevelBestSpeed,
-	}))
+	//router.GET("/ws")
+	// app.Get("/ws", websocket.New(setupWebsocket, websocket.Config{EnableCompression: true}))
 
 	startTime := time.Now()
 
-	app.Get("/ping", func(c *fiber.Ctx) error {
-		return returnPing(c, startTime)
+	router.GET("/ping", func(c *gin.Context) {
+		returnPing(c, startTime)
 	})
 
-	app.Use(func(c *fiber.Ctx) error {
-		token := c.Get(fiber.HeaderAuthorization)
+	router.Any("/", func(c *gin.Context) {
+		token := c.GetHeader("Authorization")
 
 		if token != os.Getenv("TOKEN") {
-			return c.SendStatus(401)
-		}	
+			c.Status(401)
+			c.Abort()
+			return
+		}
 
-		c.Set("Content-Type", "image/png")
+		c.Header("Content-Type", "image/png")
 
-		return c.Next()
+		c.Next()
 	})
 
-	app.Post("/astolfo", controllers.Astolfo)
-	app.Post("/philo", controllers.Philo)
-	app.Post("/ship", controllers.Ship)
-	app.Post("/trisal", controllers.Trisal)
-	app.Post("/gado", controllers.Gado)
-	app.Post("/macetava", controllers.Macetava)
-	app.Post("/blackjack", controllers.Blackjack)
-	app.Post("/8ball", controllers.Eightball)
-	app.Post("/vasco", controllers.Vasco)
-	app.Post("/profile", controllers.Profile)
-
-	app.Use(func(c *fiber.Ctx) error {
-		c.Set("Content-Type", "text")
-		return c.Status(404).SendString("Welp, there is nothing for you right here")
-	})
+	router.POST("/astolfo", controllers.Astolfo)
+	router.POST("/philo", controllers.Philo)
+	router.POST("/ship", controllers.Ship)
+	router.POST("/trisal", controllers.Trisal)
+	router.POST("/gado", controllers.Gado)
+	router.POST("/macetava", controllers.Macetava)
+	router.POST("/blackjack", controllers.Blackjack)
+	router.POST("/8ball", controllers.Eightball)
+	router.POST("/vasco", controllers.Vasco)
+	router.POST("/profile", controllers.Profile)
 
 	log.Println("Server Running Port 2080")
 
-	log.Fatal(app.Listen(":2080"))
+	log.Fatal(router.Run(":2080"))
 }
 
-func returnPing(c *fiber.Ctx, startTime time.Time) error {
+func returnPing(c *gin.Context, startTime time.Time) {
 	now := time.Now()
 
 	ws := []Ws{}
@@ -91,5 +85,42 @@ func returnPing(c *fiber.Ctx, startTime time.Time) error {
 		Ws:   ws,
 	}
 
-	return c.JSON(returnData)
+	c.JSON(200, returnData)
 }
+
+/*
+func setupWebsocket(c *websocket.Conn) {
+	c.EnableWriteCompression(true)
+	c.SetCompressionLevel(1)
+
+	if _, err := strconv.Atoi(c.Query("id")); err != nil {
+		c.WriteMessage(8, []byte("Invalid ID"))
+		print("Erro %s", err)
+	}
+
+	var (
+		mt  int
+		msg []byte
+		err error
+	)
+	for {
+		if mt, msg, err = c.ReadMessage(); err != nil {
+			log.Println("read:", err)
+			break
+		}
+
+		log.Printf("recv: %s", msg)
+
+		b, _ := json.Marshal(msg)
+
+		println(string(b))
+
+		c.WriteJSON(b)
+
+		if err = c.WriteMessage(mt, []byte("filhos da puta")); err != nil {
+			log.Println("write:", err)
+			break
+		}
+	}
+}
+*/
