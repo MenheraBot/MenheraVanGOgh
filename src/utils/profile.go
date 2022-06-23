@@ -20,20 +20,18 @@ type MarryData struct {
 }
 
 type UserData struct {
-	Cor           string      `json:"cor"`
+	Color         string      `json:"color"`
 	Avatar        string      `json:"avatar"`
-	Votos         int         `json:"votos"`
-	Nota          string      `json:"nota"`
+	Votes         int         `json:"votes"`
+	Info          string      `json:"info"`
 	Tag           string      `json:"tag"`
-	FlagsArray    []string    `json:"flagsArray"`
-	Casado        string      `json:"casado"`
 	VoteCooldown  int         `json:"voteCooldown"`
 	Badges        []BadgeData `json:"badges"`
 	HiddingBadges []int       `json:"hiddingBadges"`
 	Username      string      `json:"username"`
-	Data          string      `json:"data"`
 	Mamadas       int         `json:"mamadas"`
 	Mamou         int         `json:"mamou"`
+	MarryDate     string      `json:"marryDate"`
 	Marry         MarryData   `json:"marry"`
 	Married       bool        `json:"married"`
 }

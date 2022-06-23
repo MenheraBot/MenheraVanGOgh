@@ -36,7 +36,7 @@ func getFontPath(name string) string {
 }
 
 func (util *Utils) GetResizedAsset(path string, w, h int) (image.Image, bool) {
-	v, ok := util.images_cache[path]
+	v, ok := util.images_cache[path+"-"+strconv.Itoa(w)+"-"+strconv.Itoa(h)]
 
 	if ok {
 		return v, true
@@ -64,12 +64,12 @@ func (util *Utils) GetResizedAsset(path string, w, h int) (image.Image, bool) {
 
 	resized := imaging.Resize(img, w, h, imaging.Lanczos)
 
-	util.images_cache[path] = resized
+	util.images_cache[path+"-"+strconv.Itoa(w)+"-"+strconv.Itoa(h)] = resized
 	return resized, true
 }
 
 func (util *Utils) GetFont(font string, points float64) *font.Face {
-	v, ok := util.fonts_cache[fmt.Sprintf("%s-%f", font, points)]
+	v, ok := util.fonts_cache[font+"-"+strconv.Itoa(int(points))]
 
 	if ok {
 		return &v
@@ -81,7 +81,7 @@ func (util *Utils) GetFont(font string, points float64) *font.Face {
 		log.Panic(err)
 	}
 
-	util.fonts_cache[fmt.Sprintf("%s-%f", font, points)] = face
+	util.fonts_cache[font+"-"+strconv.Itoa(int(points))] = face
 	return &face
 }
 
@@ -116,9 +116,9 @@ func (util *Utils) GetAsset(path string) image.Image {
 	return img
 }
 
-func (util *Utils) GetImageFromURL(url string, x, y int) image.Image {
+func (util *Utils) GetImageFromURL(url string, w int) image.Image {
 	var imagem image.Image = nil
-	getImage, ok := util.ttl_images_cache.Get(url)
+	getImage, ok := util.ttl_images_cache.Get(url + "-" + strconv.Itoa(w))
 
 	if ok {
 		return getImage.(image.Image)
@@ -145,11 +145,9 @@ func (util *Utils) GetImageFromURL(url string, x, y int) image.Image {
 		imagem = img
 	}
 
-	imagem = imaging.Fill(imagem, x, y, imaging.Center, imaging.NearestNeighbor)
+	imagem = imaging.Fill(imagem, w, w, imaging.Center, imaging.NearestNeighbor)
 
-	if !ok {
-		util.ttl_images_cache.Add(url, imagem, cache.DefaultExpiration)
-	}
+	util.ttl_images_cache.Add(url+"-"+strconv.Itoa(w), imagem, cache.DefaultExpiration)
 
 	return imagem
 }
@@ -228,7 +226,7 @@ func New() Utils {
 	return Utils{
 		default_image:    def.Image(),
 		images_cache:     make(map[string]image.Image),
-		ttl_images_cache: *cache.New(time.Hour, 65*time.Minute),
+		ttl_images_cache: *cache.New(30*time.Minute, 40*time.Minute),
 		fonts_cache:      make(map[string]font.Face),
 	}
 }

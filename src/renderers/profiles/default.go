@@ -11,7 +11,7 @@ import (
 func RenderDefault(User *utils.UserData, I18n *utils.I18n, util utils.Utils) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
-	baseColor := User.Cor
+	baseColor := User.Color
 
 	ctx.SetHexColor(baseColor)
 	ctx.DrawRectangle(0, 0, 1080, 720)
@@ -39,7 +39,7 @@ func RenderDefault(User *utils.UserData, I18n *utils.I18n, util utils.Utils) ima
 	ctx.SetHexColor("#000")
 	ctx.Stroke()
 
-	userAvatar := util.GetImageFromURL(User.Avatar, 250, 250)
+	userAvatar := util.GetImageFromURL(User.Avatar, 250)
 
 	ctx.SetHexColor("#000")
 	ctx.DrawCircle(120, 120, 130)
@@ -57,13 +57,13 @@ func RenderDefault(User *utils.UserData, I18n *utils.I18n, util utils.Utils) ima
 
 	ctx.SetFontFace(*util.GetFont("Sans", 45))
 	ctx.DrawStringAnchored("Upvotes", 860, 60, 0, 0)
-	ctx.DrawStringAnchored(strconv.Itoa(User.Votos), 960, 120, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(User.Votes), 960, 120, 0.5, 0)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 55))
 	ctx.DrawStringAnchored(I18n.Aboutme, 20, 310, 0, 0)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 40))
-	ctx.DrawStringWrapped(User.Nota, 20, 340, 0, 0, 860, 1, 0)
+	ctx.DrawStringWrapped(User.Info, 20, 340, 0, 0, 860, 1, 0)
 
 	ctx.SetHexColor(baseColor)
 	ctx.DrawRectangle(0, 480, 1080, 720)
@@ -77,7 +77,7 @@ func RenderDefault(User *utils.UserData, I18n *utils.I18n, util utils.Utils) ima
 	ctx.SetFontFace(*util.GetFont("Sans", 40))
 	if User.Married {
 		ringEmoji, _ := util.GetResizedAsset("badges/17.png", 64, 64)
-		ctx.DrawStringAnchored(User.Marry.Tag+" | "+User.Data, 80, 535, 0, 0)
+		ctx.DrawStringAnchored(User.Marry.Tag+" | "+User.MarryDate, 80, 535, 0, 0)
 		ctx.DrawImage(ringEmoji, 10, 490)
 	}
 

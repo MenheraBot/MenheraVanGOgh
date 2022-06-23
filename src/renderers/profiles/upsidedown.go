@@ -11,7 +11,7 @@ import (
 func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, util utils.Utils) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
-	baseColor := User.Cor
+	baseColor := User.Color
 
 	ctx.SetHexColor(baseColor)
 	ctx.DrawRectangle(0, 0, 1080, 720)
@@ -22,7 +22,7 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, util utils.Utils) 
 	ctx.DrawStringAnchored(I18n.Aboutme, 20, 250, 0, 0.5)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 40))
-	ctx.DrawStringWrapped(User.Nota, 20, 340, 0, 0.5, 860, 1, 0)
+	ctx.DrawStringWrapped(User.Info, 20, 340, 0, 0.5, 860, 1, 0)
 
 	darker := util.ShadeColor(baseColor, 25)
 
@@ -54,7 +54,7 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, util utils.Utils) 
 	ctx.DrawCircle(960, 600, 130)
 	ctx.Fill()
 
-	userAvatar := util.GetImageFromURL(User.Avatar, 250, 250)
+	userAvatar := util.GetImageFromURL(User.Avatar, 250)
 	ctx.DrawCircle(960, 600, 120)
 	ctx.Clip()
 	ctx.DrawImageAnchored(userAvatar, 960, 600, 0.5, 0.5)
@@ -68,7 +68,7 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, util utils.Utils) 
 	ctx.SetHexColor(util.GetCompatibleFontColor(darker))
 	ctx.SetFontFace(*util.GetFont("Sans", 45))
 	ctx.DrawStringAnchored("Upvotes", 20, 620, 0, 0)
-	ctx.DrawStringAnchored(strconv.Itoa(User.Votos), 120, 690, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(User.Votes), 120, 690, 0.5, 0)
 
 	ctx.SetHexColor(util.GetCompatibleFontColor(baseColor))
 	ctx.SetFontFace(*util.GetFont("Sans", 50))
@@ -78,7 +78,7 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, util utils.Utils) 
 
 	if User.Married {
 		ringEmoji, _ := util.GetResizedAsset("badges/17.png", 64, 64)
-		ctx.DrawStringAnchored(User.Marry.Tag+" | "+User.Data, 80, 210, 0, 0)
+		ctx.DrawStringAnchored(User.Marry.Tag+" | "+User.MarryDate, 80, 210, 0, 0)
 		ctx.DrawImage(ringEmoji, 10, 165)
 	}
 

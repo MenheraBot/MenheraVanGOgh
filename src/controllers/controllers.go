@@ -123,9 +123,9 @@ func Profile(c *fiber.Ctx) error {
 	   	case "christmas_2021":
 	   		res = christmasProfileImage(&data.User, &data.I18n, utilities)
 			case "id03":
-				res = iD03ProfileImage(&data.User,&data.I18n, utilities)
-			case "without_soul":
-				res = withoutSoulProfileImage(&data.User, &data.I18n, utilities) */
+				res = iD03ProfileImage(&data.User,&data.I18n, utilities)*/
+	case "without_soul":
+		res = profiles.RenderWithoutSoul(&data.User, &data.I18n, utilities)
 	case "upsidedown":
 		res = profiles.RenderUpsideDown(&data.User, &data.I18n, utilities)
 	case "default":
