@@ -119,9 +119,9 @@ func Profile(c *fiber.Ctx) error {
 			res = fortificaçãoProfileImage(&data.User, &data.I18n, utilities)
 		case "warrior":
 			res = guerreiroProfileImage(&data.User, &data.I18n, utilities)
-		case "christmas_2021":
-			res = christmasProfileImage(&data.User, &data.I18n, utilities)
 	*/
+	case "christmas_2021":
+		res = profiles.RenderChristmas(&data.User, &data.I18n, utilities)
 	case "kawaii":
 		res = profiles.RenderKawaii(&data.User, &data.I18n, utilities)
 	case "id03":

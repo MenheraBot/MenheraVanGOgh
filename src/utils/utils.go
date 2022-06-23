@@ -203,16 +203,16 @@ func trimLeftChar(s string) string {
 	return s[:0]
 }
 
-func (util *Utils) StrokeText(ctx *gg.Context, text string, x, y, size int, ax, ay float64) {
-	ctx.SetRGBA255(0, 0, 0, 255)
+func (util *Utils) StrokeText(ctx *gg.Context, text string, x, y, size int, ax, ay float64, color string) {
+	ctx.SetHexColor(color)
 	for dy := -size; dy <= size; dy++ {
 		for dx := -size; dx <= size; dx++ {
 			if dx*dx+dy*dy >= size*size {
 				// give it rounded corners
 				continue
 			}
-			x := 256 + float64(dx)
-			y := 330 + float64(dy)
+			x := float64(x) + float64(dx)
+			y := float64(y) + float64(dy)
 			ctx.DrawStringAnchored(text, x, y, ax, ay)
 		}
 	}

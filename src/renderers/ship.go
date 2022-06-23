@@ -57,7 +57,7 @@ func RenderShip(data *ShipData, util utils.Utils) image.Image {
 
 	text := fmt.Sprint(data.ShipValue, "%")
 
-	util.StrokeText(ctx, text, 256, 330, 2, 0.5, 0)
+	util.StrokeText(ctx, text, 256, 330, 2, 0.5, 0, "#000")
 
 	ctx.SetRGBA255(255, 255, 255, 255)
 	ctx.DrawStringAnchored(text, 256, 330, 0.5, 0)
