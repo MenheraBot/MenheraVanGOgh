@@ -25,7 +25,6 @@ type UserData struct {
 	Votes         int         `json:"votes"`
 	Info          string      `json:"info"`
 	Tag           string      `json:"tag"`
-	VoteCooldown  int         `json:"voteCooldown"`
 	Badges        []BadgeData `json:"badges"`
 	HiddingBadges []int       `json:"hiddingBadges"`
 	Username      string      `json:"username"`
