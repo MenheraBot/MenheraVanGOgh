@@ -2,6 +2,7 @@ package profiles
 
 import (
 	"image"
+	"strconv"
 
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 	"github.com/fogleman/gg"
@@ -33,7 +34,7 @@ func RenderDefault(User *utils.UserData, I18n *utils.I18n, util utils.Utils) ima
 	ctx.Stroke()
 
 	ctx.SetHexColor(darkestThanTheDarkerColor)
-	ctx.DrawRoundedRectangle(890, 250, 180, 200, 20)
+	ctx.DrawRoundedRectangle(860, 250, 210, 200, 20)
 	ctx.FillPreserve()
 	ctx.SetHexColor("#000")
 	ctx.Stroke()
@@ -49,41 +50,43 @@ func RenderDefault(User *utils.UserData, I18n *utils.I18n, util utils.Utils) ima
 	ctx.DrawImageAnchored(userAvatar, 120, 120, 0.5, 0.5)
 	ctx.ResetClip()
 
-	ctx.SetHexColor("#FFF")
+	ctx.SetHexColor(util.GetCompatibleFontColor(darker))
 
-	/* ctx.SetFontFace(*util.GetFont("Sans", 50))
-	util.FillStrokedText(ctx, User.Tag, 255, 90, 650, 300, 50, 3, "#000", "#FFF", 0)
+	ctx.SetFontFace(*util.GetFont("Sans", 50))
+	ctx.DrawStringWrapped(User.Tag, 255, 80, 0, 0.5, 650, 1, 0)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 45))
-	util.StrokeText(ctx, "Upvotes", 860, 60, 3, "#000", "#FFF", 0)
-	util.StrokeText(ctx, strconv.Itoa(User.Votos), 955, 120, 2, "#000", "#FFF", 0.5)
+	ctx.DrawStringAnchored("Upvotes", 860, 60, 0, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(User.Votos), 960, 120, 0.5, 0)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 55))
-	util.StrokeText(ctx, I18n.Aboutme, 20, 300, 3, "#000", "#FFF", 0)
+	ctx.DrawStringAnchored(I18n.Aboutme, 20, 310, 0, 0)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 40))
-	util.FillStrokedText(ctx, User.Nota, 20, 350, 870, 600, 40, 2, "#000", "#FFF", 0)
+	ctx.DrawStringWrapped(User.Nota, 20, 340, 0, 0, 860, 1, 0)
 
 	ctx.SetHexColor(baseColor)
 	ctx.DrawRectangle(0, 480, 1080, 720)
 	ctx.Fill()
 
+	ctx.SetHexColor(util.GetCompatibleFontColor(baseColor))
+
 	ctx.SetFontFace(*util.GetFont("Sans", 50))
-	util.FillStrokedText(ctx, I18n.Usages, 20, 600, 1000, 600, 50, 2, "#000", "#FFF", 0)
+	ctx.DrawStringWrapped(I18n.Usages, 10, 550, 0, 0, 1070, 1, 0)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 40))
 	if User.Married {
 		ringEmoji, _ := util.GetResizedAsset("badges/17.png", 64, 64)
-		util.StrokeText(ctx, User.Marry.Tag+" | "+User.Data, 80, 535, 2, "#000", "#FFF", 0)
+		ctx.DrawStringAnchored(User.Marry.Tag+" | "+User.Data, 80, 535, 0, 0)
 		ctx.DrawImage(ringEmoji, 10, 490)
 	}
 
-	util.StrokeText(ctx, I18n.Mamado, 980, 290, 3, "#000", "#FFF", 0.5)
-	util.StrokeText(ctx, I18n.Mamou, 980, 380, 3, "#000", "#FFF", 0.5)
+	ctx.DrawStringAnchored(I18n.Mamado, 960, 290, 0.5, 0)
+	ctx.DrawStringAnchored(I18n.Mamou, 960, 380, 0.5, 0)
 
-	util.StrokeText(ctx, strconv.Itoa(User.Mamadas), 980, 335, 2, "#000", "#FFF", 0.5)
-	util.StrokeText(ctx, strconv.Itoa(User.Mamou), 980, 425, 2, "#000", "#FFF", 0.5)
-	*/
+	ctx.DrawStringAnchored(strconv.Itoa(User.Mamadas), 960, 335, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(User.Mamou), 960, 425, 0.5, 0)
+
 	util.DrawBadges(ctx, User, 230, 170)
 
 	return ctx.Image()

@@ -22,7 +22,7 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, util utils.Utils) 
 	ctx.DrawStringAnchored(I18n.Aboutme, 20, 250, 0, 0.5)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 40))
-	ctx.DrawStringWrapped(User.Nota, 20, 340, 0, 0.5, 870, 1, 0)
+	ctx.DrawStringWrapped(User.Nota, 20, 340, 0, 0.5, 860, 1, 0)
 
 	darker := util.ShadeColor(baseColor, 25)
 
@@ -41,7 +41,7 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, util utils.Utils) 
 	ctx.Stroke()
 
 	ctx.SetHexColor(darkestThanTheDarkerColor)
-	ctx.DrawRoundedRectangle(890, 250, 180, 200, 20)
+	ctx.DrawRoundedRectangle(870, 250, 200, 200, 20)
 	ctx.FillPreserve()
 	ctx.SetHexColor("#000")
 	ctx.Stroke()
@@ -84,11 +84,11 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, util utils.Utils) 
 
 	ctx.SetHexColor(util.GetCompatibleFontColor(darkestThanTheDarkerColor))
 
-	ctx.DrawStringAnchored(I18n.Mamado, 980, 290, 0.5, 0)
-	ctx.DrawStringAnchored(I18n.Mamou, 980, 380, 0.5, 0)
+	ctx.DrawStringAnchored(I18n.Mamado, 970, 290, 0.5, 0)
+	ctx.DrawStringAnchored(I18n.Mamou, 970, 380, 0.5, 0)
 
-	ctx.DrawStringAnchored(strconv.Itoa(User.Mamadas), 980, 335, 0.5, 0)
-	ctx.DrawStringAnchored(strconv.Itoa(User.Mamou), 980, 425, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(User.Mamadas), 965, 335, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(User.Mamou), 965, 425, 0.5, 0)
 
 	util.DrawBadges(ctx, User, 10, 485)
 
