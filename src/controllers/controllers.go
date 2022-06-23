@@ -114,11 +114,9 @@ func Profile(c *fiber.Ctx) error {
 	var res image.Image
 
 	switch data.Type {
-	/*
-		case "fortification":
-			res = fortificaçãoProfileImage(&data.User, &data.I18n, utilities)
 
-	*/
+	case "fortification":
+		res = profiles.RenderFortification(&data.User, &data.I18n, utilities)
 	case "warrior":
 		res = profiles.RenderWarrior(&data.User, &data.I18n, utilities)
 	case "christmas_2021":

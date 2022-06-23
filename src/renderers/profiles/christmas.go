@@ -54,7 +54,7 @@ func RenderChristmas(User *utils.UserData, I18n *utils.I18n, util utils.Utils) i
 	ctx.SetHexColor("#FF0000")
 	ctx.DrawStringAnchored(User.Username, 660, 100, 0.5, 0)
 
-	ctx.SetHexColor("#FFF")
+	ctx.SetHexColor(util.GetCompatibleFontColor(baseColor))
 	ctx.SetFontFace(*util.GetFont("Impact", 32))
 	ctx.DrawStringWrapped(User.Info, 90, 540, 0, 1, 920, 1, 0)
 
