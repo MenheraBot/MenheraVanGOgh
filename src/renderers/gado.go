@@ -9,7 +9,7 @@ import (
 )
 
 type GadoData struct {
-	Image string `json:"image"`
+	Image string `json:"image"` // 512
 }
 
 func RenderGado(data *GadoData, util utils.Utils) image.Image {

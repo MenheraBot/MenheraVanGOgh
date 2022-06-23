@@ -115,23 +115,23 @@ func Profile(c *fiber.Ctx) error {
 
 	switch data.Type {
 	/* 	case "kawaii":
-	   		res = kawaiiProfileImage(data, utilities)
+	   		res = kawaiiProfileImage(&data.User,  &data.I18n, utilities)
 	   	case "fortification":
-	   		res = fortificaçãoProfileImage(data, utilities)
+	   		res = fortificaçãoProfileImage(&data.User, &data.I18n, utilities)
 	   	case "warrior":
-	   		res = guerreiroProfileImage(data, utilities)
+	   		res = guerreiroProfileImage(&data.User, &data.I18n, utilities)
 	   	case "christmas_2021":
-	   		res = christmasProfileImage(data, utilities)
-	   	case "upsidedown":
-	   		res = upsideDownProfile(data, utilities)
-	   	case "id03":
-	   		res = iD03ProfileImage(data, utilities)
-	   	case "without_soul":
-	   		res = withoutSoulProfileImage(data, utilities) */
+	   		res = christmasProfileImage(&data.User, &data.I18n, utilities)
+			case "id03":
+				res = iD03ProfileImage(&data.User,&data.I18n, utilities)
+			case "without_soul":
+				res = withoutSoulProfileImage(&data.User, &data.I18n, utilities) */
+	case "upsidedown":
+		res = profiles.RenderUpsideDown(&data.User, &data.I18n, utilities)
 	case "default":
-		res = profiles.RenderDefault(&data.User, &data.UsageCommands, &data.I18n, utilities)
+		res = profiles.RenderDefault(&data.User, &data.I18n, utilities)
 	default:
-		res = profiles.RenderDefault(&data.User, &data.UsageCommands, &data.I18n, utilities)
+		res = profiles.RenderDefault(&data.User, &data.I18n, utilities)
 	}
 
 	return encoder.Encode(c.Context(), res)

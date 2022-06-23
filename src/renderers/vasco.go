@@ -10,7 +10,7 @@ import (
 )
 
 type VascoData struct {
-	User     string `json:"user"`
+	User     string `json:"user"` // 256 normal | low 64
 	Username string `json:"username"`
 	Quality  string `json:"quality"`
 	Position string `json:"position"`
@@ -24,13 +24,12 @@ func RenderVasco(data *VascoData, util utils.Utils) image.Image {
 
 	ctx.DrawImage(userImage, 65, 165)
 	ctx.DrawImage(vascoImage, 0, 0)
-	ctx.LoadFontFace(util.GetFontPath("Impact"), 42)
-
-	ctx.SetHexColor("#FFF")
+	ctx.SetFontFace(*util.GetFont("Impact", 42))
 
 	text := strings.ToUpper(data.Username) + "\n" + strings.ToUpper(data.Position)
 
-	util.FillStrokedText(ctx, text, 500, 260, 350, 500, 50, 0, "#FFF", "#FFF", 0.5)
+	ctx.SetHexColor("#FFF")
+	ctx.DrawStringWrapped(text, 500, 290, 0.5, 0.5, 500, 2, 1)
 
 	return ctx.Image()
 }

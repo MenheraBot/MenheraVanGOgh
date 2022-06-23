@@ -57,10 +57,11 @@ func RenderEightball(data *EightballData, util utils.Utils) image.Image {
 		fontSize = 28
 	}
 
-	ctx.LoadFontFace(util.GetFontPath("Arial"), float64(fontSize))
-	util.StrokeText(ctx, data.Username, 440, 339, 2, "#000", "#FFF", 0.5)
+	ctx.SetFontFace(*util.GetFont("Sans", float64(fontSize)))
+	ctx.SetHexColor("#d89a30")
+	ctx.DrawStringAnchored(data.Username, 440, 339, 0.5, 0)
 
-	ctx.LoadFontFace(util.GetFontPath("Arial"), 38)
+	ctx.SetFontFace(*util.GetFont("Sans", 36))
 
 	question := data.Question
 
@@ -68,9 +69,11 @@ func RenderEightball(data *EightballData, util utils.Utils) image.Image {
 		question = data.Question + "?"
 	}
 
-	util.FillStrokedText(ctx, question, 440, 378, 700, 500, 30, 2, "#000", "#FFF", 0.5)
+	ctx.SetHexColor("#FFF")
+	ctx.DrawStringWrapped(question, 440, 380, 0.5, 0.5, 700, 1, 1)
 
-	util.FillStrokedText(ctx, data.Answer, 645, 80, 360, 500, 35, 2, "#000", "#FFF", 0.5)
+	ctx.SetHexColor("#595959")
+	ctx.DrawStringWrapped(data.Answer, 645, 140, 0.5, 0.5, 360, 1, 1)
 
 	return ctx.Image()
 }

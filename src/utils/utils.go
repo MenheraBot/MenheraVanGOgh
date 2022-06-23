@@ -13,6 +13,7 @@ import (
 	"github.com/disintegration/imaging"
 	"github.com/fogleman/gg"
 	"github.com/patrickmn/go-cache"
+	"golang.org/x/image/font"
 	"golang.org/x/image/webp"
 )
 
@@ -20,59 +21,18 @@ type Utils struct {
 	default_image    image.Image
 	images_cache     map[string]image.Image
 	ttl_images_cache cache.Cache
+	fonts_cache      map[string]font.Face
 }
 
-func canFitHeightWise(ctx *gg.Context, lines []string, maxHeight, spacing int) bool {
-	sum := 0
-	for _, text := range lines {
-		_, h := ctx.MeasureString(text)
-		sum += int(h) + spacing
-	}
-	return sum < maxHeight
-}
-
-func (util *Utils) FillText(ctx *gg.Context, s string, x, y, width, height, spacing int) {
-	lines := ctx.WordWrap(s, float64(width))
-	var tbd []string
-
-	for len(lines) > 0 && canFitHeightWise(ctx, append(tbd, lines[0]), height, spacing) {
-		tbd = append(tbd, lines[0])
-		lines = lines[1:]
-	}
-
-	currentY := y
-	for _, text := range tbd {
-		ctx.DrawString(text, float64(x), float64(currentY))
-		currentY += spacing
-	}
-}
-
-func (util *Utils) FillStrokedText(ctx *gg.Context, s string, x, y, width, height, spacing, n int, stroke, color string, anchor float64) {
-	lines := ctx.WordWrap(s, float64(width))
-	var tbd []string
-
-	for len(lines) > 0 && canFitHeightWise(ctx, append(tbd, lines[0]), height, spacing) {
-		tbd = append(tbd, lines[0])
-		lines = lines[1:]
-	}
-
-	currentY := y
-	for _, text := range tbd {
-		util.StrokeText(ctx, text, x, currentY, n, stroke, color, anchor)
-		currentY += spacing
-	}
-}
-
-func (util *Utils) GetFontPath(name string) string {
+func getFontPath(name string) string {
 	workdir, err := os.Getwd()
 
 	if err != nil {
 		log.Println(err)
-		return "../assets/fonts/Arial.ttf"
+		return "../assets/fonts/Sans.ttf"
 	}
 
 	return workdir + "/assets/fonts/" + name + ".ttf"
-
 }
 
 func (util *Utils) GetResizedAsset(path string, w, h int) (image.Image, bool) {
@@ -108,21 +68,21 @@ func (util *Utils) GetResizedAsset(path string, w, h int) (image.Image, bool) {
 	return resized, true
 }
 
-func (util *Utils) StrokeText(ctx *gg.Context, s string, x, y, n int, stroke, color string, anchor float64) {
-	ctx.SetHexColor(stroke)
-	for dy := -n; dy <= n; dy++ {
-		for dx := -n; dx <= n; dx++ {
-			if dx*dx+dy*dy >= n*n {
-				// give it rounded corners
-				continue
-			}
-			x := x + dx
-			y := y + dy
-			ctx.DrawStringAnchored(s, float64(x), float64(y), anchor, 0)
-		}
+func (util *Utils) GetFont(font string, points float64) *font.Face {
+	v, ok := util.fonts_cache[fmt.Sprintf("%s-%f", font, points)]
+
+	if ok {
+		return &v
 	}
-	ctx.SetHexColor(color)
-	ctx.DrawStringAnchored(s, float64(x), float64(y), anchor, 0)
+
+	face, err := gg.LoadFontFace(getFontPath(font), points)
+
+	if err != nil {
+		log.Panic(err)
+	}
+
+	util.fonts_cache[fmt.Sprintf("%s-%f", font, points)] = face
+	return &face
 }
 
 func (util *Utils) GetAsset(path string) image.Image {
@@ -245,6 +205,21 @@ func trimLeftChar(s string) string {
 	return s[:0]
 }
 
+func (util *Utils) StrokeText(ctx *gg.Context, text string, x, y, size int, ax, ay float64) {
+	ctx.SetRGBA255(0, 0, 0, 255)
+	for dy := -size; dy <= size; dy++ {
+		for dx := -size; dx <= size; dx++ {
+			if dx*dx+dy*dy >= size*size {
+				// give it rounded corners
+				continue
+			}
+			x := 256 + float64(dx)
+			y := 330 + float64(dy)
+			ctx.DrawStringAnchored(text, x, y, ax, ay)
+		}
+	}
+}
+
 func New() Utils {
 	def := gg.NewContext(1, 1)
 	def.SetRGB(255, 255, 0)
@@ -254,5 +229,6 @@ func New() Utils {
 		default_image:    def.Image(),
 		images_cache:     make(map[string]image.Image),
 		ttl_images_cache: *cache.New(time.Hour, 65*time.Minute),
+		fonts_cache:      make(map[string]font.Face),
 	}
 }

@@ -11,8 +11,8 @@ import (
 )
 
 type ShipData struct {
-	LinkOne   string `json:"linkOne"`
-	LinkTwo   string `json:"linkTwo"`
+	LinkOne   string `json:"linkOne"` // 256
+	LinkTwo   string `json:"linkTwo"` // 256
 	ShipValue uint16 `json:"shipValue"`
 }
 
@@ -53,9 +53,14 @@ func RenderShip(data *ShipData, util utils.Utils) image.Image {
 	ctx.DrawImage(secondAvatar, 256, 0)
 	ctx.DrawImage(shipLoadedImage, 20, 270)
 
-	ctx.LoadFontFace(util.GetFontPath("Arial"), 58)
+	ctx.SetFontFace(*util.GetFont("Sans", 58))
 
-	util.StrokeText(ctx, fmt.Sprint(data.ShipValue, "%"), 256, 330, 4, "#000", "#FFF", 0.5)
+	text := fmt.Sprint(data.ShipValue, "%")
+
+	util.StrokeText(ctx, text, 256, 330, 2, 0.5, 0)
+
+	ctx.SetRGBA255(255, 255, 255, 255)
+	ctx.DrawStringAnchored(text, 256, 330, 0.5, 0)
 
 	return ctx.Image()
 }

@@ -38,13 +38,13 @@ func getFontColorByTheme(theme string) string {
 	case "green":
 		return "#2aa421"
 	case "blue":
-		return "#3e86e9"
+		return "#8194f9"
 	case "red":
 		return "#ff383a"
 	case "pink":
 		return "#f231b4"
 	case "rounded":
-		return "#2aa421"
+		return "#79d861"
 	case "gauderios":
 		return "#2aa321"
 	case "atemporal":
@@ -64,15 +64,15 @@ func RenderBlackjack(data *BlackjackData, util utils.Utils) image.Image {
 	baseHexColor := getFontColorByTheme(data.TableTheme)
 
 	ctx.SetHexColor(baseHexColor)
-	ctx.LoadFontFace(util.GetFontPath("Impact"), 36)
+	ctx.SetFontFace(*util.GetFont("Impact", 36))
 
-	dealerText := data.I18n.DealerHand + "\n" + strconv.Itoa(data.MenheraTotal)
-	userText := data.I18n.YourHand + "\n" + strconv.Itoa(data.UserTotal)
+	ctx.DrawStringAnchored(data.I18n.DealerHand, 278, 36, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(data.MenheraTotal), 278, 78, 0.5, 0)
 
-	util.FillStrokedText(ctx, dealerText, 278, 36, 1000, 1000, 35, 2, "#000", baseHexColor, 0.5)
-	util.FillStrokedText(ctx, userText, 280, 300, 1000, 1000, 40, 2, "#000", baseHexColor, 0.5)
+	ctx.DrawStringAnchored(data.I18n.YourHand, 280, 300, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(data.UserTotal), 280, 336, 0.5, 0)
 
-	util.StrokeText(ctx, strconv.Itoa(data.Aposta*2), 240, 240, 2, "#000", "#FFFF00", 0)
+	ctx.DrawStringAnchored(strconv.Itoa(data.Aposta*2), 240, 240, 0, 0)
 
 	ctx.SetHexColor(util.ShadeColor(baseHexColor, -10))
 
@@ -86,7 +86,7 @@ func RenderBlackjack(data *BlackjackData, util utils.Utils) image.Image {
 	for i, card := range data.MenheraCards {
 		var cardImage image.Image
 		if card.Hidden {
-			cardImage, _ = util.GetResizedAsset("card_backgrounds/" + data.BackgroundCardTheme + ".png", 72, 84)
+			cardImage, _ = util.GetResizedAsset("card_backgrounds/"+data.BackgroundCardTheme+".png", 72, 84)
 		} else {
 			cardImage, _ = util.GetResizedAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", 72, 84)
 		}

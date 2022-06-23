@@ -9,9 +9,9 @@ import (
 )
 
 type TrisalData struct {
-	UserOne   string `json:"userOne"`
-	UserTwo   string `json:"userTwo"`
-	UserThree string `json:"userThree"`
+	UserOne   string `json:"userOne"` // 256
+	UserTwo   string `json:"userTwo"` // 256
+	UserThree string `json:"userThree"` // 256
 }
 
 func RenderTrisal(data *TrisalData, util utils.Utils) image.Image {

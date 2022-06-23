@@ -15,11 +15,11 @@ type PhiloData struct {
 func RenderPhilo(data *PhiloData, util utils.Utils) image.Image {
 	ctx := gg.NewContext(720, 720)
 
-	ctx.LoadFontFace(util.GetFontPath("Arial"), 58)
+	ctx.SetFontFace(*util.GetFont("Sans", 58))
 
 	ctx.SetHexColor("#FFF")
 
-	util.FillText(ctx, data.Text, 0, 100, 720, 412, 50)
+	ctx.DrawStringWrapped(data.Text, 0, 0, 0, 0, 720, 1, 1)
 
 	philoImage, _ := util.GetResizedAsset("images/philo.png", 720, 420)
 

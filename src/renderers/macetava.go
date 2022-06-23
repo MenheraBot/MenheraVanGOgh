@@ -9,10 +9,10 @@ import (
 )
 
 type MacetavaData struct {
-	Image               string `json:"image"`
+	Image               string `json:"image"` // 512
 	AuthorName          string `json:"authorName"`
 	AuthorDiscriminator string `json:"authorDiscriminator"`
-	AuthorImage         string `json:"authorImage"`
+	AuthorImage         string `json:"authorImage"` // 128
 }
 
 func rgbaToGray(img image.Image) *image.Gray {
@@ -44,10 +44,10 @@ func RenderMacetava(data *MacetavaData, util utils.Utils) image.Image {
 	ctx.DrawImage(macetavaImage, 0, 0)
 
 	ctx.SetHexColor("#FFF")
-	ctx.LoadFontFace(util.GetFontPath("Arial"), 48)
-	util.StrokeText(ctx, data.AuthorName, 210, 85, 2, "#000", "#FFF", 0)
+	ctx.SetFontFace(*util.GetFont("Arial", 48))
+	ctx.DrawStringAnchored(data.AuthorName, 210, 85, 0, 0)
 
-	ctx.LoadFontFace(util.GetFontPath("Arial"), 38)
+	ctx.SetFontFace(*util.GetFont("Arial", 38))
 	ctx.SetHexColor("#86878C")
 	ctx.DrawString(data.AuthorName+"#"+data.AuthorDiscriminator, 250, 145)
 

@@ -19,11 +19,11 @@ func RenderAstolfo(data *AstolfoData, util utils.Utils) image.Image {
 
 	ctx.DrawImage(astolfoImage, 0, 0)
 
-	ctx.LoadFontFace(util.GetFontPath("Arial"), 20)
+	ctx.SetFontFace(*util.GetFont("Sans", 20))
 
 	ctx.SetHexColor("#000")
 
-	util.FillText(ctx, data.Text, 72, 208, 160, 250, 20)
+	ctx.DrawStringWrapped(data.Text, 70, 185, 0, 0, 160, 1, 1)
 
 	return ctx.Image()
 }
