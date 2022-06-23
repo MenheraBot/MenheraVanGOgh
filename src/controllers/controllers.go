@@ -114,15 +114,16 @@ func Profile(c *fiber.Ctx) error {
 	var res image.Image
 
 	switch data.Type {
-	/* 	case "kawaii":
-	   		res = kawaiiProfileImage(&data.User,  &data.I18n, utilities)
-	   	case "fortification":
-	   		res = fortificaçãoProfileImage(&data.User, &data.I18n, utilities)
-	   	case "warrior":
-	   		res = guerreiroProfileImage(&data.User, &data.I18n, utilities)
-	   	case "christmas_2021":
-	   		res = christmasProfileImage(&data.User, &data.I18n, utilities)
+	/*
+		case "fortification":
+			res = fortificaçãoProfileImage(&data.User, &data.I18n, utilities)
+		case "warrior":
+			res = guerreiroProfileImage(&data.User, &data.I18n, utilities)
+		case "christmas_2021":
+			res = christmasProfileImage(&data.User, &data.I18n, utilities)
 	*/
+	case "kawaii":
+		res = profiles.RenderKawaii(&data.User, &data.I18n, utilities)
 	case "id03":
 		res = profiles.RenderID03(&data.User, &data.I18n, utilities)
 	case "without_soul":
