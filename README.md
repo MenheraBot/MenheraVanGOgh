@@ -18,7 +18,7 @@ You may contribute to this project by opening an issue or creating a pull reques
 
 ## 🔥 | Running
 
-To run MenheraPicasso, you need to have [Docker](https://www.docker.com/) in your machine. You have two options of installation, follow the one that applies to you.
+To run Menhera Van GOgh, you need to have [Docker](https://www.docker.com/) in your machine. You have two options of installation, follow the one that applies to you.
 
 ### 🔮 | Building the Image
 
