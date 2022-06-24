@@ -72,6 +72,7 @@ func main() {
 	router.POST("/8ball", func(ctx *gin.Context) { controllers.Eightball(ctx, &Utilities) })
 	router.POST("/vasco", func(ctx *gin.Context) { controllers.Vasco(ctx, &Utilities) })
 	router.POST("/profile", func(ctx *gin.Context) { controllers.Profile(ctx, &Utilities) })
+	router.POST("/preview", func(ctx *gin.Context) { controllers.Preview(ctx, &Utilities) })
 
 	log.Println("Listening and serving HTTP on :2080")
 

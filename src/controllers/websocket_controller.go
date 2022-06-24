@@ -51,6 +51,10 @@ func HandleWebsocketRequest(toRender string, msg *bytes.Reader, util *utils.Util
 		data := &renderers.VascoData{}
 		json.NewDecoder(msg).Decode(data)
 		res = renderers.RenderVasco(data, util)
+	case "preview":
+		data := &renderers.PreviewData{}
+		json.NewDecoder(msg).Decode(data)
+		res = renderers.RenderPreview(data, util)
 	case "profile":
 		data := &utils.ProfileData{}
 		json.NewDecoder(msg).Decode(data)
