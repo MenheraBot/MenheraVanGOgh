@@ -14,7 +14,7 @@ type TrisalData struct {
 	UserThree string `json:"userThree"` // 256
 }
 
-func RenderTrisal(data *TrisalData, util utils.Utils) image.Image {
+func RenderTrisal(data *TrisalData, util *utils.Utils) image.Image {
 	ctx := gg.NewContext(768, 256)
 
 	firstImage := util.GetImageFromURL(data.UserOne, 256)

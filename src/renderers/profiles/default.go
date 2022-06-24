@@ -8,7 +8,7 @@ import (
 	"github.com/fogleman/gg"
 )
 
-func RenderDefault(User *utils.UserData, I18n *utils.I18n, util utils.Utils) image.Image {
+func RenderDefault(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
 	baseColor := User.Color

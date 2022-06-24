@@ -54,7 +54,7 @@ func getFontColorByTheme(theme string) string {
 	}
 }
 
-func RenderBlackjack(data *BlackjackData, util utils.Utils) image.Image {
+func RenderBlackjack(data *BlackjackData, util *utils.Utils) image.Image {
 	ctx := gg.NewContext(630, 460)
 
 	tableImage, _ := util.GetResizedAsset("tables/"+data.TableTheme+".png", 630, 460)

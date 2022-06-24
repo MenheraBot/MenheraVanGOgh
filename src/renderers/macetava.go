@@ -29,7 +29,7 @@ func rgbaToGray(img image.Image) *image.Gray {
 	return gray
 }
 
-func RenderMacetava(data *MacetavaData, util utils.Utils) image.Image {
+func RenderMacetava(data *MacetavaData, util *utils.Utils) image.Image {
 	ctx := gg.NewContext(1080, 882)
 
 	userImage := util.GetImageFromURL(data.Image, 573)

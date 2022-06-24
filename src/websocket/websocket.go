@@ -1,11 +1,16 @@
-package utils
+package websocket
 
 import (
+	"bytes"
+	"encoding/json"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
 	"time"
 
+	"github.com/MenheraBot/MenheraVanGOgh/src/controllers"
+	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 	"github.com/gorilla/websocket"
 )
 
@@ -23,7 +28,17 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
-func ServeHTTP(w http.ResponseWriter, r *http.Request, connections *map[uint8]time.Time) {
+type ReceivedObject struct {
+	Type string `json:"type"`
+	Id   string `json:"id"`
+}
+
+type ToSendObject struct {
+	Id  string `json:"id"`
+	Res string `json:"res"`
+}
+
+func ServeHTTP(w http.ResponseWriter, r *http.Request, connections *map[uint8]time.Time, Utilities *utils.Utils) {
 
 	id := r.URL.Query().Get("id")
 	w.Header().Set("Content-Type", "text")
@@ -61,13 +76,26 @@ func ServeHTTP(w http.ResponseWriter, r *http.Request, connections *map[uint8]ti
 	(*connections)[uint8(idNumber)] = time.Now()
 
 	for {
-		mt, message, err := c.ReadMessage()
+		_, msg, err := c.NextReader()
 		if err != nil {
 			c.WriteJSON(map[string]bool{"error": true})
 			break
 		}
 
-		err = c.WriteMessage(mt, message)
+		data, _ := ioutil.ReadAll(msg)
+
+		received := &ReceivedObject{}
+		json.NewDecoder(bytes.NewReader(data)).Decode(received)
+
+		res := controllers.HandleWebsocketRequest(received.Type, bytes.NewReader(data), Utilities)
+
+		toSend := &ToSendObject{}
+
+		toSend.Id = received.Id
+		toSend.Res = *res
+
+		err = c.WriteJSON(toSend)
+
 		if err != nil {
 			break
 		}

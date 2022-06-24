@@ -16,7 +16,7 @@ type VascoData struct {
 	Position string `json:"position"`
 }
 
-func RenderVasco(data *VascoData, util utils.Utils) image.Image {
+func RenderVasco(data *VascoData, util *utils.Utils) image.Image {
 	ctx := gg.NewContext(800, 534)
 
 	vascoImage := util.GetAsset("images/vasco_" + data.Quality + ".png")

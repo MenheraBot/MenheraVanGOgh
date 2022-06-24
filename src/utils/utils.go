@@ -17,6 +17,11 @@ import (
 	"golang.org/x/image/webp"
 )
 
+type Buffer struct {
+	Type string `json:"type"`
+	Data []byte `json:"data"`
+}
+
 type Utils struct {
 	default_image    image.Image
 	images_cache     map[string]image.Image

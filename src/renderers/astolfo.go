@@ -12,7 +12,7 @@ type AstolfoData struct {
 	Text string `json:"text"`
 }
 
-func RenderAstolfo(data *AstolfoData, util utils.Utils) image.Image {
+func RenderAstolfo(data *AstolfoData, util *utils.Utils) image.Image {
 	ctx := gg.NewContext(253, 330)
 
 	astolfoImage := util.GetAsset("images/astolfo.png")

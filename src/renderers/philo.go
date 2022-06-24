@@ -12,7 +12,7 @@ type PhiloData struct {
 	Text string `json:"text"`
 }
 
-func RenderPhilo(data *PhiloData, util utils.Utils) image.Image {
+func RenderPhilo(data *PhiloData, util *utils.Utils) image.Image {
 	ctx := gg.NewContext(720, 720)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 58))

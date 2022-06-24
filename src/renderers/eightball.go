@@ -37,7 +37,7 @@ func getRandomBasedOnType(t string) int {
 	}
 }
 
-func RenderEightball(data *EightballData, util utils.Utils) image.Image {
+func RenderEightball(data *EightballData, util *utils.Utils) image.Image {
 	ctx := gg.NewContext(854, 456)
 
 	bedroomImage := util.GetAsset("images/bedroom.png")

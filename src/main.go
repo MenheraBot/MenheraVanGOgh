@@ -7,6 +7,7 @@ import (
 
 	"github.com/MenheraBot/MenheraVanGOgh/src/controllers"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
+	"github.com/MenheraBot/MenheraVanGOgh/src/websocket"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
@@ -50,25 +51,27 @@ func main() {
 			return
 		}
 
-		c.Header("Content-Type", "image/png")
+		c.Header("Content-Type", "text")
 
 		c.Next()
 	})
 
+	Utilities := utils.New()
+
 	router.GET("/ws", func(c *gin.Context) {
-		utils.ServeHTTP(c.Writer, c.Request, &websocketConnections)
+		websocket.ServeHTTP(c.Writer, c.Request, &websocketConnections, &Utilities)
 	})
 
-	router.POST("/astolfo", controllers.Astolfo)
-	router.POST("/philo", controllers.Philo)
-	router.POST("/ship", controllers.Ship)
-	router.POST("/trisal", controllers.Trisal)
-	router.POST("/gado", controllers.Gado)
-	router.POST("/macetava", controllers.Macetava)
-	router.POST("/blackjack", controllers.Blackjack)
-	router.POST("/8ball", controllers.Eightball)
-	router.POST("/vasco", controllers.Vasco)
-	router.POST("/profile", controllers.Profile)
+	router.POST("/astolfo", func(ctx *gin.Context) { controllers.Astolfo(ctx, &Utilities) })
+	router.POST("/philo", func(ctx *gin.Context) { controllers.Philo(ctx, &Utilities) })
+	router.POST("/ship", func(ctx *gin.Context) { controllers.Ship(ctx, &Utilities) })
+	router.POST("/trisal", func(ctx *gin.Context) { controllers.Trisal(ctx, &Utilities) })
+	router.POST("/gado", func(ctx *gin.Context) { controllers.Gado(ctx, &Utilities) })
+	router.POST("/macetava", func(ctx *gin.Context) { controllers.Macetava(ctx, &Utilities) })
+	router.POST("/blackjack", func(ctx *gin.Context) { controllers.Blackjack(ctx, &Utilities) })
+	router.POST("/8ball", func(ctx *gin.Context) { controllers.Eightball(ctx, &Utilities) })
+	router.POST("/vasco", func(ctx *gin.Context) { controllers.Vasco(ctx, &Utilities) })
+	router.POST("/profile", func(ctx *gin.Context) { controllers.Profile(ctx, &Utilities) })
 
 	log.Println("Listening and serving HTTP on :2080")
 
