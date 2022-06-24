@@ -49,7 +49,9 @@ func ServeHTTP(w http.ResponseWriter, r *http.Request, connections *map[uint8]ti
 		return
 	}
 
-	if r.Header.Get("Authorization") != os.Getenv("TOKEN") {
+	auth := r.URI.Query().Get("auth")
+
+	if auth != os.Getenv("TOKEN") {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte("Only Menhera client can access this!"))
 		return
