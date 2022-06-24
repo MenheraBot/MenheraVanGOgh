@@ -39,10 +39,10 @@ docker build . --tag vangogh
 3. 🏃‍♂️ Running a Container
 
 ```bash
-docker run --name VangoghServer -p 2080:2080 -e "API_TOKEN=" -e "GIN_MODE=release" --restart unless-stopped -d -t vangogh
+docker run --name VangoghServer -p 2080:2080 -e "TOKEN=" -e "GIN_MODE=release" --restart unless-stopped -d -t vangogh
 ```
 
-> Obs: the `API_TOKEN` is just for authentication purpuses. `GIN_MODE=release` is to avoid gin of making debug logs. The `restart` policy used is because, well, no one wants a server down!
+> Obs: the `TOKEN` is just for authentication purpuses. `GIN_MODE=release` is to avoid gin of making debug logs. The `restart` policy used is because, well, no one wants a server down!
 
 Now we can connect to WS or HTTP to 2080 port!
 
@@ -61,10 +61,10 @@ docker pull ghcr.io/menherabot/vangogh:latest
 2. 🏃‍♂️ Running a Container
 
 ```bash
-docker run --name VangoghServer -p 2080:2080 -e "API_TOKEN=ReplaceWithToken" -e "GIN_MODE=release" --restart unless-stopped -d -t ghcr.io/menherabot/vangogh:latest
+docker run --name VangoghServer -p 2080:2080 -e "TOKEN=ReplaceWithToken" -e "GIN_MODE=release" --restart unless-stopped -d -t ghcr.io/menherabot/vangogh:latest
 ```
 
-> Obs: the `API_TOKEN` is just for authentication purpuses. `GIN_MODE=release` is to avoid gin of making debug logs. The `restart` policy used is because, well, no one wants a server down!
+> Obs: the `TOKEN` is just for authentication purpuses. `GIN_MODE=release` is to avoid gin of making debug logs. The `restart` policy used is because, well, no one wants a server down!
 
 Creeper? Awww maan. Van GOgh is on!
 

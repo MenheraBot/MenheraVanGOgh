@@ -208,3 +208,20 @@ func Profile(c *gin.Context, Utilities *utils.Utils) {
 	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
 
 }
+
+func Preview(c *gin.Context, Utilities *utils.Utils) {
+	data := new(renderers.PreviewData)
+
+	c.BindJSON(data)
+
+	res := renderers.RenderPreview(data, Utilities)
+
+	buff := new(bytes.Buffer)
+	err := encoder.Encode(buff, res)
+
+	if err != nil {
+		panic(err)
+	}
+
+	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
+}
