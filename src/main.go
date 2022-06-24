@@ -42,6 +42,12 @@ func main() {
 		returnPing(c, httpStartTime, &websocketConnections)
 	})
 
+	Utilities := utils.New()
+
+	router.GET("/ws", func(c *gin.Context) {
+		websocket.ServeHTTP(c.Writer, c.Request, &websocketConnections, &Utilities)
+	})
+
 	router.Use(func(c *gin.Context) {
 		token := c.GetHeader("Authorization")
 
@@ -54,12 +60,6 @@ func main() {
 		c.Header("Content-Type", "text")
 
 		c.Next()
-	})
-
-	Utilities := utils.New()
-
-	router.GET("/ws", func(c *gin.Context) {
-		websocket.ServeHTTP(c.Writer, c.Request, &websocketConnections, &Utilities)
 	})
 
 	router.POST("/astolfo", func(ctx *gin.Context) { controllers.Astolfo(ctx, &Utilities) })
