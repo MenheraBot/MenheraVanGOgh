@@ -49,7 +49,7 @@ func ServeHTTP(w http.ResponseWriter, r *http.Request, connections *map[uint8]ti
 		return
 	}
 
-	auth := r.URI.Query().Get("auth")
+	auth := r.URL.Query().Get("auth")
 
 	if auth != os.Getenv("TOKEN") {
 		w.WriteHeader(http.StatusUnauthorized)
