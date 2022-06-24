@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/MenheraBot/MenheraVanGOgh/src/controllers"
+	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
@@ -16,9 +17,8 @@ type Http struct {
 }
 
 type Ws struct {
-	Id     uint8  `json:"id"`
-	Ping   uint16 `json:"ping"`
-	Uptime int64  `json:"uptime"`
+	Id     uint8 `json:"id"`
+	Uptime int64 `json:"uptime"`
 }
 
 type PingStruct struct {
@@ -33,16 +33,15 @@ func main() {
 	router.Use(cors.Default())
 	router.Use(gzip.Gzip(gzip.BestSpeed))
 
-	//router.GET("/ws")
-	// app.Get("/ws", websocket.New(setupWebsocket, websocket.Config{EnableCompression: true}))
+	httpStartTime := time.Now()
 
-	startTime := time.Now()
+	websocketConnections := make(map[uint8]time.Time)
 
 	router.GET("/ping", func(c *gin.Context) {
-		returnPing(c, startTime)
+		returnPing(c, httpStartTime, &websocketConnections)
 	})
 
-	router.Any("/", func(c *gin.Context) {
+	router.Use(func(c *gin.Context) {
 		token := c.GetHeader("Authorization")
 
 		if token != os.Getenv("TOKEN") {
@@ -56,6 +55,10 @@ func main() {
 		c.Next()
 	})
 
+	router.GET("/ws", func(c *gin.Context) {
+		utils.ServeHTTP(c.Writer, c.Request, &websocketConnections)
+	})
+
 	router.POST("/astolfo", controllers.Astolfo)
 	router.POST("/philo", controllers.Philo)
 	router.POST("/ship", controllers.Ship)
@@ -67,60 +70,30 @@ func main() {
 	router.POST("/vasco", controllers.Vasco)
 	router.POST("/profile", controllers.Profile)
 
-	log.Println("Server Running Port 2080")
+	log.Println("Listening and serving HTTP on :2080")
 
 	log.Fatal(router.Run(":2080"))
 }
 
-func returnPing(c *gin.Context, startTime time.Time) {
+func returnPing(c *gin.Context, startTime time.Time, ws *map[uint8]time.Time) {
 	now := time.Now()
 
-	ws := []Ws{}
+	toSend := make([]Ws, 0)
+
+	for k, v := range *ws {
+		uptime := int64(now.Sub(v).Milliseconds())
+
+		toSend = append(toSend, Ws{Id: k, Uptime: uptime})
+	}
+
 	http := Http{
 		Uptime: now.Sub(startTime).Milliseconds(),
 	}
 
 	returnData := PingStruct{
 		Http: http,
-		Ws:   ws,
+		Ws:   toSend,
 	}
 
 	c.JSON(200, returnData)
 }
-
-/*
-func setupWebsocket(c *websocket.Conn) {
-	c.EnableWriteCompression(true)
-	c.SetCompressionLevel(1)
-
-	if _, err := strconv.Atoi(c.Query("id")); err != nil {
-		c.WriteMessage(8, []byte("Invalid ID"))
-		print("Erro %s", err)
-	}
-
-	var (
-		mt  int
-		msg []byte
-		err error
-	)
-	for {
-		if mt, msg, err = c.ReadMessage(); err != nil {
-			log.Println("read:", err)
-			break
-		}
-
-		log.Printf("recv: %s", msg)
-
-		b, _ := json.Marshal(msg)
-
-		println(string(b))
-
-		c.WriteJSON(b)
-
-		if err = c.WriteMessage(mt, []byte("filhos da puta")); err != nil {
-			log.Println("write:", err)
-			break
-		}
-	}
-}
-*/
