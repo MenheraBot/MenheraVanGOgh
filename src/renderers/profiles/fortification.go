@@ -42,7 +42,7 @@ func RenderFortification(User *utils.UserData, I18n *utils.I18n, util *utils.Uti
 	ctx.SetHexColor(util.GetCompatibleFontColor(darkerColor))
 	ctx.SetFontFace(*util.GetFont("Sans", 44))
 
-	ctx.DrawStringWrapped(I18n.Usages+" | "+strconv.Itoa(User.Votes)+" Upvotes", 50, 545, 0, 0.5, 970, 1, 0)
+	ctx.DrawStringWrapped(I18n.Usages+" | "+strconv.Itoa(int(User.Votes))+" Upvotes", 50, 545, 0, 0.5, 970, 1, 0)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 36))
 	ctx.DrawStringAnchored(User.Tag, 630, 170, 0.5, 0)
@@ -65,8 +65,8 @@ func RenderFortification(User *utils.UserData, I18n *utils.I18n, util *utils.Uti
 	ctx.SetHexColor(util.GetCompatibleFontColor(darkestThanTheDarkerColor))
 	ctx.DrawStringAnchored(I18n.Mamado, 935, 310, 0.5, 0)
 	ctx.DrawStringAnchored(I18n.Mamou, 935, 400, 0.5, 0)
-	ctx.DrawStringAnchored(strconv.Itoa(User.Mamadas), 935, 355, 0.5, 0)
-	ctx.DrawStringAnchored(strconv.Itoa(User.Mamou), 935, 445, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamadas)), 935, 355, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamou)), 935, 445, 0.5, 0)
 
 	util.DrawBadges(ctx, User, 160, 5)
 

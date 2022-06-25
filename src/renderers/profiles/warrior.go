@@ -26,7 +26,7 @@ func RenderWarrior(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) im
 	ctx.SetFontFace(*util.GetFont("Sans", 36))
 	ctx.DrawStringWrapped(User.Info, 105, 460, 0, 0.5, 870, 1, 0)
 
-	ctx.DrawStringWrapped(I18n.Usages+"   | "+strconv.Itoa(User.Votes)+" Upvotes", 50, 275, 0, 0.5, 970, 1, 0)
+	ctx.DrawStringWrapped(I18n.Usages+"   | "+strconv.Itoa(int(User.Votes))+" Upvotes", 50, 275, 0, 0.5, 970, 1, 0)
 
 	background := util.GetAsset("profiles/guerreiro.png")
 	ctx.DrawImage(background, 0, 0)
@@ -38,8 +38,8 @@ func RenderWarrior(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) im
 	ctx.DrawStringWrapped(User.Marry.Username+" "+strings.Split(User.MarryDate, " ")[0], 380, 170, 0, 0.5, 600, 1, 0)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 28))
-	ctx.DrawStringWrapped(I18n.Mamado+"\n"+strconv.Itoa(User.Mamou), 940, 100, 0.5, 0.5, 600, 1, 1)
-	ctx.DrawStringWrapped(I18n.Mamou+"\n"+strconv.Itoa(User.Mamadas), 940, 170, 0.5, 0.5, 600, 1, 1)
+	ctx.DrawStringWrapped(I18n.Mamado+"\n"+strconv.Itoa(int(User.Mamou)), 940, 100, 0.5, 0.5, 600, 1, 1)
+	ctx.DrawStringWrapped(I18n.Mamou+"\n"+strconv.Itoa(int(User.Mamadas)), 940, 170, 0.5, 0.5, 600, 1, 1)
 
 	util.DrawBadges(ctx, User, 110, 620)
 

@@ -9,30 +9,25 @@ import (
 	"github.com/fogleman/gg"
 )
 
-type BadgeData struct {
-	Id       int    `json:"id"`
-	ObtainAt string `json:"obtainAt"`
-}
-
 type MarryData struct {
 	Username string `json:"username"`
 	Tag      string `json:"tag"`
 }
 
 type UserData struct {
-	Color         string      `json:"color"`
-	Avatar        string      `json:"avatar"`
-	Votes         int         `json:"votes"`
-	Info          string      `json:"info"`
-	Tag           string      `json:"tag"`
-	Badges        []BadgeData `json:"badges"`
-	HiddingBadges []int       `json:"hiddingBadges"`
-	Username      string      `json:"username"`
-	Mamadas       int         `json:"mamadas"`
-	Mamou         int         `json:"mamou"`
-	MarryDate     string      `json:"marryDate"`
-	Marry         MarryData   `json:"marry"`
-	Married       bool        `json:"married"`
+	Color         string    `json:"color"`
+	Avatar        string    `json:"avatar"`
+	Votes         uint16    `json:"votes"`
+	Info          string    `json:"info"`
+	Tag           string    `json:"tag"`
+	Badges        []uint8   `json:"badges"`
+	HiddingBadges []uint8   `json:"hiddingBadges"`
+	Username      string    `json:"username"`
+	Mamadas       uint32    `json:"mamadas"`
+	Mamou         uint32    `json:"mamou"`
+	MarryDate     string    `json:"marryDate"`
+	Marry         MarryData `json:"marry"`
+	Married       bool      `json:"married"`
 }
 
 type I18n struct {
@@ -50,7 +45,7 @@ type ProfileData struct {
 
 const badgeSize = 64
 
-func includes(arr []int, target int) bool {
+func includes(arr []uint8, target uint8) bool {
 	var result bool = false
 
 	for _, x := range arr {
@@ -67,8 +62,8 @@ func (util *Utils) getUserBadges(user *UserData) []image.Image {
 	var images []image.Image
 
 	for _, badge := range user.Badges {
-		if !includes(user.HiddingBadges, badge.Id) {
-			img, ok := util.GetResizedAsset("badges/"+strconv.Itoa(badge.Id)+".png", badgeSize, badgeSize)
+		if !includes(user.HiddingBadges, badge) {
+			img, ok := util.GetResizedAsset("badges/"+strconv.Itoa(int(badge))+".png", badgeSize, badgeSize)
 			if ok {
 				images = append(images, img)
 			}
