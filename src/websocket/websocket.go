@@ -12,6 +12,14 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+type WsConnection struct {
+	Uptime     time.Time
+	Ping       uint
+	LastPingAt time.Time
+	Socket     *websocket.Conn
+	IsAlive    bool
+}
+
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
@@ -21,7 +29,7 @@ var upgrader = websocket.Upgrader{
 	EnableCompression: true,
 }
 
-func ServeHTTP(ctx *gin.Context, connections *map[uint8]time.Time, Utilities *utils.Utils) {
+func ServeHTTP(ctx *gin.Context, connections *map[uint8]WsConnection, Utilities *utils.Utils) {
 
 	var connectionDetails struct {
 		Id   *uint8  `form:"id" binding:"required"`
@@ -62,9 +70,26 @@ func ServeHTTP(ctx *gin.Context, connections *map[uint8]time.Time, Utilities *ut
 	}
 
 	defer c.Close()
+
+	(*connections)[*connectionDetails.Id] = WsConnection{
+		Uptime:     time.Now(),
+		Ping:       0,
+		LastPingAt: time.Now(),
+		Socket:     c,
+		IsAlive:    true,
+	}
+
 	defer delete(*connections, *connectionDetails.Id)
 
-	(*connections)[*connectionDetails.Id] = time.Now()
+	c.SetPongHandler(func(string) error {
+		conn := (*connections)[*connectionDetails.Id]
+
+		conn.Ping = uint(time.Since(conn.LastPingAt).Microseconds())
+		conn.IsAlive = true
+
+		(*connections)[*connectionDetails.Id] = conn
+		return nil
+	})
 
 	nome := make(chan []byte)
 
@@ -81,13 +106,16 @@ func ServeHTTP(ctx *gin.Context, connections *map[uint8]time.Time, Utilities *ut
 	})()
 
 	for {
-		_, msg, err := c.ReadMessage()
+		msgType, msg, err := c.ReadMessage()
+
 		if err != nil {
 			c.WriteJSON(map[string]bool{"error": true})
 			break
 		}
 
-		nome <- msg
+		if msgType == websocket.TextMessage {
+			nome <- msg
+		}
 	}
 }
 
