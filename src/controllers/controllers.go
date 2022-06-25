@@ -12,16 +12,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var utilities = utils.New()
+
 var encoder = png.Encoder{
 	CompressionLevel: png.BestSpeed,
 }
 
-func Astolfo(c *gin.Context, Utilities *utils.Utils) {
+func Astolfo(c *gin.Context) {
 	data := new(renderers.AstolfoData)
 
 	c.BindJSON(data)
 
-	res := renderers.RenderAstolfo(data, Utilities)
+	res := renderers.RenderAstolfo(data, &utilities)
 
 	buff := new(bytes.Buffer)
 	err := encoder.Encode(buff, res)
@@ -33,12 +35,12 @@ func Astolfo(c *gin.Context, Utilities *utils.Utils) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
-func Philo(c *gin.Context, Utilities *utils.Utils) {
+func Philo(c *gin.Context) {
 	data := new(renderers.PhiloData)
 
 	c.BindJSON(data)
 
-	res := renderers.RenderPhilo(data, Utilities)
+	res := renderers.RenderPhilo(data, &utilities)
 
 	buff := new(bytes.Buffer)
 	err := encoder.Encode(buff, res)
@@ -50,12 +52,12 @@ func Philo(c *gin.Context, Utilities *utils.Utils) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
-func Trisal(c *gin.Context, Utilities *utils.Utils) {
+func Trisal(c *gin.Context) {
 	data := new(renderers.TrisalData)
 
 	c.BindJSON(data)
 
-	res := renderers.RenderTrisal(data, Utilities)
+	res := renderers.RenderTrisal(data, &utilities)
 
 	buff := new(bytes.Buffer)
 	err := encoder.Encode(buff, res)
@@ -67,12 +69,12 @@ func Trisal(c *gin.Context, Utilities *utils.Utils) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
-func Ship(c *gin.Context, Utilities *utils.Utils) {
+func Ship(c *gin.Context) {
 	data := new(renderers.ShipData)
 
 	c.BindJSON(data)
 
-	res := renderers.RenderShip(data, Utilities)
+	res := renderers.RenderShip(data, &utilities)
 
 	buff := new(bytes.Buffer)
 	err := encoder.Encode(buff, res)
@@ -84,12 +86,12 @@ func Ship(c *gin.Context, Utilities *utils.Utils) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
-func Gado(c *gin.Context, Utilities *utils.Utils) {
+func Gado(c *gin.Context) {
 	data := new(renderers.GadoData)
 
 	c.BindJSON(data)
 
-	res := renderers.RenderGado(data, Utilities)
+	res := renderers.RenderGado(data, &utilities)
 
 	buff := new(bytes.Buffer)
 	err := encoder.Encode(buff, res)
@@ -101,12 +103,12 @@ func Gado(c *gin.Context, Utilities *utils.Utils) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
-func Macetava(c *gin.Context, Utilities *utils.Utils) {
+func Macetava(c *gin.Context) {
 	data := new(renderers.MacetavaData)
 
 	c.BindJSON(data)
 
-	res := renderers.RenderMacetava(data, Utilities)
+	res := renderers.RenderMacetava(data, &utilities)
 
 	buff := new(bytes.Buffer)
 	err := encoder.Encode(buff, res)
@@ -118,12 +120,12 @@ func Macetava(c *gin.Context, Utilities *utils.Utils) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
-func Eightball(c *gin.Context, Utilities *utils.Utils) {
+func Eightball(c *gin.Context) {
 	data := new(renderers.EightballData)
 
 	c.BindJSON(data)
 
-	res := renderers.RenderEightball(data, Utilities)
+	res := renderers.RenderEightball(data, &utilities)
 
 	buff := new(bytes.Buffer)
 	err := encoder.Encode(buff, res)
@@ -135,12 +137,12 @@ func Eightball(c *gin.Context, Utilities *utils.Utils) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
-func Vasco(c *gin.Context, Utilities *utils.Utils) {
+func Vasco(c *gin.Context) {
 	data := new(renderers.VascoData)
 
 	c.BindJSON(data)
 
-	res := renderers.RenderVasco(data, Utilities)
+	res := renderers.RenderVasco(data, &utilities)
 
 	buff := new(bytes.Buffer)
 	err := encoder.Encode(buff, res)
@@ -152,12 +154,12 @@ func Vasco(c *gin.Context, Utilities *utils.Utils) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
-func Blackjack(c *gin.Context, Utilities *utils.Utils) {
+func Blackjack(c *gin.Context) {
 	data := new(renderers.BlackjackData)
 
 	c.BindJSON(data)
 
-	res := renderers.RenderBlackjack(data, Utilities)
+	res := renderers.RenderBlackjack(data, &utilities)
 
 	buff := new(bytes.Buffer)
 	err := encoder.Encode(buff, res)
@@ -169,7 +171,7 @@ func Blackjack(c *gin.Context, Utilities *utils.Utils) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
-func Profile(c *gin.Context, Utilities *utils.Utils) {
+func Profile(c *gin.Context) {
 	data := new(utils.ProfileData)
 
 	c.BindJSON(data)
@@ -179,23 +181,23 @@ func Profile(c *gin.Context, Utilities *utils.Utils) {
 	switch data.Type {
 
 	case "fortification":
-		res = profiles.RenderFortification(&data.User, &data.I18n, Utilities)
+		res = profiles.RenderFortification(&data.User, &data.I18n, &utilities)
 	case "warrior":
-		res = profiles.RenderWarrior(&data.User, &data.I18n, Utilities)
+		res = profiles.RenderWarrior(&data.User, &data.I18n, &utilities)
 	case "christmas_2021":
-		res = profiles.RenderChristmas(&data.User, &data.I18n, Utilities)
+		res = profiles.RenderChristmas(&data.User, &data.I18n, &utilities)
 	case "kawaii":
-		res = profiles.RenderKawaii(&data.User, &data.I18n, Utilities)
+		res = profiles.RenderKawaii(&data.User, &data.I18n, &utilities)
 	case "id03":
-		res = profiles.RenderID03(&data.User, &data.I18n, Utilities)
+		res = profiles.RenderID03(&data.User, &data.I18n, &utilities)
 	case "without_soul":
-		res = profiles.RenderWithoutSoul(&data.User, &data.I18n, Utilities)
+		res = profiles.RenderWithoutSoul(&data.User, &data.I18n, &utilities)
 	case "upsidedown":
-		res = profiles.RenderUpsideDown(&data.User, &data.I18n, Utilities)
+		res = profiles.RenderUpsideDown(&data.User, &data.I18n, &utilities)
 	case "default":
-		res = profiles.RenderDefault(&data.User, &data.I18n, Utilities)
+		res = profiles.RenderDefault(&data.User, &data.I18n, &utilities)
 	default:
-		res = profiles.RenderDefault(&data.User, &data.I18n, Utilities)
+		res = profiles.RenderDefault(&data.User, &data.I18n, &utilities)
 	}
 
 	buff := new(bytes.Buffer)
@@ -208,12 +210,12 @@ func Profile(c *gin.Context, Utilities *utils.Utils) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
-func Preview(c *gin.Context, Utilities *utils.Utils) {
+func Preview(c *gin.Context) {
 	data := new(renderers.PreviewData)
 
 	c.BindJSON(data)
 
-	res := renderers.RenderPreview(data, Utilities)
+	res := renderers.RenderPreview(data, &utilities)
 
 	buff := new(bytes.Buffer)
 	err := encoder.Encode(buff, res)
