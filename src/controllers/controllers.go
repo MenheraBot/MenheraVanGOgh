@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"image"
 	"image/png"
+	"log"
 
 	"github.com/MenheraBot/MenheraVanGOgh/src/renderers"
 	"github.com/MenheraBot/MenheraVanGOgh/src/renderers/profiles"
@@ -21,15 +22,19 @@ var encoder = png.Encoder{
 func Astolfo(c *gin.Context) {
 	data := new(renderers.AstolfoData)
 
-	c.BindJSON(data)
+	err := c.BindJSON(data)
+
+	if err != nil {
+		log.Print(err)
+	}
 
 	res := renderers.RenderAstolfo(data, &utilities)
 
 	buff := new(bytes.Buffer)
-	err := encoder.Encode(buff, res)
+	err = encoder.Encode(buff, res)
 
 	if err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
@@ -38,15 +43,19 @@ func Astolfo(c *gin.Context) {
 func Philo(c *gin.Context) {
 	data := new(renderers.PhiloData)
 
-	c.BindJSON(data)
+	err := c.BindJSON(data)
+
+	if err != nil {
+		log.Print(err)
+	}
 
 	res := renderers.RenderPhilo(data, &utilities)
 
 	buff := new(bytes.Buffer)
-	err := encoder.Encode(buff, res)
+	err = encoder.Encode(buff, res)
 
 	if err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
@@ -55,15 +64,19 @@ func Philo(c *gin.Context) {
 func Trisal(c *gin.Context) {
 	data := new(renderers.TrisalData)
 
-	c.BindJSON(data)
+	err := c.BindJSON(data)
+
+	if err != nil {
+		log.Print(err)
+	}
 
 	res := renderers.RenderTrisal(data, &utilities)
 
 	buff := new(bytes.Buffer)
-	err := encoder.Encode(buff, res)
+	err = encoder.Encode(buff, res)
 
 	if err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
@@ -72,15 +85,19 @@ func Trisal(c *gin.Context) {
 func Ship(c *gin.Context) {
 	data := new(renderers.ShipData)
 
-	c.BindJSON(data)
+	err := c.BindJSON(data)
+
+	if err != nil {
+		log.Print(err)
+	}
 
 	res := renderers.RenderShip(data, &utilities)
 
 	buff := new(bytes.Buffer)
-	err := encoder.Encode(buff, res)
+	err = encoder.Encode(buff, res)
 
 	if err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
@@ -89,15 +106,19 @@ func Ship(c *gin.Context) {
 func Gado(c *gin.Context) {
 	data := new(renderers.GadoData)
 
-	c.BindJSON(data)
+	err := c.BindJSON(data)
+
+	if err != nil {
+		log.Print(err)
+	}
 
 	res := renderers.RenderGado(data, &utilities)
 
 	buff := new(bytes.Buffer)
-	err := encoder.Encode(buff, res)
+	err = encoder.Encode(buff, res)
 
 	if err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
@@ -106,15 +127,19 @@ func Gado(c *gin.Context) {
 func Macetava(c *gin.Context) {
 	data := new(renderers.MacetavaData)
 
-	c.BindJSON(data)
+	err := c.BindJSON(data)
+
+	if err != nil {
+		log.Print(err)
+	}
 
 	res := renderers.RenderMacetava(data, &utilities)
 
 	buff := new(bytes.Buffer)
-	err := encoder.Encode(buff, res)
+	err = encoder.Encode(buff, res)
 
 	if err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
@@ -123,15 +148,19 @@ func Macetava(c *gin.Context) {
 func Eightball(c *gin.Context) {
 	data := new(renderers.EightballData)
 
-	c.BindJSON(data)
+	err := c.BindJSON(data)
+
+	if err != nil {
+		log.Print(err)
+	}
 
 	res := renderers.RenderEightball(data, &utilities)
 
 	buff := new(bytes.Buffer)
-	err := encoder.Encode(buff, res)
+	err = encoder.Encode(buff, res)
 
 	if err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
@@ -140,15 +169,18 @@ func Eightball(c *gin.Context) {
 func Vasco(c *gin.Context) {
 	data := new(renderers.VascoData)
 
-	c.BindJSON(data)
+	err := c.BindJSON(data)
+	if err != nil {
+		log.Print(err)
+	}
 
 	res := renderers.RenderVasco(data, &utilities)
 
 	buff := new(bytes.Buffer)
-	err := encoder.Encode(buff, res)
+	err = encoder.Encode(buff, res)
 
 	if err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
@@ -157,15 +189,18 @@ func Vasco(c *gin.Context) {
 func Blackjack(c *gin.Context) {
 	data := new(renderers.BlackjackData)
 
-	c.BindJSON(data)
+	err := c.BindJSON(data)
+	if err != nil {
+		log.Print(err)
+	}
 
 	res := renderers.RenderBlackjack(data, &utilities)
 
 	buff := new(bytes.Buffer)
-	err := encoder.Encode(buff, res)
+	err = encoder.Encode(buff, res)
 
 	if err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
@@ -174,7 +209,11 @@ func Blackjack(c *gin.Context) {
 func Profile(c *gin.Context) {
 	data := new(utils.ProfileData)
 
-	c.BindJSON(data)
+	err := c.BindJSON(data)
+
+	if err != nil {
+		log.Print(err)
+	}
 
 	var res image.Image
 
@@ -200,10 +239,10 @@ func Profile(c *gin.Context) {
 	}
 
 	buff := new(bytes.Buffer)
-	err := encoder.Encode(buff, res)
+	err = encoder.Encode(buff, res)
 
 	if err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
@@ -212,15 +251,19 @@ func Profile(c *gin.Context) {
 func Preview(c *gin.Context) {
 	data := new(renderers.PreviewData)
 
-	c.BindJSON(data)
+	err := c.BindJSON(data)
+
+	if err != nil {
+		log.Print(err)
+	}
 
 	res := renderers.RenderPreview(data, &utilities)
 
 	buff := new(bytes.Buffer)
-	err := encoder.Encode(buff, res)
+	err = encoder.Encode(buff, res)
 
 	if err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))

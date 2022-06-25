@@ -120,15 +120,41 @@ func (util *Utils) GetColorLuminance(color color.RGBA) float64 {
 	return float64(float64(0.299)*float64(color.R) + float64(0.587)*float64(color.G) + float64(0.114)*float64(color.B))
 }
 
+// https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
 func (util *Utils) GetCompatibleFontColor(hex_color string) string {
 	c, ok := parseHexColorFast(hex_color)
 	if !ok {
 		c = color.RGBA{R: 0, G: 0, B: 0, A: 0xff}
 	}
 
-	if math.Abs(util.GetColorLuminance(c)-util.GetColorLuminance(color.RGBA{R: 0, G: 0, B: 0, A: 255})) >= 128.0 {
-		return "000000"
+	red := float64(c.R) / 255.0
+	green := float64(c.G) / 255.0
+	blue := float64(c.B) / 255.0
+
+	if red <= 0.04045 {
+		red /= 12.92
 	} else {
-		return "ffffff"
+		red = math.Pow(((red + 0.055) / 1.055), 2.4)
 	}
+
+	if green <= 0.04045 {
+		green /= 12.92
+	} else {
+		green = math.Pow(((green + 0.055) / 1.055), 2.4)
+	}
+
+	if blue <= 0.04045 {
+		blue /= 12.92
+	} else {
+		blue = math.Pow(((blue + 0.055) / 1.055), 2.4)
+	}
+
+	L := 0.2126*red + 0.7152*green + 0.0722*blue
+
+	if L > 0.179 {
+		return "#000000"
+	}
+
+	return "#ffffff"
+
 }
