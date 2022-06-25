@@ -56,7 +56,7 @@ func main() {
 
 		requestsMade++
 
-		if requestsMade >= 2 {
+		if requestsMade >= 50 {
 			var m runtime.MemStats
 			runtime.ReadMemStats(&m)
 			memory = append(memory, MemoryProfiler{
