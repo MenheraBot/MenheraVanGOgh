@@ -9,7 +9,6 @@ import (
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 	"github.com/MenheraBot/MenheraVanGOgh/src/websocket"
 	"github.com/gin-contrib/cors"
-	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,11 +27,11 @@ type PingStruct struct {
 }
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
 
 	router := gin.New()
 	router.Use(gin.Recovery())
 	router.Use(cors.Default())
-	router.Use(gzip.Gzip(gzip.BestSpeed))
 
 	httpStartTime := time.Now()
 
@@ -45,7 +44,7 @@ func main() {
 	Utilities := utils.New()
 
 	router.GET("/ws", func(c *gin.Context) {
-		websocket.ServeHTTP(c.Writer, c.Request, &websocketConnections, &Utilities)
+		websocket.ServeHTTP(c, &websocketConnections, &Utilities)
 	})
 
 	router.Use(func(c *gin.Context) {
@@ -57,7 +56,7 @@ func main() {
 			return
 		}
 
-		c.Header("Content-Type", "text")
+		c.Header("Content-Type", "text/plain")
 
 		c.Next()
 	})
@@ -71,8 +70,8 @@ func main() {
 	router.POST("/blackjack", func(ctx *gin.Context) { controllers.Blackjack(ctx, &Utilities) })
 	router.POST("/8ball", func(ctx *gin.Context) { controllers.Eightball(ctx, &Utilities) })
 	router.POST("/vasco", func(ctx *gin.Context) { controllers.Vasco(ctx, &Utilities) })
-	router.POST("/profile", func(ctx *gin.Context) { controllers.Profile(ctx, &Utilities) })
 	router.POST("/preview", func(ctx *gin.Context) { controllers.Preview(ctx, &Utilities) })
+	router.POST("/profile", func(ctx *gin.Context) { controllers.Profile(ctx, &Utilities) })
 
 	log.Println("Listening and serving HTTP on :2080")
 

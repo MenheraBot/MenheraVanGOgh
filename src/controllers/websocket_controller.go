@@ -5,59 +5,60 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"image"
+	"log"
 
 	"github.com/MenheraBot/MenheraVanGOgh/src/renderers"
 	"github.com/MenheraBot/MenheraVanGOgh/src/renderers/profiles"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 )
 
-func HandleWebsocketRequest(toRender string, msg *bytes.Reader, util *utils.Utils) *string {
+func HandleWebsocketRequest(toRender string, msg []byte, util *utils.Utils) *string {
 	var res image.Image
 
 	switch toRender {
 	case "astolfo":
-		data := &renderers.AstolfoData{}
-		json.NewDecoder(msg).Decode(data)
-		res = renderers.RenderAstolfo(data, util)
+		data := renderers.AstolfoData{}
+		json.Unmarshal(msg, &data)
+		res = renderers.RenderAstolfo(&data, util)
 	case "blackjack":
-		data := &renderers.BlackjackData{}
-		json.NewDecoder(msg).Decode(data)
-		res = renderers.RenderBlackjack(data, util)
+		data := renderers.BlackjackData{}
+		json.Unmarshal(msg, &data)
+		res = renderers.RenderBlackjack(&data, util)
 	case "8ball":
-		data := &renderers.EightballData{}
-		json.NewDecoder(msg).Decode(data)
-		res = renderers.RenderEightball(data, util)
+		data := renderers.EightballData{}
+		json.Unmarshal(msg, &data)
+		res = renderers.RenderEightball(&data, util)
 	case "gado":
-		data := &renderers.GadoData{}
-		json.NewDecoder(msg).Decode(data)
-		res = renderers.RenderGado(data, util)
+		data := renderers.GadoData{}
+		json.Unmarshal(msg, &data)
+		res = renderers.RenderGado(&data, util)
 	case "macetava":
-		data := &renderers.MacetavaData{}
-		json.NewDecoder(msg).Decode(data)
-		res = renderers.RenderMacetava(data, util)
+		data := renderers.MacetavaData{}
+		json.Unmarshal(msg, &data)
+		res = renderers.RenderMacetava(&data, util)
 	case "philo":
-		data := &renderers.PhiloData{}
-		json.NewDecoder(msg).Decode(data)
-		res = renderers.RenderPhilo(data, util)
+		data := renderers.PhiloData{}
+		json.Unmarshal(msg, &data)
+		res = renderers.RenderPhilo(&data, util)
 	case "ship":
-		data := &renderers.ShipData{}
-		json.NewDecoder(msg).Decode(data)
-		res = renderers.RenderShip(data, util)
+		data := renderers.ShipData{}
+		json.Unmarshal(msg, &data)
+		res = renderers.RenderShip(&data, util)
 	case "trisal":
-		data := &renderers.TrisalData{}
-		json.NewDecoder(msg).Decode(data)
-		res = renderers.RenderTrisal(data, util)
+		data := renderers.TrisalData{}
+		json.Unmarshal(msg, &data)
+		res = renderers.RenderTrisal(&data, util)
 	case "vasco":
-		data := &renderers.VascoData{}
-		json.NewDecoder(msg).Decode(data)
-		res = renderers.RenderVasco(data, util)
+		data := renderers.VascoData{}
+		json.Unmarshal(msg, &data)
+		res = renderers.RenderVasco(&data, util)
 	case "preview":
-		data := &renderers.PreviewData{}
-		json.NewDecoder(msg).Decode(data)
-		res = renderers.RenderPreview(data, util)
+		data := renderers.PreviewData{}
+		json.Unmarshal(msg, &data)
+		res = renderers.RenderPreview(&data, util)
 	case "profile":
-		data := &utils.ProfileData{}
-		json.NewDecoder(msg).Decode(data)
+		data := utils.ProfileData{}
+		json.Unmarshal(msg, &data)
 		switch data.Type {
 		case "fortification":
 			res = profiles.RenderFortification(&data.User, &data.I18n, util)
@@ -86,7 +87,7 @@ func HandleWebsocketRequest(toRender string, msg *bytes.Reader, util *utils.Util
 	encodedString := base64.StdEncoding.EncodeToString(buff.Bytes())
 
 	if err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	return &encodedString
