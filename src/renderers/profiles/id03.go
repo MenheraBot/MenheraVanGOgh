@@ -47,11 +47,11 @@ func RenderID03(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) image
 	}
 
 	ctx.SetFontFace(*util.GetFont("Pixellari", float64(fontSize)))
-	ctx.DrawStringAnchored(I18n.Mamado+": "+strconv.Itoa(User.Mamadas), 850, 145, 0, 0)
-	ctx.DrawStringAnchored(I18n.Mamou+": "+strconv.Itoa(User.Mamou), 850, 175, 0, 0)
+	ctx.DrawStringAnchored(I18n.Mamado+": "+strconv.Itoa(int(User.Mamadas)), 850, 145, 0, 0)
+	ctx.DrawStringAnchored(I18n.Mamou+": "+strconv.Itoa(int(User.Mamou)), 850, 175, 0, 0)
 
 	ctx.SetFontFace(*util.GetFont("Pixellari", 24))
-	ctx.DrawStringWrapped(strings.Split(I18n.Usages, ".")[0]+" | "+strconv.Itoa(User.Votes)+" Upvotes", 390, 426, 0, 1, 540, 1, 0)
+	ctx.DrawStringWrapped(strings.Split(I18n.Usages, ".")[0]+" | "+strconv.Itoa(int(User.Votes))+" Upvotes", 390, 426, 0, 1, 540, 1, 0)
 
 	return ctx.Image()
 }

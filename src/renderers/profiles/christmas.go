@@ -64,11 +64,11 @@ func RenderChristmas(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) 
 	}
 
 	ctx.SetFontFace(*util.GetFont("Sans", 32))
-	ctx.DrawStringAnchored(I18n.Mamado+": "+strconv.Itoa(User.Mamadas)+" "+I18n.Mamou+": "+strconv.Itoa(User.Mamou), 380, 243, 0, 0)
+	ctx.DrawStringAnchored(I18n.Mamado+": "+strconv.Itoa(int(User.Mamadas))+" "+I18n.Mamou+": "+strconv.Itoa(int(User.Mamou)), 380, 243, 0, 0)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 40))
 
-	ctx.DrawStringWrapped(I18n.Usages+"   | "+strconv.Itoa(User.Votes)+" Upvotes", 90, 270, 0, 0, 920, 1, 0)
+	ctx.DrawStringWrapped(I18n.Usages+"   | "+strconv.Itoa(int(User.Votes))+" Upvotes", 90, 270, 0, 0, 920, 1, 0)
 
 	util.DrawBadges(ctx, User, 80, 667)
 

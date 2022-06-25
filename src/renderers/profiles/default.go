@@ -57,7 +57,7 @@ func RenderDefault(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) im
 
 	ctx.SetFontFace(*util.GetFont("Sans", 45))
 	ctx.DrawStringAnchored("Upvotes", 860, 60, 0, 0)
-	ctx.DrawStringAnchored(strconv.Itoa(User.Votes), 960, 120, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(int(User.Votes)), 960, 120, 0.5, 0)
 
 	ctx.SetFontFace(*util.GetFont("Sans", 55))
 	ctx.DrawStringAnchored(I18n.Aboutme, 20, 310, 0, 0)
@@ -84,8 +84,8 @@ func RenderDefault(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) im
 	ctx.DrawStringAnchored(I18n.Mamado, 960, 290, 0.5, 0)
 	ctx.DrawStringAnchored(I18n.Mamou, 960, 380, 0.5, 0)
 
-	ctx.DrawStringAnchored(strconv.Itoa(User.Mamadas), 960, 335, 0.5, 0)
-	ctx.DrawStringAnchored(strconv.Itoa(User.Mamou), 960, 425, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamadas)), 960, 335, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamou)), 960, 425, 0.5, 0)
 
 	util.DrawBadges(ctx, User, 230, 170)
 

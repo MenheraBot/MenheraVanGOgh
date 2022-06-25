@@ -68,7 +68,7 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, util *utils.Utils)
 	ctx.SetHexColor(util.GetCompatibleFontColor(darker))
 	ctx.SetFontFace(*util.GetFont("Sans", 45))
 	ctx.DrawStringAnchored("Upvotes", 20, 620, 0, 0)
-	ctx.DrawStringAnchored(strconv.Itoa(User.Votes), 120, 690, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(int(User.Votes)), 120, 690, 0.5, 0)
 
 	ctx.SetHexColor(util.GetCompatibleFontColor(baseColor))
 	ctx.SetFontFace(*util.GetFont("Sans", 50))
@@ -87,8 +87,8 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, util *utils.Utils)
 	ctx.DrawStringAnchored(I18n.Mamado, 970, 290, 0.5, 0)
 	ctx.DrawStringAnchored(I18n.Mamou, 970, 380, 0.5, 0)
 
-	ctx.DrawStringAnchored(strconv.Itoa(User.Mamadas), 965, 335, 0.5, 0)
-	ctx.DrawStringAnchored(strconv.Itoa(User.Mamou), 965, 425, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamadas)), 965, 335, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamou)), 965, 425, 0.5, 0)
 
 	util.DrawBadges(ctx, User, 10, 485)
 

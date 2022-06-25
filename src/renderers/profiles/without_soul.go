@@ -45,7 +45,7 @@ func RenderWithoutSoul(User *utils.UserData, I18n *utils.I18n, util *utils.Utils
 	ctx.DrawStringWrapped(User.Tag, 630, 127, 0.5, 0.5, 420, 1, 1)
 
 	ctx.SetFontFace(*util.GetFont("Postamt", 30))
-	ctx.DrawStringAnchored("Upvotes: "+strconv.Itoa(User.Votes), 875, 620, 0.5, 0.5)
+	ctx.DrawStringAnchored("Upvotes: "+strconv.Itoa(int(User.Votes)), 875, 620, 0.5, 0.5)
 
 	util.DrawBadges(ctx, User, 135, 595)
 

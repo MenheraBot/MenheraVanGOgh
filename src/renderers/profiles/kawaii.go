@@ -32,8 +32,8 @@ func RenderKawaii(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) ima
 	ctx.DrawStringAnchored(I18n.Mamou, 880, 440, 0.5, 0)
 	ctx.DrawStringAnchored(I18n.Mamado, 880, 560, 0.5, 0)
 
-	ctx.DrawStringAnchored(strconv.Itoa(User.Mamou), 880, 500, 0.5, 0)
-	ctx.DrawStringAnchored(strconv.Itoa(User.Mamadas), 880, 620, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamou)), 880, 500, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamadas)), 880, 620, 0.5, 0)
 
 	ctx.SetFontFace(*util.GetFont("Kawaii", 72))
 	ctx.DrawStringAnchored(User.Tag, 420, 200, 0, 0)
@@ -49,7 +49,7 @@ func RenderKawaii(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) ima
 	ctx.DrawStringWrapped(User.Info, 85, 410, 0, 0.5, 680, 1, 0)
 
 	ctx.SetFontFace(*util.GetFont("Kawaii", 34))
-	ctx.DrawStringWrapped(I18n.Usages+"   | "+strconv.Itoa(User.Votes)+" Upvotes", 85, 580, 0, 0.5, 650, 1, 0)
+	ctx.DrawStringWrapped(I18n.Usages+"   | "+strconv.Itoa(int(User.Votes))+" Upvotes", 85, 580, 0, 0.5, 650, 1, 0)
 
 	util.DrawBadges(ctx, User, 410, 40)
 
