@@ -10,8 +10,8 @@ import (
 )
 
 type BadgeData struct {
-	Id       int `json:"id"`
-	ObtainAt int `json:"obtainAt"`
+	Id       int    `json:"id"`
+	ObtainAt string `json:"obtainAt"`
 }
 
 type MarryData struct {

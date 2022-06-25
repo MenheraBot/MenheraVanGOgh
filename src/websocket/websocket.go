@@ -1,16 +1,14 @@
 package websocket
 
 import (
-	"bytes"
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/MenheraBot/MenheraVanGOgh/src/controllers"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
+	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 )
 
@@ -21,85 +19,95 @@ var upgrader = websocket.Upgrader{
 		return true
 	},
 	EnableCompression: true,
-	Error: func(w http.ResponseWriter, r *http.Request, status int, reason error) {
-		w.Header().Set("Content-Type", "text")
-		w.WriteHeader(426)
-		w.Write([]byte("Upgrade Required"))
-	},
 }
 
-type ReceivedObject struct {
-	Type string `json:"type"`
-	Id   string `json:"id"`
-}
+func ServeHTTP(ctx *gin.Context, connections *map[uint8]time.Time, Utilities *utils.Utils) {
 
-type ToSendObject struct {
-	Id  string `json:"id"`
-	Res string `json:"res"`
-}
-
-func ServeHTTP(w http.ResponseWriter, r *http.Request, connections *map[uint8]time.Time, Utilities *utils.Utils) {
-
-	id := r.URL.Query().Get("id")
-	w.Header().Set("Content-Type", "text")
-
-	if _, err := strconv.Atoi(id); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("An invalid ID was provided!"))
-		return
+	var connectionDetails struct {
+		Id   *uint8  `form:"id" binding:"required"`
+		Auth *string `form:"auth" binding:"required"`
 	}
 
-	auth := r.URL.Query().Get("auth")
-
-	if auth != os.Getenv("TOKEN") {
-		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("Only Menhera client can access this!"))
-		return
-	}
-
-	idNumber, _ := strconv.ParseInt(id, 10, 8)
-
-	if _, found := (*connections)[uint8(idNumber)]; found {
-		w.WriteHeader(http.StatusConflict)
-		w.Write([]byte("A connection with this ID already exists!"))
-		return
-	}
-
-	c, err := upgrader.Upgrade(w, r, nil)
+	err := ctx.ShouldBindQuery(&connectionDetails)
 
 	if err != nil {
-		w.WriteHeader(http.StatusUpgradeRequired)
+		if connectionDetails.Id == nil {
+			ctx.String(http.StatusBadRequest, "An invalid ID was provided!")
+			return
+		}
+
+		if connectionDetails.Auth == nil {
+			ctx.String(http.StatusBadRequest, "No Auth provided")
+			return
+		}
+
+		return
+	}
+
+	if *connectionDetails.Auth != os.Getenv("TOKEN") {
+		ctx.String(http.StatusUnauthorized, "Only Menhera client can access this!")
+		return
+	}
+
+	if _, found := (*connections)[*connectionDetails.Id]; found {
+		ctx.String(http.StatusConflict, "A connection with this ID already exists!")
+		return
+	}
+
+	c, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
+
+	if err != nil {
+		ctx.Status(http.StatusUpgradeRequired)
 		return
 	}
 
 	defer c.Close()
-	defer delete(*connections, uint8(idNumber))
+	defer delete(*connections, *connectionDetails.Id)
 
-	(*connections)[uint8(idNumber)] = time.Now()
+	(*connections)[*connectionDetails.Id] = time.Now()
+
+	nome := make(chan []byte)
+
+	go (func() {
+		for {
+			msg, ok := <-nome
+
+			if !ok {
+				continue
+			}
+
+			go receiveMessage(msg, c, Utilities)
+		}
+	})()
 
 	for {
-		_, msg, err := c.NextReader()
+		_, msg, err := c.ReadMessage()
 		if err != nil {
 			c.WriteJSON(map[string]bool{"error": true})
 			break
 		}
 
-		data, _ := ioutil.ReadAll(msg)
-
-		received := &ReceivedObject{}
-		json.NewDecoder(bytes.NewReader(data)).Decode(received)
-
-		res := controllers.HandleWebsocketRequest(received.Type, bytes.NewReader(data), Utilities)
-
-		toSend := &ToSendObject{}
-
-		toSend.Id = received.Id
-		toSend.Res = *res
-
-		err = c.WriteJSON(toSend)
-
-		if err != nil {
-			break
-		}
+		nome <- msg
 	}
+}
+
+func receiveMessage(msg []byte, c *websocket.Conn, Utilities *utils.Utils) {
+	var received struct {
+		RequestType string `json:"requestType"`
+		Id          string `json:"id"`
+	}
+
+	json.Unmarshal(msg, &received)
+
+	res := controllers.HandleWebsocketRequest(received.RequestType, msg, Utilities)
+
+	var toSend struct {
+		Id  string `json:"id"`
+		Res string `json:"res"`
+	}
+
+	toSend.Id = received.Id
+	toSend.Res = *res
+
+	c.WriteJSON(toSend)
 }

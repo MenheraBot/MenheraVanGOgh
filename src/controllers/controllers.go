@@ -30,7 +30,7 @@ func Astolfo(c *gin.Context, Utilities *utils.Utils) {
 		panic(err)
 	}
 
-	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
 func Philo(c *gin.Context, Utilities *utils.Utils) {
@@ -47,7 +47,7 @@ func Philo(c *gin.Context, Utilities *utils.Utils) {
 		panic(err)
 	}
 
-	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
 func Trisal(c *gin.Context, Utilities *utils.Utils) {
@@ -64,7 +64,7 @@ func Trisal(c *gin.Context, Utilities *utils.Utils) {
 		panic(err)
 	}
 
-	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
 func Ship(c *gin.Context, Utilities *utils.Utils) {
@@ -81,7 +81,7 @@ func Ship(c *gin.Context, Utilities *utils.Utils) {
 		panic(err)
 	}
 
-	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
 func Gado(c *gin.Context, Utilities *utils.Utils) {
@@ -98,7 +98,7 @@ func Gado(c *gin.Context, Utilities *utils.Utils) {
 		panic(err)
 	}
 
-	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
 func Macetava(c *gin.Context, Utilities *utils.Utils) {
@@ -115,7 +115,7 @@ func Macetava(c *gin.Context, Utilities *utils.Utils) {
 		panic(err)
 	}
 
-	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
 func Eightball(c *gin.Context, Utilities *utils.Utils) {
@@ -132,7 +132,7 @@ func Eightball(c *gin.Context, Utilities *utils.Utils) {
 		panic(err)
 	}
 
-	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
 func Vasco(c *gin.Context, Utilities *utils.Utils) {
@@ -149,7 +149,7 @@ func Vasco(c *gin.Context, Utilities *utils.Utils) {
 		panic(err)
 	}
 
-	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
 func Blackjack(c *gin.Context, Utilities *utils.Utils) {
@@ -166,7 +166,7 @@ func Blackjack(c *gin.Context, Utilities *utils.Utils) {
 		panic(err)
 	}
 
-	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
 func Profile(c *gin.Context, Utilities *utils.Utils) {
@@ -205,8 +205,7 @@ func Profile(c *gin.Context, Utilities *utils.Utils) {
 		panic(err)
 	}
 
-	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
-
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
 func Preview(c *gin.Context, Utilities *utils.Utils) {
@@ -223,5 +222,5 @@ func Preview(c *gin.Context, Utilities *utils.Utils) {
 		panic(err)
 	}
 
-	c.Writer.WriteString(base64.StdEncoding.EncodeToString(buff.Bytes()))
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
