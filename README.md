@@ -44,7 +44,7 @@ docker run --name VangoghServer -p 2080:2080 -e "TOKEN=" --restart unless-stoppe
 
 > Obs: the `TOKEN` is just for authentication purpuses. The `restart` policy used is because, well, no one wants a server down!
 
-Now we can connect to WS or HTTP to 2080 port!
+Now we can connect to HTTP to 2080 port!
 
 ### 🎉 | Downloading the Image
 
@@ -73,7 +73,6 @@ Creeper? Awww maan. Van GOgh is on!
 - [Go](https://go.dev/)
 - [Gin](https://github.com/gin-gonic/gin)
 - [Go Graphics](https://github.com/fogleman/gg)
-- [Gorilla WebSocket](https://github.com/gorilla/websocket)
 
 ## 💖 | Special Thanks
 
