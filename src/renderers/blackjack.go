@@ -54,17 +54,17 @@ func getFontColorByTheme(theme string) string {
 	}
 }
 
-func RenderBlackjack(data *BlackjackData, util *utils.Utils) image.Image {
+func RenderBlackjack(data *BlackjackData) image.Image {
 	ctx := gg.NewContext(630, 460)
 
-	tableImage, _ := util.GetResizedAsset("tables/"+data.TableTheme+".png", 630, 460)
+	tableImage, _ := utils.GetResizedAsset("tables/"+data.TableTheme+".png", 630, 460)
 
 	ctx.DrawImage(tableImage, 0, 0)
 
 	baseHexColor := getFontColorByTheme(data.TableTheme)
 
 	ctx.SetHexColor(baseHexColor)
-	ctx.SetFontFace(*util.GetFont("Impact", 36))
+	ctx.SetFontFace(*utils.GetFont("Impact", 36))
 
 	ctx.DrawStringAnchored(data.I18n.DealerHand, 278, 36, 0.5, 0)
 	ctx.DrawStringAnchored(strconv.Itoa(data.MenheraTotal), 278, 78, 0.5, 0)
@@ -74,7 +74,7 @@ func RenderBlackjack(data *BlackjackData, util *utils.Utils) image.Image {
 
 	ctx.DrawStringAnchored(strconv.Itoa(data.Aposta*2), 240, 240, 0, 0)
 
-	ctx.SetHexColor(util.ShadeColor(baseHexColor, -10))
+	ctx.SetHexColor(utils.ShadeColor(baseHexColor, -10))
 
 	menheraStartW := (295 - 40*len(data.MenheraCards))
 	userStartW := (295 - 40*len(data.UserCards))
@@ -86,15 +86,15 @@ func RenderBlackjack(data *BlackjackData, util *utils.Utils) image.Image {
 	for i, card := range data.MenheraCards {
 		var cardImage image.Image
 		if card.Hidden {
-			cardImage, _ = util.GetResizedAsset("card_backgrounds/"+data.BackgroundCardTheme+".png", 72, 84)
+			cardImage, _ = utils.GetResizedAsset("card_backgrounds/"+data.BackgroundCardTheme+".png", 72, 84)
 		} else {
-			cardImage, _ = util.GetResizedAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", 72, 84)
+			cardImage, _ = utils.GetResizedAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", 72, 84)
 		}
 		ctx.DrawImage(cardImage, menheraStartW+(80*i), 93)
 	}
 
 	for i, card := range data.UserCards {
-		cardImage, _ := util.GetResizedAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", 72, 84)
+		cardImage, _ := utils.GetResizedAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", 72, 84)
 		ctx.DrawImage(cardImage, userStartW+(80*i), 360)
 	}
 

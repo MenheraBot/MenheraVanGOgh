@@ -37,13 +37,13 @@ func getRandomBasedOnType(t string) int {
 	}
 }
 
-func RenderEightball(data *EightballData, util *utils.Utils) image.Image {
+func RenderEightball(data *EightballData) image.Image {
 	ctx := gg.NewContext(854, 456)
 
-	bedroomImage := util.GetAsset("images/bedroom.png")
-	textBoxImage := util.GetAsset("images/text_box.png")
-	responseBoxImage, _ := util.GetResizedAsset("images/response_box.png", 400, 250)
-	menheraImage, _ := util.GetResizedAsset("menheras/"+data.Type+"_"+strconv.Itoa(getRandomBasedOnType(data.Type))+".png", 387, 440)
+	bedroomImage := utils.GetAsset("images/bedroom.png")
+	textBoxImage := utils.GetAsset("images/text_box.png")
+	responseBoxImage, _ := utils.GetResizedAsset("images/response_box.png", 400, 250)
+	menheraImage, _ := utils.GetResizedAsset("menheras/"+data.Type+"_"+strconv.Itoa(getRandomBasedOnType(data.Type))+".png", 387, 440)
 
 	ctx.DrawImage(bedroomImage, 0, 0)
 	ctx.DrawImage(menheraImage, 10, 10)
@@ -57,11 +57,11 @@ func RenderEightball(data *EightballData, util *utils.Utils) image.Image {
 		fontSize = 28
 	}
 
-	ctx.SetFontFace(*util.GetFont("Sans", float64(fontSize)))
+	ctx.SetFontFace(*utils.GetFont("Sans", float64(fontSize)))
 	ctx.SetHexColor("#d89a30")
 	ctx.DrawStringAnchored(data.Username, 440, 339, 0.5, 0)
 
-	ctx.SetFontFace(*util.GetFont("Sans", 36))
+	ctx.SetFontFace(*utils.GetFont("Sans", 36))
 
 	question := data.Question
 

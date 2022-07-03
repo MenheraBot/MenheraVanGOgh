@@ -12,11 +12,11 @@ type GadoData struct {
 	Image string `json:"image"` // 512
 }
 
-func RenderGado(data *GadoData, util *utils.Utils) image.Image {
+func RenderGado(data *GadoData) image.Image {
 	ctx := gg.NewContext(1200, 526)
 
-	userImage := util.GetImageFromURL(data.Image, 455)
-	gadoImage := util.GetAsset("/images/gado.png")
+	userImage := utils.GetImageFromURL(data.Image, 455)
+	gadoImage := utils.GetAsset("/images/gado.png")
 
 	ctx.DrawImage(userImage, 695, 0)
 	ctx.DrawImage(gadoImage, 0, 0)

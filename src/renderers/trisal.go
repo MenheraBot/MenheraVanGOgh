@@ -14,12 +14,12 @@ type TrisalData struct {
 	UserThree string `json:"userThree"` // 256
 }
 
-func RenderTrisal(data *TrisalData, util *utils.Utils) image.Image {
+func RenderTrisal(data *TrisalData) image.Image {
 	ctx := gg.NewContext(768, 256)
 
-	firstImage := util.GetImageFromURL(data.UserOne, 256)
-	secondImage := util.GetImageFromURL(data.UserTwo, 256)
-	thirdImage := util.GetImageFromURL(data.UserThree, 256)
+	firstImage := utils.GetImageFromURL(data.UserOne, 256)
+	secondImage := utils.GetImageFromURL(data.UserTwo, 256)
+	thirdImage := utils.GetImageFromURL(data.UserThree, 256)
 
 	ctx.DrawImage(firstImage, 0, 0)
 	ctx.DrawImage(secondImage, 256, 0)

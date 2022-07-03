@@ -16,15 +16,15 @@ type VascoData struct {
 	Position string `json:"position"`
 }
 
-func RenderVasco(data *VascoData, util *utils.Utils) image.Image {
+func RenderVasco(data *VascoData) image.Image {
 	ctx := gg.NewContext(800, 534)
 
-	vascoImage := util.GetAsset("images/vasco_" + data.Quality + ".png")
-	userImage := util.GetImageFromURL(data.User, 243)
+	vascoImage := utils.GetAsset("images/vasco_" + data.Quality + ".png")
+	userImage := utils.GetImageFromURL(data.User, 243)
 
 	ctx.DrawImage(userImage, 65, 165)
 	ctx.DrawImage(vascoImage, 0, 0)
-	ctx.SetFontFace(*util.GetFont("Impact", 42))
+	ctx.SetFontFace(*utils.GetFont("Impact", 42))
 
 	text := strings.ToUpper(data.Username) + "\n" + strings.ToUpper(data.Position)
 

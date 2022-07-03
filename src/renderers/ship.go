@@ -42,22 +42,22 @@ func rainbowColorPercentage(percentage uint16) image.Image {
 	return ctx.Image()
 }
 
-func RenderShip(data *ShipData, util *utils.Utils) image.Image {
+func RenderShip(data *ShipData) image.Image {
 	ctx := gg.NewContext(512, 350)
 
-	firstAvatar := util.GetImageFromURL(data.LinkOne, 256)
-	secondAvatar := util.GetImageFromURL(data.LinkTwo, 256)
+	firstAvatar := utils.GetImageFromURL(data.LinkOne, 256)
+	secondAvatar := utils.GetImageFromURL(data.LinkTwo, 256)
 	shipLoadedImage := rainbowColorPercentage(data.ShipValue)
 
 	ctx.DrawImage(firstAvatar, 0, 0)
 	ctx.DrawImage(secondAvatar, 256, 0)
 	ctx.DrawImage(shipLoadedImage, 20, 270)
 
-	ctx.SetFontFace(*util.GetFont("Sans", 58))
+	ctx.SetFontFace(*utils.GetFont("Sans", 58))
 
 	text := fmt.Sprint(data.ShipValue, "%")
 
-	util.StrokeText(ctx, text, 256, 330, 2, 0.5, 0, "#000")
+	utils.StrokeText(ctx, text, 256, 330, 2, 0.5, 0, "#000")
 
 	ctx.SetRGBA255(255, 255, 255, 255)
 	ctx.DrawStringAnchored(text, 256, 330, 0.5, 0)

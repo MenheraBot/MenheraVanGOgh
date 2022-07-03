@@ -3,31 +3,20 @@ package main
 import (
 	"log"
 	"os"
-	"runtime"
 	"time"
-	"unsafe"
 
 	"github.com/MenheraBot/MenheraVanGOgh/src/controllers"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-type HttpPIng struct {
+type HttpPing struct {
 	Uptime int64 `json:"uptime"`
-	Ping   uint  `json:"ping"`
-}
-
-type MemoryProfiler struct {
-	Sys       uint64 `json:"alloc"`
-	Timestamp int64  `json:"timestamp"`
 }
 
 type PingStruct struct {
-	Http           HttpPIng         `json:"http"`
-	MemoryProfiler []MemoryProfiler `json:"memory"`
+	Http HttpPing `json:"http"`
 }
-
-var memory = make([]MemoryProfiler, 0)
 
 func main() {
 	gin.SetMode(gin.ReleaseMode)
@@ -37,7 +26,6 @@ func main() {
 	router.Use(cors.Default())
 
 	httpStartTime := time.Now()
-	requestsMade := 0
 
 	router.GET("/ping", func(c *gin.Context) {
 		returnPing(c, httpStartTime)
@@ -54,18 +42,6 @@ func main() {
 
 		c.Header("Content-Type", "text/plain")
 
-		requestsMade++
-
-		if requestsMade >= 50 {
-			var m runtime.MemStats
-			runtime.ReadMemStats(&m)
-			memory = append(memory, MemoryProfiler{
-				Sys:       m.Sys / 1024,
-				Timestamp: time.Now().Unix(),
-			})
-			requestsMade = 0
-		}
-
 		c.Next()
 	})
 
@@ -81,13 +57,6 @@ func main() {
 	router.POST("/preview", controllers.Preview)
 	router.POST("/profile", controllers.Profile)
 
-	router.DELETE("/memory", func(c *gin.Context) {
-		memorySize := unsafe.Sizeof(memory)
-		memoryLenArr := len(memory)
-		memory = nil
-		c.String(200, "Size of array: %d\nMemory size of array: %dMB", memoryLenArr, memorySize)
-	})
-
 	log.Println("Listening and serving HTTP on :2080")
 
 	log.Fatal(router.Run(":2080"))
@@ -95,13 +64,12 @@ func main() {
 
 func returnPing(c *gin.Context, startTime time.Time) {
 
-	http := HttpPIng{
+	http := HttpPing{
 		Uptime: time.Since(startTime).Milliseconds(),
 	}
 
 	returnData := PingStruct{
-		Http:           http,
-		MemoryProfiler: memory,
+		Http: http,
 	}
 
 	c.JSON(200, returnData)
