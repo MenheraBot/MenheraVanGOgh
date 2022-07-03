@@ -29,13 +29,13 @@ func rgbaToGray(img image.Image) *image.Gray {
 	return gray
 }
 
-func RenderMacetava(data *MacetavaData, util *utils.Utils) image.Image {
+func RenderMacetava(data *MacetavaData) image.Image {
 	ctx := gg.NewContext(1080, 882)
 
-	userImage := util.GetImageFromURL(data.Image, 573)
+	userImage := utils.GetImageFromURL(data.Image, 573)
 	userImageGayscale := rgbaToGray(userImage)
-	userAvatar := util.GetImageFromURL(data.AuthorImage, 145)
-	macetavaImage := util.GetAsset("/images/macetava.png")
+	userAvatar := utils.GetImageFromURL(data.AuthorImage, 145)
+	macetavaImage := utils.GetAsset("/images/macetava.png")
 
 	ctx.DrawImage(userAvatar, 30, 18)
 	ctx.DrawImage(userImage, 33, 305)
@@ -44,10 +44,10 @@ func RenderMacetava(data *MacetavaData, util *utils.Utils) image.Image {
 	ctx.DrawImage(macetavaImage, 0, 0)
 
 	ctx.SetHexColor("#FFF")
-	ctx.SetFontFace(*util.GetFont("Arial", 48))
+	ctx.SetFontFace(*utils.GetFont("Arial", 48))
 	ctx.DrawStringAnchored(data.AuthorName, 210, 85, 0, 0)
 
-	ctx.SetFontFace(*util.GetFont("Arial", 38))
+	ctx.SetFontFace(*utils.GetFont("Arial", 38))
 	ctx.SetHexColor("#86878C")
 	ctx.DrawString(data.AuthorName+"#"+data.AuthorDiscriminator, 250, 145)
 

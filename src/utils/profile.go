@@ -58,12 +58,12 @@ func includes(arr []uint8, target uint8) bool {
 	return result
 }
 
-func (util *Utils) getUserBadges(user *UserData) []image.Image {
+func getUserBadges(user *UserData) []image.Image {
 	var images []image.Image
 
 	for _, badge := range user.Badges {
 		if !includes(user.HiddingBadges, badge) {
-			img, ok := util.GetResizedAsset("badges/"+strconv.Itoa(int(badge))+".png", badgeSize, badgeSize)
+			img, ok := GetResizedAsset("badges/"+strconv.Itoa(int(badge))+".png", badgeSize, badgeSize)
 			if ok {
 				images = append(images, img)
 			}
@@ -73,9 +73,9 @@ func (util *Utils) getUserBadges(user *UserData) []image.Image {
 	return images
 }
 
-func (util *Utils) DrawBadges(ctx *gg.Context, user *UserData, w, h int) {
+func DrawBadges(ctx *gg.Context, user *UserData, w, h int) {
 
-	for i, badge := range util.getUserBadges(user) {
+	for i, badge := range getUserBadges(user) {
 		ctx.DrawImage(badge, i*badgeSize+w, h)
 	}
 }
@@ -116,12 +116,12 @@ func parseHexColorFast(s string) (c color.RGBA, ok bool) {
 	return
 }
 
-func (util *Utils) GetColorLuminance(color color.RGBA) float64 {
+func GetColorLuminance(color color.RGBA) float64 {
 	return float64(float64(0.299)*float64(color.R) + float64(0.587)*float64(color.G) + float64(0.114)*float64(color.B))
 }
 
 // https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
-func (util *Utils) GetCompatibleFontColor(hex_color string) string {
+func GetCompatibleFontColor(hex_color string) string {
 	c, ok := parseHexColorFast(hex_color)
 	if !ok {
 		c = color.RGBA{R: 0, G: 0, B: 0, A: 0xff}

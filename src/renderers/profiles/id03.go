@@ -9,7 +9,7 @@ import (
 	"github.com/fogleman/gg"
 )
 
-func RenderID03(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) image.Image {
+func RenderID03(User *utils.UserData, I18n *utils.I18n) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
 	baseColor := User.Color
@@ -18,25 +18,25 @@ func RenderID03(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) image
 	ctx.DrawRectangle(0, 0, 1080, 720)
 	ctx.Fill()
 
-	userAvatar := util.GetImageFromURL(User.Avatar, 120)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 120)
 
 	ctx.DrawImage(userAvatar, 225, 92)
 
-	backgroundImage := util.GetAsset("/profiles/iD03.png")
+	backgroundImage := utils.GetAsset("/profiles/iD03.png")
 
 	ctx.DrawImage(backgroundImage, 0, 0)
 
-	util.DrawBadges(ctx, User, 408, 435)
+	utils.DrawBadges(ctx, User, 408, 435)
 
 	ctx.SetHexColor("#FFF")
-	ctx.SetFontFace(*util.GetFont("Pixellari", 32))
+	ctx.SetFontFace(*utils.GetFont("Pixellari", 32))
 	ctx.DrawStringWrapped(User.Tag, 425, 160, 0, 1, 420, 0, 0)
 
-	ctx.SetFontFace(*util.GetFont("Pixellari", 24))
+	ctx.SetFontFace(*utils.GetFont("Pixellari", 24))
 	ctx.DrawStringWrapped(User.Info, 200, 540, 0, 0.5, 700, 1, 0)
 
 	if User.Married {
-		ctx.SetFontFace(*util.GetFont("Pixellari", 20))
+		ctx.SetFontFace(*utils.GetFont("Pixellari", 20))
 		ctx.DrawStringWrapped(User.Marry.Username+" "+strings.Split(User.MarryDate, " ")[0], 445, 220, 0, 1, 600, 1, 0)
 	}
 
@@ -46,11 +46,11 @@ func RenderID03(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) image
 		fontSize = 22
 	}
 
-	ctx.SetFontFace(*util.GetFont("Pixellari", float64(fontSize)))
+	ctx.SetFontFace(*utils.GetFont("Pixellari", float64(fontSize)))
 	ctx.DrawStringAnchored(I18n.Mamado+": "+strconv.Itoa(int(User.Mamadas)), 850, 145, 0, 0)
 	ctx.DrawStringAnchored(I18n.Mamou+": "+strconv.Itoa(int(User.Mamou)), 850, 175, 0, 0)
 
-	ctx.SetFontFace(*util.GetFont("Pixellari", 24))
+	ctx.SetFontFace(*utils.GetFont("Pixellari", 24))
 	ctx.DrawStringWrapped(strings.Split(I18n.Usages, ".")[0]+" | "+strconv.Itoa(int(User.Votes))+" Upvotes", 390, 426, 0, 1, 540, 1, 0)
 
 	return ctx.Image()

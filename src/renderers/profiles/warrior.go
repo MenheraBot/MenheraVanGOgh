@@ -9,7 +9,7 @@ import (
 	"github.com/fogleman/gg"
 )
 
-func RenderWarrior(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) image.Image {
+func RenderWarrior(User *utils.UserData, I18n *utils.I18n) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
 	baseColor := User.Color
@@ -18,30 +18,30 @@ func RenderWarrior(User *utils.UserData, I18n *utils.I18n, util *utils.Utils) im
 	ctx.DrawRectangle(0, 0, 1080, 720)
 	ctx.Fill()
 
-	userAvatar := util.GetImageFromURL(User.Avatar, 226)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 226)
 	ctx.DrawImage(userAvatar, 23, 0)
 
 	ctx.SetHexColor("#FFF")
 
-	ctx.SetFontFace(*util.GetFont("Sans", 36))
+	ctx.SetFontFace(*utils.GetFont("Sans", 36))
 	ctx.DrawStringWrapped(User.Info, 105, 460, 0, 0.5, 870, 1, 0)
 
 	ctx.DrawStringWrapped(I18n.Usages+"   | "+strconv.Itoa(int(User.Votes))+" Upvotes", 50, 275, 0, 0.5, 970, 1, 0)
 
-	background := util.GetAsset("profiles/guerreiro.png")
+	background := utils.GetAsset("profiles/guerreiro.png")
 	ctx.DrawImage(background, 0, 0)
 
-	ctx.SetFontFace(*util.GetFont("Warrior", 28))
+	ctx.SetFontFace(*utils.GetFont("Warrior", 28))
 	ctx.DrawStringAnchored(User.Tag, 330, 140, 0, 0)
 
-	ctx.SetFontFace(*util.GetFont("Warrior", 16))
+	ctx.SetFontFace(*utils.GetFont("Warrior", 16))
 	ctx.DrawStringWrapped(User.Marry.Username+" "+strings.Split(User.MarryDate, " ")[0], 380, 170, 0, 0.5, 600, 1, 0)
 
-	ctx.SetFontFace(*util.GetFont("Sans", 28))
+	ctx.SetFontFace(*utils.GetFont("Sans", 28))
 	ctx.DrawStringWrapped(I18n.Mamado+"\n"+strconv.Itoa(int(User.Mamou)), 940, 100, 0.5, 0.5, 600, 1, 1)
 	ctx.DrawStringWrapped(I18n.Mamou+"\n"+strconv.Itoa(int(User.Mamadas)), 940, 170, 0.5, 0.5, 600, 1, 1)
 
-	util.DrawBadges(ctx, User, 110, 620)
+	utils.DrawBadges(ctx, User, 110, 620)
 
 	return ctx.Image()
 }

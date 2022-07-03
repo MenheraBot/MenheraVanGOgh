@@ -13,8 +13,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var utilities = utils.New()
-
 var encoder = png.Encoder{
 	CompressionLevel: png.BestSpeed,
 }
@@ -28,7 +26,7 @@ func Astolfo(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderAstolfo(data, &utilities)
+	res := renderers.RenderAstolfo(data)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
@@ -49,7 +47,7 @@ func Philo(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderPhilo(data, &utilities)
+	res := renderers.RenderPhilo(data)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
@@ -70,7 +68,7 @@ func Trisal(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderTrisal(data, &utilities)
+	res := renderers.RenderTrisal(data)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
@@ -91,7 +89,7 @@ func Ship(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderShip(data, &utilities)
+	res := renderers.RenderShip(data)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
@@ -112,7 +110,7 @@ func Gado(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderGado(data, &utilities)
+	res := renderers.RenderGado(data)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
@@ -133,7 +131,7 @@ func Macetava(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderMacetava(data, &utilities)
+	res := renderers.RenderMacetava(data)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
@@ -154,7 +152,7 @@ func Eightball(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderEightball(data, &utilities)
+	res := renderers.RenderEightball(data)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
@@ -174,7 +172,7 @@ func Vasco(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderVasco(data, &utilities)
+	res := renderers.RenderVasco(data)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
@@ -194,7 +192,7 @@ func Blackjack(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderBlackjack(data, &utilities)
+	res := renderers.RenderBlackjack(data)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
@@ -219,23 +217,23 @@ func Profile(c *gin.Context) {
 
 	switch data.Type {
 	case "fortification":
-		res = profiles.RenderFortification(&data.User, &data.I18n, &utilities)
+		res = profiles.RenderFortification(&data.User, &data.I18n)
 	case "warrior":
-		res = profiles.RenderWarrior(&data.User, &data.I18n, &utilities)
+		res = profiles.RenderWarrior(&data.User, &data.I18n)
 	case "christmas_2021":
-		res = profiles.RenderChristmas(&data.User, &data.I18n, &utilities)
+		res = profiles.RenderChristmas(&data.User, &data.I18n)
 	case "kawaii":
-		res = profiles.RenderKawaii(&data.User, &data.I18n, &utilities)
+		res = profiles.RenderKawaii(&data.User, &data.I18n)
 	case "id03":
-		res = profiles.RenderID03(&data.User, &data.I18n, &utilities)
+		res = profiles.RenderID03(&data.User, &data.I18n)
 	case "without_soul":
-		res = profiles.RenderWithoutSoul(&data.User, &data.I18n, &utilities)
+		res = profiles.RenderWithoutSoul(&data.User, &data.I18n)
 	case "upsidedown":
-		res = profiles.RenderUpsideDown(&data.User, &data.I18n, &utilities)
+		res = profiles.RenderUpsideDown(&data.User, &data.I18n)
 	case "default":
-		res = profiles.RenderDefault(&data.User, &data.I18n, &utilities)
+		res = profiles.RenderDefault(&data.User, &data.I18n)
 	default:
-		res = profiles.RenderDefault(&data.User, &data.I18n, &utilities)
+		res = profiles.RenderDefault(&data.User, &data.I18n)
 	}
 
 	buff := new(bytes.Buffer)
@@ -257,7 +255,7 @@ func Preview(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderPreview(data, &utilities)
+	res := renderers.RenderPreview(data)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
