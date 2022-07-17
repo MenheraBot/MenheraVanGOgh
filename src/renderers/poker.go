@@ -15,6 +15,7 @@ type PokerUserData struct {
 	Name   string `json:"name"`
 	Theme  string `json:"theme"`
 	Fold   bool   `json:"fold"`
+	Chips  int    `json:"chips"`
 }
 type PokerTableData struct {
 	ComunityCards []uint8         `json:"cards"`
@@ -39,6 +40,7 @@ func RenderPokerHand(data *PokerHandData) image.Image {
 }
 
 var avatarLocations = [9][2]uint16{{670, 70}, {860, 240}, {800, 460}, {580, 530}, {330, 530}, {130, 460}, {70, 240}, {240, 70}, {455, 70}}
+var chipLocations = [9][2]uint16{{670, 140}, {720, 230}, {660, 390}, {510, 390}, {330, 390}, {170, 320}, {150, 220}, {240, 130}, {405, 130}}
 
 func limitString(s string, size uint) string {
 	if len(s) > int(size) {
@@ -65,6 +67,23 @@ func drawAvatar(ctx *gg.Context, avatar image.Image, x, y uint16, m bool) {
 	ctx.Clip()
 	ctx.DrawImageAnchored(avatar, int(x), int(y), 0.5, 0.5)
 	ctx.ResetClip()
+}
+
+func getUserChipsImage(chips int) image.Image {
+
+	var image image.Image
+
+	if chips < 10000 {
+		image, _ = utils.GetResizedAsset("poker/less_chips.png", 50, 50)
+	} else if chips < 100000 {
+		image, _ = utils.GetResizedAsset("poker/medium_chips.png", 60, 60)
+	} else if chips < 500000 {
+		image, _ = utils.GetResizedAsset("poker/lots_chips.png", 80, 80)
+	} else {
+		image, _ = utils.GetResizedAsset("poker/millions_chips.png", 80, 80)
+	}
+
+	return image
 }
 
 func RenderPokerTable(data *PokerTableData) image.Image {
@@ -113,18 +132,39 @@ func RenderPokerTable(data *PokerTableData) image.Image {
 			}
 		}
 
-		textSize, _ := ctx.MeasureString(limitString(user.Name, 20))
+		image := getUserChipsImage(user.Chips)
+		ctx.DrawImage(image, int(chipLocations[i][0]), int(chipLocations[i][1]))
+
+		nameSize, _ := ctx.MeasureString(limitString(user.Name, 20))
+		numberSize, _ := ctx.MeasureString(strconv.Itoa(user.Chips))
+
+		var textSize = nameSize
+
+		if numberSize > nameSize {
+			textSize = numberSize
+		}
 
 		ctx.SetColor(color.RGBA{R: 0, G: 0, B: 0, A: 180})
-		ctx.DrawRoundedRectangle(float64(avatarLocations[i][0])-textSize/2-10, float64(avatarLocations[i][1]-60), textSize+10, 20, 10)
+		ctx.DrawRoundedRectangle(float64(avatarLocations[i][0])-textSize/2-10, float64(avatarLocations[i][1]-70), textSize+10, 36, 10)
 		ctx.Fill()
 
-		ctx.SetHexColor("#FFF")
-		ctx.DrawStringWrapped(ctx.WordWrap(limitString(user.Name, 20), 140)[0], float64(avatarLocations[i][0]-toLeft), float64(avatarLocations[i][1]-60), anchorX, 0, 140, 1, 1)
+		if user.Fold {
+			ctx.SetHexColor("#FF0000")
+		} else {
+			ctx.SetHexColor("#FFF")
+		}
+
+		ctx.DrawStringWrapped(ctx.WordWrap(limitString(user.Name, 20), 140)[0], float64(avatarLocations[i][0]-toLeft), float64(avatarLocations[i][1]-70), anchorX, 0, 140, 1, 1)
+		ctx.SetHexColor("#FFFF00")
+		ctx.DrawStringWrapped(strconv.Itoa(user.Chips), float64(avatarLocations[i][0]-toLeft), float64(avatarLocations[i][1]-56), anchorX, 0, 140, 1, 1)
 	}
 
 	menheraAvatar, _ := utils.GetResizedAsset("poker/headphone.png", 120, 120)
 	drawAvatar(ctx, menheraAvatar, avatarLocations[8][0], avatarLocations[8][1], true)
+
+	potImage := getUserChipsImage(data.Pot)
+
+	ctx.DrawImage(potImage, int(chipLocations[8][0]), int(chipLocations[8][1]))
 
 	ctx.SetColor(color.RGBA{R: 0, G: 0, B: 0, A: 180})
 	ctx.DrawRoundedRectangle(float64(startCardW), 200, float64(len(data.ComunityCards)*62)+31, 40, 5)
