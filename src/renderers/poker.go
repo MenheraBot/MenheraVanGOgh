@@ -172,8 +172,14 @@ func RenderPokerTable(data *PokerTableData) image.Image {
 
 	ctx.DrawImage(potImage, int(chipLocations[8][0]), int(chipLocations[8][1]))
 
+	var rectW int = len(data.ComunityCards)
+
+	if rectW == 0 {
+		rectW = 3
+	}
+
 	ctx.SetColor(color.RGBA{R: 0, G: 0, B: 0, A: 180})
-	ctx.DrawRoundedRectangle(float64(startCardW), 200, float64(len(data.ComunityCards)*62)+31, 40, 5)
+	ctx.DrawRoundedRectangle(float64(startCardW), 200, float64(rectW*62)+31, 40, 5)
 	ctx.Fill()
 
 	ctx.SetHexColor("#FFFF00")
