@@ -16,6 +16,7 @@ type PokerUserData struct {
 	Theme  string `json:"theme"`
 	Fold   bool   `json:"fold"`
 	Chips  int    `json:"chips"`
+	Dealer bool   `json:"dealer"`
 }
 type PokerTableData struct {
 	ComunityCards []uint8         `json:"cards"`
@@ -157,6 +158,11 @@ func RenderPokerTable(data *PokerTableData) image.Image {
 		ctx.DrawStringWrapped(ctx.WordWrap(limitString(user.Name, 20), 140)[0], float64(avatarLocations[i][0]-toLeft), float64(avatarLocations[i][1]-70), anchorX, 0, 140, 1, 1)
 		ctx.SetHexColor("#FFFF00")
 		ctx.DrawStringWrapped(strconv.Itoa(user.Chips), float64(avatarLocations[i][0]-toLeft), float64(avatarLocations[i][1]-56), anchorX, 0, 140, 1, 1)
+
+		if user.Dealer {
+			dealerBotton, _ := utils.GetResizedAsset("poker/dealer.png", 60, 60)
+			ctx.DrawImageAnchored(dealerBotton, int(avatarLocations[i][0]-45), int(avatarLocations[i][1]+35), 0.5, 0.5)
+		}
 	}
 
 	menheraAvatar, _ := utils.GetResizedAsset("poker/headphone.png", 120, 120)
