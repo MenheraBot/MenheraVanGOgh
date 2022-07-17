@@ -33,7 +33,7 @@ type BlackjackData struct {
 	BackgroundCardTheme string          `json:"backgroundCardTheme"`
 }
 
-func getFontColorByTheme(theme string) string {
+func GetFontColorByTableTheme(theme string) string {
 	switch theme {
 	case "green":
 		return "#2aa421"
@@ -61,7 +61,7 @@ func RenderBlackjack(data *BlackjackData) image.Image {
 
 	ctx.DrawImage(tableImage, 0, 0)
 
-	baseHexColor := getFontColorByTheme(data.TableTheme)
+	baseHexColor := GetFontColorByTableTheme(data.TableTheme)
 
 	ctx.SetHexColor(baseHexColor)
 	ctx.SetFontFace(*utils.GetFont("Impact", 36))

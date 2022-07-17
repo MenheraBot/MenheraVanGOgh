@@ -56,6 +56,7 @@ func main() {
 	router.POST("/vasco", controllers.Vasco)
 	router.POST("/preview", controllers.Preview)
 	router.POST("/profile", controllers.Profile)
+	router.POST("/poker", controllers.Poker)
 
 	log.Println("Listening and serving HTTP on :2080")
 
