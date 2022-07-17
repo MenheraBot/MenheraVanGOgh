@@ -266,3 +266,46 @@ func Preview(c *gin.Context) {
 
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
+
+func Poker(c *gin.Context) {
+	query := c.Request.URL.Query().Get("player")
+
+	if query == "true" {
+		data := new(renderers.PokerHandData)
+
+		err := c.BindJSON(data)
+		if err != nil {
+			log.Print(err)
+		}
+
+		res := renderers.RenderPokerHand(data)
+
+		buff := new(bytes.Buffer)
+		err = encoder.Encode(buff, res)
+
+		if err != nil {
+			log.Print(err)
+		}
+
+		c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
+		return
+	}
+
+	data := new(renderers.PokerTableData)
+
+	err := c.BindJSON(data)
+	if err != nil {
+		log.Print(err)
+	}
+
+	res := renderers.RenderPokerTable(data)
+
+	buff := new(bytes.Buffer)
+	err = encoder.Encode(buff, res)
+
+	if err != nil {
+		log.Print(err)
+	}
+
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
+}
