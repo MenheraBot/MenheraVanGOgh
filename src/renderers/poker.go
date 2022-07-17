@@ -10,13 +10,16 @@ import (
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 )
 
+type PokerUserData struct {
+	Avatar string `json:"avatar"`
+	Name   string `json:"name"`
+	Theme  string `json:"theme"`
+	Fold   bool   `json:"fold"`
+}
 type PokerTableData struct {
-	ComunityCards  []uint8  `json:"cards"`
-	UserAvatars    []string `json:"avatars"`
-	UserCardThemes []string `json:"themes"`
-	UserFolds      []bool   `json:"folds"`
-	UserNames      []string `json:"usernames"`
-	Pot            int      `json:"pot"`
+	ComunityCards []uint8         `json:"cards"`
+	Users         []PokerUserData `json:"users"`
+	Pot           int             `json:"pot"`
 }
 
 type PokerHandData struct {
@@ -82,12 +85,12 @@ func RenderPokerTable(data *PokerTableData) image.Image {
 
 	ctx.SetFontFace(*utils.GetFont("Arial", 16))
 
-	for i, avatar := range data.UserAvatars {
-		userAvatar := utils.GetImageFromURL(avatar, 120)
+	for i, user := range data.Users {
+		userAvatar := utils.GetImageFromURL(user.Avatar, 120)
 		drawAvatar(ctx, userAvatar, avatarLocations[i][0], avatarLocations[i][1], false)
 
-		if !data.UserFolds[i] {
-			userCardBackground, _ := utils.GetResizedAsset("card_backgrounds/"+data.UserCardThemes[i]+".png", 37, 51)
+		if !user.Fold {
+			userCardBackground, _ := utils.GetResizedAsset("card_backgrounds/"+user.Theme+".png", 37, 51)
 			ctx.DrawImage(userCardBackground, int(avatarLocations[i][0])+10, int(avatarLocations[i][1])+10)
 			ctx.DrawImage(userCardBackground, int(avatarLocations[i][0])+15, int(avatarLocations[i][1])+15)
 		} else {
@@ -99,25 +102,25 @@ func RenderPokerTable(data *PokerTableData) image.Image {
 		var anchorX float64 = 0
 		var toLeft uint16 = 75
 
-		if i == 1 && len(data.UserNames[i]) > 15 {
+		if i == 1 && len(user.Name) > 15 {
 			anchorX = 0.3
 		}
 
 		if i == 6 {
 			toLeft = 70
-			if len(data.UserNames[i]) > 15 {
+			if len(user.Name) > 15 {
 				anchorX = -0.3
 			}
 		}
 
-		textSize, _ := ctx.MeasureString(limitString(data.UserNames[i], 20))
+		textSize, _ := ctx.MeasureString(limitString(user.Name, 20))
 
 		ctx.SetColor(color.RGBA{R: 0, G: 0, B: 0, A: 180})
 		ctx.DrawRoundedRectangle(float64(avatarLocations[i][0])-textSize/2-10, float64(avatarLocations[i][1]-60), textSize+10, 20, 10)
 		ctx.Fill()
 
 		ctx.SetHexColor("#FFF")
-		ctx.DrawStringWrapped(ctx.WordWrap(limitString(data.UserNames[i], 20), 140)[0], float64(avatarLocations[i][0]-toLeft), float64(avatarLocations[i][1]-60), anchorX, 0, 140, 1, 1)
+		ctx.DrawStringWrapped(ctx.WordWrap(limitString(user.Name, 20), 140)[0], float64(avatarLocations[i][0]-toLeft), float64(avatarLocations[i][1]-60), anchorX, 0, 140, 1, 1)
 	}
 
 	menheraAvatar, _ := utils.GetResizedAsset("poker/headphone.png", 120, 120)
