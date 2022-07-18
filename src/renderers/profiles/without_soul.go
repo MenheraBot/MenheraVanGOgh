@@ -5,11 +5,12 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/MenheraBot/MenheraVanGOgh/src/database"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 	"github.com/fogleman/gg"
 )
 
-func RenderWithoutSoul(User *utils.UserData, I18n *utils.I18n) image.Image {
+func RenderWithoutSoul(User *utils.UserData, I18n *utils.I18n, db *database.Database) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
 	baseColor := User.Color
@@ -18,7 +19,7 @@ func RenderWithoutSoul(User *utils.UserData, I18n *utils.I18n) image.Image {
 	ctx.DrawRectangle(0, 0, 1080, 720)
 	ctx.Fill()
 
-	userAvatar := utils.GetImageFromURL(User.Avatar, 175)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 175, db)
 
 	ctx.DrawImage(userAvatar, 85, 95)
 

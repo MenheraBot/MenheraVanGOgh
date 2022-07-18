@@ -4,11 +4,12 @@ import (
 	"image"
 	"strconv"
 
+	"github.com/MenheraBot/MenheraVanGOgh/src/database"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 	"github.com/fogleman/gg"
 )
 
-func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n) image.Image {
+func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, db *database.Database) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
 	baseColor := User.Color
@@ -54,7 +55,7 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n) image.Image {
 	ctx.DrawCircle(960, 600, 130)
 	ctx.Fill()
 
-	userAvatar := utils.GetImageFromURL(User.Avatar, 250)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 250, db)
 	ctx.DrawCircle(960, 600, 120)
 	ctx.Clip()
 	ctx.DrawImageAnchored(userAvatar, 960, 600, 0.5, 0.5)

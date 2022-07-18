@@ -6,6 +6,7 @@ import (
 
 	"github.com/fogleman/gg"
 
+	"github.com/MenheraBot/MenheraVanGOgh/src/database"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 )
 
@@ -16,11 +17,11 @@ type VascoData struct {
 	Position string `json:"position"`
 }
 
-func RenderVasco(data *VascoData) image.Image {
+func RenderVasco(data *VascoData, db *database.Database) image.Image {
 	ctx := gg.NewContext(800, 534)
 
 	vascoImage := utils.GetAsset("images/vasco_" + data.Quality + ".png")
-	userImage := utils.GetImageFromURL(data.User, 243)
+	userImage := utils.GetImageFromURL(data.User, 243, db)
 
 	ctx.DrawImage(userImage, 65, 165)
 	ctx.DrawImage(vascoImage, 0, 0)

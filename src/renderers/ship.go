@@ -7,6 +7,7 @@ import (
 
 	"github.com/fogleman/gg"
 
+	"github.com/MenheraBot/MenheraVanGOgh/src/database"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 )
 
@@ -42,11 +43,11 @@ func rainbowColorPercentage(percentage uint16) image.Image {
 	return ctx.Image()
 }
 
-func RenderShip(data *ShipData) image.Image {
+func RenderShip(data *ShipData, db *database.Database) image.Image {
 	ctx := gg.NewContext(512, 350)
 
-	firstAvatar := utils.GetImageFromURL(data.LinkOne, 256)
-	secondAvatar := utils.GetImageFromURL(data.LinkTwo, 256)
+	firstAvatar := utils.GetImageFromURL(data.LinkOne, 256, db)
+	secondAvatar := utils.GetImageFromURL(data.LinkTwo, 256, db)
 	shipLoadedImage := rainbowColorPercentage(data.ShipValue)
 
 	ctx.DrawImage(firstAvatar, 0, 0)
