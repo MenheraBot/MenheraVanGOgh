@@ -5,11 +5,12 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/MenheraBot/MenheraVanGOgh/src/database"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 	"github.com/fogleman/gg"
 )
 
-func RenderChristmas(User *utils.UserData, I18n *utils.I18n) image.Image {
+func RenderChristmas(User *utils.UserData, I18n *utils.I18n, db *database.Database) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
 	baseColor := User.Color
@@ -28,7 +29,7 @@ func RenderChristmas(User *utils.UserData, I18n *utils.I18n) image.Image {
 	ctx.SetHexColor("#000")
 	ctx.Stroke()
 
-	userAvatar := utils.GetImageFromURL(User.Avatar, 250)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 250, db)
 
 	ctx.DrawCircle(193, 133, 125)
 	ctx.Clip()

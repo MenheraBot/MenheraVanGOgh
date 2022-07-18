@@ -9,6 +9,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/MenheraBot/MenheraVanGOgh/src/database"
 	"github.com/disintegration/imaging"
 	"github.com/fogleman/gg"
 	"golang.org/x/image/font"
@@ -94,8 +95,16 @@ func GetAsset(path string) image.Image {
 	return img
 }
 
-func GetImageFromURL(url string, w int) image.Image {
+func GetImageFromURL(url string, w int, db *database.Database) image.Image {
 	var imagem image.Image = nil
+
+	if db.Client != nil {
+		res, err := db.GetAvatar(url, w)
+		if err == nil {
+			imagem = res
+			return imagem
+		}
+	}
 
 	res, err := http.Get(url)
 
@@ -119,6 +128,10 @@ func GetImageFromURL(url string, w int) image.Image {
 	}
 
 	imagem = imaging.Fill(imagem, w, w, imaging.Center, imaging.NearestNeighbor)
+
+	if db.Client != nil {
+		db.SetAvatar(url, w, imagem)
+	}
 
 	return imagem
 }
