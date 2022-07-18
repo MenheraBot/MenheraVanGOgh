@@ -71,7 +71,7 @@ func initializeDatabase() *database.Database {
 		return &database.Database{Client: nil}
 	}
 
-	redis, err := database.NewDatabase(os.Getenv("REDIS_URL"), databaseNumber)
+	redis, err := database.NewDatabase(os.Getenv("REDIS_ADDRESS"), databaseNumber)
 
 	if err != nil {
 		log.Print(err)
