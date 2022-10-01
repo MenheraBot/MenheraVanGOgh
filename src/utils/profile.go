@@ -23,8 +23,8 @@ type UserData struct {
 	Badges        []uint8   `json:"badges"`
 	HiddingBadges []uint8   `json:"hiddingBadges"`
 	Username      string    `json:"username"`
-	Mamadas       uint32    `json:"mamadas"`
-	Mamou         uint32    `json:"mamou"`
+	Mamadas       int32    `json:"mamadas"`
+	Mamou         int32    `json:"mamou"`
 	MarryDate     string    `json:"marryDate"`
 	Marry         MarryData `json:"marry"`
 	Married       bool      `json:"married"`
