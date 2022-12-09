@@ -26,8 +26,6 @@ func RenderGatito(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 	ctx.SetFontFace(*utils.GetFont("Mustard", 36))
 	ctx.DrawStringWrapped("\u200e   "+User.Info, 827, 270, 0.5, 0, 455, 1, 0)
 
-	ctx.DrawStringWrapped(I18n.Usages+"   | "+strconv.Itoa(int(User.Votes))+" upvotes", 610, 480, 0, 0, 455, 1, 0)
-
 	ctx.DrawStringWrapped(User.Tag, 610, 105, 0, 0, 455, 1, 1)
 
 	if User.Married {
@@ -36,6 +34,9 @@ func RenderGatito(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 	}
 
 	utils.DrawVerticalBadges(ctx, User, 52, 38)
+
+	ctx.SetFontFace(*utils.GetFont("Mustard", 32))
+	ctx.DrawStringWrapped(I18n.Usages+". "+strconv.Itoa(int(User.Votes))+" upvotes", 610, 480, 0, 0, 460, 1, 0)
 
 	return ctx.Image()
 }
