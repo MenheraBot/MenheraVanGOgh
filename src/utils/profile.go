@@ -74,9 +74,14 @@ func getUserBadges(user *UserData) []image.Image {
 }
 
 func DrawBadges(ctx *gg.Context, user *UserData, w, h int) {
-
 	for i, badge := range getUserBadges(user) {
 		ctx.DrawImage(badge, i*badgeSize+w, h)
+	}
+}
+
+func DrawVerticalBadges(ctx *gg.Context, user *UserData, w, h int) {
+	for i, badge := range getUserBadges(user) {
+		ctx.DrawImage(badge, w, i*badgeSize+h)
 	}
 }
 

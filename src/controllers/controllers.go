@@ -233,6 +233,8 @@ func Profile(c *gin.Context, db *database.Database) {
 		res = profiles.RenderUpsideDown(&data.User, &data.I18n, db)
 	case "default":
 		res = profiles.RenderDefault(&data.User, &data.I18n, db)
+	case "gatito":
+		res = profiles.RenderGatito(&data.User, &data.I18n, db)
 	default:
 		res = profiles.RenderDefault(&data.User, &data.I18n, db)
 	}
