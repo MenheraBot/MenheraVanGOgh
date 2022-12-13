@@ -12,10 +12,13 @@ import (
 )
 
 type EightballData struct {
-	Question string `json:"question"`
-	Type     string `json:"type"`
-	Username string `json:"username"`
-	Answer   string `json:"answer"`
+	Question        string `json:"question"`
+	Type            string `json:"type"`
+	Username        string `json:"username"`
+	Answer          string `json:"answer"`
+	BackgroundTheme string `json:"backgroundTheme"`
+	TextBoxTheme    string `json:"textBoxTheme"`
+	MenheraTheme    string `json:"menheraTheme"`
 }
 
 func getRandomMenheraImage(t, theme string) string {
@@ -60,14 +63,10 @@ func getUsernameTextColor(theme string) string {
 func RenderEightball(data *EightballData) image.Image {
 	ctx := gg.NewContext(854, 456)
 
-	const MenheraTheme = "default"
-	const BackgroundTheme = "default"
-	const TextBoxTheme = "default"
-
-	bedroomImage := utils.GetAsset("8ball/backgrounds/" + BackgroundTheme + ".png")
-	responseBoxImage := utils.GetAsset("8ball/response_boxes/" + BackgroundTheme + ".png")
-	textBoxImage := utils.GetAsset("8ball/text_boxes/" + TextBoxTheme + ".png")
-	menheraImage := utils.GetAsset(getRandomMenheraImage(data.Type, MenheraTheme))
+	bedroomImage := utils.GetAsset("8ball/backgrounds/" + data.BackgroundTheme + ".png")
+	responseBoxImage := utils.GetAsset("8ball/response_boxes/" + data.BackgroundTheme + ".png")
+	textBoxImage := utils.GetAsset("8ball/text_boxes/" + data.TextBoxTheme + ".png")
+	menheraImage := utils.GetAsset(getRandomMenheraImage(data.Type, data.MenheraTheme))
 
 	ctx.DrawImage(bedroomImage, 0, 0)
 	ctx.DrawImage(menheraImage, 10, 10)
@@ -81,7 +80,7 @@ func RenderEightball(data *EightballData) image.Image {
 
 	ctx.SetFontFace(*utils.GetFont("Sans", float64(fontSize)))
 
-	ctx.SetHexColor(getUsernameTextColor(TextBoxTheme))
+	ctx.SetHexColor(getUsernameTextColor(data.TextBoxTheme))
 	ctx.DrawStringAnchored(data.Username, 440, 339, 0.5, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 36))
@@ -92,10 +91,10 @@ func RenderEightball(data *EightballData) image.Image {
 		question = data.Question + "?"
 	}
 
-	ctx.SetHexColor(getQuestionTextColor(TextBoxTheme))
+	ctx.SetHexColor(getQuestionTextColor(data.TextBoxTheme))
 	ctx.DrawStringWrapped(question, 440, 380, 0.5, 0.5, 700, 1, 1)
 
-	ctx.SetHexColor(getResponseTextColor(BackgroundTheme))
+	ctx.SetHexColor(getResponseTextColor(data.BackgroundTheme))
 	ctx.DrawStringWrapped(data.Answer, 645, 140, 0.5, 0.5, 360, 1, 1)
 
 	return ctx.Image()
