@@ -40,10 +40,17 @@ func getRandomBasedOnType(t string) int {
 func RenderEightball(data *EightballData) image.Image {
 	ctx := gg.NewContext(854, 456)
 
-	bedroomImage := utils.GetAsset("images/bedroom.png")
-	textBoxImage := utils.GetAsset("images/text_box.png")
-	responseBoxImage, _ := utils.GetResizedAsset("images/response_box.png", 400, 250)
-	menheraImage, _ := utils.GetResizedAsset("menheras/"+data.Type+"_"+strconv.Itoa(getRandomBasedOnType(data.Type))+".png", 387, 440)
+	const MenheraTheme = "default"
+	const BackgroundTheme = "default"
+	const TextBoxTheme = "default"
+
+	bedroomImage := utils.GetAsset("8ball/backgrounds/" + BackgroundTheme + ".png")
+	textBoxImage := utils.GetAsset("8ball/text_boxes/" + TextBoxTheme + ".png")
+
+	responseBoxImage := utils.GetAsset("images/response_box.png")
+
+	// 390, 440
+	menheraImage := utils.GetAsset("8ball/menheras/" + MenheraTheme + "/" + data.Type + "_" + strconv.Itoa(getRandomBasedOnType(data.Type)) + ".png")
 
 	ctx.DrawImage(bedroomImage, 0, 0)
 	ctx.DrawImage(menheraImage, 10, 10)
