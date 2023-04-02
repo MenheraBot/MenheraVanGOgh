@@ -12,45 +12,66 @@ import (
 )
 
 type EightballData struct {
-	Question string `json:"question"`
-	Type     string `json:"type"`
-	Username string `json:"username"`
-	Answer   string `json:"answer"`
+	Question        string `json:"question"`
+	Type            string `json:"type"`
+	Username        string `json:"username"`
+	Answer          string `json:"answer"`
+	BackgroundTheme string `json:"backgroundTheme"`
+	TextBoxTheme    string `json:"textBoxTheme"`
+	MenheraTheme    string `json:"menheraTheme"`
 }
 
-const (
-	Positive = 3
-	Neutral  = 3
-	Negative = 4
-)
+func getRandomMenheraImage(t, theme string) string {
+	const MenherasByType = 5
 
-func getRandomBasedOnType(t string) int {
-	switch t {
-	case "positive":
-		return rand.Intn(Positive) + 1
-	case "neutral":
-		return rand.Intn(Neutral) + 1
-	case "negative":
-		return rand.Intn(Negative) + 1
+	return "8ball/menheras/" + theme + "/" + t + "_" + strconv.Itoa(rand.Intn(MenherasByType)+1) + ".png"
+}
+
+func getQuestionTextColor(theme string) string {
+	switch theme {
+	case "default":
+		return "#FFF"
+	case "xp":
+		return "#000"
 	default:
-		return 1
+		return "#FFF"
+	}
+}
+
+func getResponseTextColor(theme string) string {
+	switch theme {
+	case "default":
+		return "#595959"
+	case "xp":
+		return "#000"
+	default:
+		return "#595959"
+	}
+}
+
+func getUsernameTextColor(theme string) string {
+	switch theme {
+	case "default":
+		return "#d89a30"
+	case "xp":
+		return "#FFF"
+	default:
+		return "#d89a30"
 	}
 }
 
 func RenderEightball(data *EightballData) image.Image {
 	ctx := gg.NewContext(854, 456)
 
-	bedroomImage := utils.GetAsset("images/bedroom.png")
-	textBoxImage := utils.GetAsset("images/text_box.png")
-	responseBoxImage, _ := utils.GetResizedAsset("images/response_box.png", 400, 250)
-	menheraImage, _ := utils.GetResizedAsset("menheras/"+data.Type+"_"+strconv.Itoa(getRandomBasedOnType(data.Type))+".png", 387, 440)
+	bedroomImage := utils.GetAsset("8ball/backgrounds/" + data.BackgroundTheme + ".png")
+	responseBoxImage := utils.GetAsset("8ball/response_boxes/" + data.BackgroundTheme + ".png")
+	textBoxImage := utils.GetAsset("8ball/text_boxes/" + data.TextBoxTheme + ".png")
+	menheraImage := utils.GetAsset(getRandomMenheraImage(data.Type, data.MenheraTheme))
 
 	ctx.DrawImage(bedroomImage, 0, 0)
 	ctx.DrawImage(menheraImage, 10, 10)
 	ctx.DrawImage(textBoxImage, 40, 250)
 	ctx.DrawImage(responseBoxImage, 440, 20)
-
-	ctx.SetHexColor("#FFF")
 
 	fontSize := 22
 	if len(data.Username) <= 20 {
@@ -58,7 +79,8 @@ func RenderEightball(data *EightballData) image.Image {
 	}
 
 	ctx.SetFontFace(*utils.GetFont("Sans", float64(fontSize)))
-	ctx.SetHexColor("#d89a30")
+
+	ctx.SetHexColor(getUsernameTextColor(data.TextBoxTheme))
 	ctx.DrawStringAnchored(data.Username, 440, 339, 0.5, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 36))
@@ -69,10 +91,10 @@ func RenderEightball(data *EightballData) image.Image {
 		question = data.Question + "?"
 	}
 
-	ctx.SetHexColor("#FFF")
+	ctx.SetHexColor(getQuestionTextColor(data.TextBoxTheme))
 	ctx.DrawStringWrapped(question, 440, 380, 0.5, 0.5, 700, 1, 1)
 
-	ctx.SetHexColor("#595959")
+	ctx.SetHexColor(getResponseTextColor(data.BackgroundTheme))
 	ctx.DrawStringWrapped(data.Answer, 645, 140, 0.5, 0.5, 360, 1, 1)
 
 	return ctx.Image()

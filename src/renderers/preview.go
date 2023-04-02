@@ -34,6 +34,23 @@ func RenderPreview(data *PreviewData) image.Image {
 		image, _ := utils.GetResizedAsset("card_backgrounds/"+data.Theme+".png", 156, 242)
 		ctx := gg.NewContextForImage(image)
 		toReturn = ctx.Image()
+	case "eb_background":
+		image := utils.GetAsset("8ball/backgrounds/" + data.Theme + ".png")
+		ctx := gg.NewContextForImage(image)
+		toReturn = ctx.Image()
+	case "eb_text_box":
+		image := utils.GetAsset("8ball/text_boxes/" + data.Theme + ".png")
+		ctx := gg.NewContextForImage(image)
+		toReturn = ctx.Image()
+	case "eb_menhera":
+		ctx := gg.NewContext(1170, 440)
+		first := utils.GetAsset("8ball/menheras/" + data.Theme + "/negative_1.png")
+		second := utils.GetAsset("8ball/menheras/" + data.Theme + "/neutral_1.png")
+		third := utils.GetAsset("8ball/menheras/" + data.Theme + "/positive_1.png")
+		ctx.DrawImage(first, 0, 0)
+		ctx.DrawImage(second, 391, 0)
+		ctx.DrawImage(third, 782, 0)
+		toReturn = ctx.Image()
 	}
 
 	return toReturn
