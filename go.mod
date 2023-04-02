@@ -8,7 +8,7 @@ require (
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-redis/redis/v8 v8.11.5
-	golang.org/x/image v0.0.0-20220617043117-41969df76e82
+	golang.org/x/image v0.5.0
 )
 
 require (
