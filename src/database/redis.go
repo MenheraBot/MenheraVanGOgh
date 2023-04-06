@@ -16,6 +16,10 @@ func RedisContext() (context.Context, context.CancelFunc) {
 	return context.WithTimeout(context.Background(), time.Second*2)
 }
 
+func BackgroundContext() context.Context {
+	return context.Background()
+}
+
 func NewDatabase(address string, db int) (*Database, error) {
 	client := redis.NewClient(&redis.Options{
 		Addr:         address,

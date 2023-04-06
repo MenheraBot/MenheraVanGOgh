@@ -214,6 +214,13 @@ func Profile(c *gin.Context, db *database.Database) {
 		log.Print(err)
 	}
 
+	base64Profile, err := db.GetCachedProfileImage(data.User.Id, data.StringedProfileData)
+
+	if err == nil {
+		c.String(200, base64Profile)
+		return
+	}
+
 	var res image.Image
 
 	switch data.Type {
@@ -246,7 +253,11 @@ func Profile(c *gin.Context, db *database.Database) {
 		log.Print(err)
 	}
 
-	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
+	stringedImage := base64.StdEncoding.EncodeToString(buff.Bytes())
+
+	db.SetCachedProfileImage(data.User.Id, data.StringedProfileData, stringedImage)
+
+	c.String(200, stringedImage)
 }
 
 func Preview(c *gin.Context) {

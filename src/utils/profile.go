@@ -16,6 +16,7 @@ type MarryData struct {
 
 type UserData struct {
 	Color         string    `json:"color"`
+	Id            string    `json:"id"`
 	Avatar        string    `json:"avatar"`
 	Votes         uint16    `json:"votes"`
 	Info          string    `json:"info"`
@@ -38,9 +39,10 @@ type I18n struct {
 }
 
 type ProfileData struct {
-	User UserData `json:"user"`
-	I18n I18n     `json:"i18n"`
-	Type string   `json:"type"`
+	User                UserData `json:"user"`
+	StringedProfileData string   `json:"stringedProfileData"`
+	I18n                I18n     `json:"i18n"`
+	Type                string   `json:"type"`
 }
 
 const badgeSize = 64
