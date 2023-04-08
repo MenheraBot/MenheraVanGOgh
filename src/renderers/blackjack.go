@@ -55,47 +55,49 @@ func GetFontColorByTableTheme(theme string) string {
 }
 
 func RenderBlackjack(data *BlackjackData) image.Image {
-	ctx := gg.NewContext(630, 460)
+	ctx := gg.NewContext(1080, 720)
 
-	tableImage, _ := utils.GetResizedAsset("tables/"+data.TableTheme+".png", 630, 460)
+	tableImage := utils.GetAsset("tables/" + data.TableTheme + ".png")
 
 	ctx.DrawImage(tableImage, 0, 0)
 
 	baseHexColor := GetFontColorByTableTheme(data.TableTheme)
 
 	ctx.SetHexColor(baseHexColor)
-	ctx.SetFontFace(*utils.GetFont("Impact", 36))
+	ctx.SetFontFace(*utils.GetFont("Impact", 72))
 
-	ctx.DrawStringAnchored(data.I18n.DealerHand, 278, 36, 0.5, 0)
-	ctx.DrawStringAnchored(strconv.Itoa(data.MenheraTotal), 278, 78, 0.5, 0)
+	ctx.DrawStringAnchored(data.I18n.DealerHand, 500, 65, 0.5, 0)
 
-	ctx.DrawStringAnchored(data.I18n.YourHand, 280, 300, 0.5, 0)
-	ctx.DrawStringAnchored(strconv.Itoa(data.UserTotal), 280, 336, 0.5, 0)
+	ctx.SetFontFace(*utils.GetFont("Impact", 58))
+	ctx.DrawStringAnchored(strconv.Itoa(data.MenheraTotal), 475, 128, 0.5, 0)
 
-	ctx.DrawStringAnchored(strconv.Itoa(data.Aposta*2), 240, 240, 0, 0)
+	ctx.DrawStringAnchored(data.I18n.YourHand, 490, 470, 0.5, 0)
+	ctx.DrawStringAnchored(strconv.Itoa(data.UserTotal), 480, 535, 0.5, 0)
+
+	ctx.DrawStringAnchored(strconv.Itoa(data.Aposta*2), 420, 390, 0, 0)
 
 	ctx.SetHexColor(utils.ShadeColor(baseHexColor, -10))
 
-	menheraStartW := (295 - 40*len(data.MenheraCards))
-	userStartW := (295 - 40*len(data.UserCards))
+	menheraStartW := (490 - 60*len(data.MenheraCards))
+	userStartW := (490 - 60*len(data.UserCards))
 
-	ctx.DrawRoundedRectangle(float64(menheraStartW-5), 85, float64(len(data.MenheraCards)*80+3), 97, 5)
-	ctx.DrawRoundedRectangle(float64(userStartW-5), 353, float64(len(data.UserCards)*80+3), 97, 5)
+	ctx.DrawRoundedRectangle(float64(menheraStartW-10), 150, float64(len(data.MenheraCards)*125+15), 150, 5)
+	ctx.DrawRoundedRectangle(float64(userStartW-10), 545, float64(len(data.UserCards)*125+15), 150, 5)
 	ctx.Fill()
 
 	for i, card := range data.MenheraCards {
 		var cardImage image.Image
 		if card.Hidden {
-			cardImage, _ = utils.GetResizedAsset("card_backgrounds/"+data.BackgroundCardTheme+".png", 72, 84)
+			cardImage = utils.GetAsset("card_backgrounds/" + data.BackgroundCardTheme + ".png")
 		} else {
-			cardImage, _ = utils.GetResizedAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", 72, 84)
+			cardImage = utils.GetAsset("cards/" + data.CardTheme + "/" + strconv.Itoa(card.Id) + ".png")
 		}
-		ctx.DrawImage(cardImage, menheraStartW+(80*i), 93)
+		ctx.DrawImage(cardImage, menheraStartW+(125*i), 160)
 	}
 
 	for i, card := range data.UserCards {
-		cardImage, _ := utils.GetResizedAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", 72, 84)
-		ctx.DrawImage(cardImage, userStartW+(80*i), 360)
+		cardImage := utils.GetAsset("cards/" + data.CardTheme + "/" + strconv.Itoa(card.Id) + ".png")
+		ctx.DrawImage(cardImage, userStartW+(125*i), 555)
 	}
 
 	return ctx.Image()
