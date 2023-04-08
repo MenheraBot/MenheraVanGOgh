@@ -18,20 +18,20 @@ func RenderPreview(data *PreviewData) image.Image {
 
 	switch data.Type {
 	case "table":
-		image, _ := utils.GetResizedAsset("tables/"+data.Theme+".png", 630, 460)
+		image := utils.GetAsset("tables/" + data.Theme + ".png")
 		ctx := gg.NewContextForImage(image)
 		toReturn = ctx.Image()
 	case "cards":
-		ctx := gg.NewContext(408, 187)
-		first, _ := utils.GetResizedAsset("cards/"+data.Theme+"/13.png", 136, 187)
-		second, _ := utils.GetResizedAsset("cards/"+data.Theme+"/22.png", 136, 187)
-		third, _ := utils.GetResizedAsset("cards/"+data.Theme+"/47.png", 136, 187)
+		ctx := gg.NewContext(360, 130)
+		first := utils.GetAsset("cards/" + data.Theme + "/13.png")
+		second := utils.GetAsset("cards/" + data.Theme + "/22.png")
+		third := utils.GetAsset("cards/" + data.Theme + "/47.png")
 		ctx.DrawImage(first, 0, 0)
-		ctx.DrawImage(second, 137, 0)
-		ctx.DrawImage(third, 271, 0)
+		ctx.DrawImage(second, 120, 0)
+		ctx.DrawImage(third, 240, 0)
 		toReturn = ctx.Image()
 	case "card_background":
-		image, _ := utils.GetResizedAsset("card_backgrounds/"+data.Theme+".png", 156, 242)
+		image := utils.GetAsset("card_backgrounds/" + data.Theme + ".png")
 		ctx := gg.NewContextForImage(image)
 		toReturn = ctx.Image()
 	case "eb_background":
