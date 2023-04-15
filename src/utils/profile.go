@@ -39,10 +39,10 @@ type I18n struct {
 }
 
 type ProfileData struct {
-	User                UserData `json:"user"`
-	StringedProfileData string   `json:"stringedProfileData"`
-	I18n                I18n     `json:"i18n"`
-	Type                string   `json:"type"`
+	User       UserData `json:"user"`
+	HashedData string   `json:"hashedData"`
+	I18n       I18n     `json:"i18n"`
+	Type       string   `json:"type"`
 }
 
 const badgeSize = 64
