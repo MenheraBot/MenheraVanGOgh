@@ -214,15 +214,11 @@ func Profile(c *gin.Context, db *database.Database) {
 		log.Print(err)
 	}
 
-	shouldCache := data.HashedData != "NO_CACHE"
+	base64Profile, err := db.GetCachedProfileImage(data.User.Id, data.HashedData)
 
-	if shouldCache {
-		base64Profile, err := db.GetCachedProfileImage(data.User.Id, data.HashedData)
-
-		if err == nil {
-			c.String(200, base64Profile)
-			return
-		}
+	if err == nil {
+		c.String(200, base64Profile)
+		return
 	}
 
 	var res image.Image
@@ -259,9 +255,7 @@ func Profile(c *gin.Context, db *database.Database) {
 
 	stringedImage := base64.StdEncoding.EncodeToString(buff.Bytes())
 
-	if shouldCache {
-		db.SetCachedProfileImage(data.User.Id, data.HashedData, stringedImage)
-	}
+	db.SetCachedProfileImage(data.User.Id, data.HashedData, stringedImage)
 
 	c.String(200, stringedImage)
 }
