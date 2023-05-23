@@ -242,6 +242,8 @@ func Profile(c *gin.Context, db *database.Database) {
 		res = profiles.RenderDefault(&data.User, &data.I18n, db)
 	case "gatito":
 		res = profiles.RenderGatito(&data.User, &data.I18n, db)
+	case "personal_space":
+		res = profiles.RenderPersonalSpace(&data.User, &data.I18n, db)
 	default:
 		res = profiles.RenderDefault(&data.User, &data.I18n, db)
 	}
