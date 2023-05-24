@@ -13,28 +13,30 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, db *database.Da
 	ctx := gg.NewContext(1080, 720)
 
 	userAvatar := utils.GetImageFromURL(User.Avatar, 250, db)
-
-	ctx.DrawImage(userAvatar, 540, 75)
-
 	backgroundImage := utils.GetAsset("/profiles/personal_space.png")
 
+	ctx.DrawImage(userAvatar, 0, 0)
 	ctx.DrawImage(backgroundImage, 0, 0)
 
-	ctx.SetHexColor("#845242")
-	ctx.SetFontFace(*utils.GetFont("Mustard", 36))
-	ctx.DrawStringWrapped("\u200e   "+User.Info, 827, 270, 0.5, 0, 455, 1, 0)
-
-	ctx.DrawStringWrapped(User.Tag, 610, 105, 0, 0, 455, 1, 1)
+	ctx.SetHexColor("#FFF")
 
 	if User.Married {
-		ctx.SetFontFace(*utils.GetFont("Mustard", 32))
-		ctx.DrawStringWrapped(User.Marry.Tag, 620, 140, 0, 0, 430, 1, 1)
+		ctx.SetFontFace(*utils.GetFont("Sans", 42))
+		ctx.DrawStringWrapped(User.Tag, 260, 90, 0, 0.5, 750, 1, 0)
+		ctx.SetFontFace(*utils.GetFont("Sans", 38))
+		ctx.DrawStringWrapped(User.Tag, 260, 150, 0, 0.5, 750, 1, 0)
+	} else {
+		ctx.SetFontFace(*utils.GetFont("Sans", 50))
+		ctx.DrawStringWrapped(User.Tag, 260, 120, 0, 0.5, 750, 1, 0)
 	}
 
-	utils.DrawVerticalBadges(ctx, User, 52, 38)
+	ctx.SetFontFace(*utils.GetFont("Sans", 38))
+	ctx.DrawStringWrapped(User.Info, 620, 220, 0.5, 0, 780, 1, 1)
 
-	ctx.SetFontFace(*utils.GetFont("Mustard", 32))
-	ctx.DrawStringWrapped(I18n.Usages+". "+strconv.Itoa(int(User.Votes))+" upvotes", 610, 480, 0, 0, 460, 1, 0)
+	ctx.SetFontFace(*utils.GetFont("Sans", 34))
+	ctx.DrawStringWrapped(I18n.Usages+"\n"+strconv.Itoa(int(User.Votes))+" Upvotes || "+I18n.Mamado+" "+strconv.Itoa(int(User.Mamadas))+" || "+I18n.Mamou+" "+strconv.Itoa(int(User.Mamou)), 550, 480, 0.5, 0, 920, 1, 1)
+
+	utils.DrawBadges(ctx, User, 125, 637)
 
 	return ctx.Image()
 }
