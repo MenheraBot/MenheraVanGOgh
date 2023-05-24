@@ -47,7 +47,7 @@ func getResponseTextColor(theme string) string {
 	case "xp":
 		return "#000"
 	case "hello_kitty":
-		return "#e286f1"
+		return "#f836c7"
 	default:
 		return "#595959"
 	}
@@ -64,6 +64,14 @@ func getUsernameTextColor(theme string) string {
 	default:
 		return "#d89a30"
 	}
+}
+
+func getFontFaceByTheme(theme string) string {
+	if theme == "hello_kitty" {
+		return "Kawaii"
+	}
+
+	return "Sans"
 }
 
 func RenderEightball(data *EightballData) image.Image {
@@ -89,7 +97,7 @@ func RenderEightball(data *EightballData) image.Image {
 	ctx.SetHexColor(getUsernameTextColor(data.TextBoxTheme))
 	ctx.DrawStringAnchored(data.Username, 440, 339, 0.5, 0)
 
-	ctx.SetFontFace(*utils.GetFont("Sans", 36))
+	ctx.SetFontFace(*utils.GetFont(getFontFaceByTheme(data.TextBoxTheme), 36))
 
 	question := data.Question
 
@@ -99,6 +107,8 @@ func RenderEightball(data *EightballData) image.Image {
 
 	ctx.SetHexColor(getQuestionTextColor(data.TextBoxTheme))
 	ctx.DrawStringWrapped(question, 440, 380, 0.5, 0.5, 700, 1, 1)
+
+	ctx.SetFontFace(*utils.GetFont(getFontFaceByTheme(data.BackgroundTheme), 36))
 
 	ctx.SetHexColor(getResponseTextColor(data.BackgroundTheme))
 	ctx.DrawStringWrapped(data.Answer, 645, 140, 0.5, 0.5, 360, 1, 1)
