@@ -49,6 +49,8 @@ func GetFontColorByTableTheme(theme string) string {
 		return "#2aa321"
 	case "atemporal":
 		return "#a760e6"
+	case "hello_kitty":
+		return "#e894f5"
 	default:
 		return "#FFF"
 	}
@@ -57,6 +59,7 @@ func GetFontColorByTableTheme(theme string) string {
 func RenderBlackjack(data *BlackjackData) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
+	data.TableTheme = "hello_kitty"// TODO: Remove
 	tableImage := utils.GetAsset("tables/" + data.TableTheme + ".png")
 
 	ctx.DrawImage(tableImage, 0, 0)
