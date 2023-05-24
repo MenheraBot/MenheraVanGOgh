@@ -33,6 +33,8 @@ func getQuestionTextColor(theme string) string {
 		return "#FFF"
 	case "xp":
 		return "#000"
+	case "hello_kitty":
+		return "#d11964"
 	default:
 		return "#FFF"
 	}
@@ -44,6 +46,8 @@ func getResponseTextColor(theme string) string {
 		return "#595959"
 	case "xp":
 		return "#000"
+	case "hello_kitty":
+		return "#e286f1"
 	default:
 		return "#595959"
 	}
@@ -55,6 +59,8 @@ func getUsernameTextColor(theme string) string {
 		return "#d89a30"
 	case "xp":
 		return "#FFF"
+	case "hello_kitty":
+		return "#5b1aee"
 	default:
 		return "#d89a30"
 	}
