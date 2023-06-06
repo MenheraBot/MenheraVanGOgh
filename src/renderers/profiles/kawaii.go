@@ -19,7 +19,7 @@ func RenderKawaii(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 	ctx.DrawRectangle(0, 0, 1080, 720)
 	ctx.Fill()
 
-	userAvatar := utils.GetImageFromURL(User.Avatar, 300, db)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 300, 300, db)
 
 	ctx.DrawImage(userAvatar, 55, 50)
 

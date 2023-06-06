@@ -33,9 +33,9 @@ func rgbaToGray(img image.Image) *image.Gray {
 func RenderMacetava(data *MacetavaData, db *database.Database) image.Image {
 	ctx := gg.NewContext(1080, 882)
 
-	userImage := utils.GetImageFromURL(data.Image, 573, db)
+	userImage := utils.GetImageFromURL(data.Image, 573, 573, db)
 	userImageGayscale := rgbaToGray(userImage)
-	userAvatar := utils.GetImageFromURL(data.AuthorImage, 145, db)
+	userAvatar := utils.GetImageFromURL(data.AuthorImage, 145, 145, db)
 	macetavaImage := utils.GetAsset("/images/macetava.png")
 
 	ctx.DrawImage(userAvatar, 30, 18)

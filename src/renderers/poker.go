@@ -107,7 +107,7 @@ func RenderPokerTable(data *PokerTableData, db *database.Database) image.Image {
 	ctx.SetFontFace(*utils.GetFont("Arial", 16))
 
 	for i, user := range data.Users {
-		userAvatar := utils.GetImageFromURL(user.Avatar, 120, db)
+		userAvatar := utils.GetImageFromURL(user.Avatar, 120, 120, db)
 		drawAvatar(ctx, userAvatar, avatarLocations[i][0], avatarLocations[i][1], false)
 
 		if !user.Fold {

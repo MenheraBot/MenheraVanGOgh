@@ -12,7 +12,7 @@ import (
 func RenderHelloKitty(User *utils.UserData, I18n *utils.I18n, db *database.Database) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
-	userAvatar := utils.GetImageFromURL(User.Avatar, 200, db)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 200, 200, db)
 	backgroundImage := utils.GetAsset("/profiles/hello_kitty.png")
 
 	ctx.DrawImage(userAvatar, 20, 0)

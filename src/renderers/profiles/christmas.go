@@ -29,7 +29,7 @@ func RenderChristmas(User *utils.UserData, I18n *utils.I18n, db *database.Databa
 	ctx.SetHexColor("#000")
 	ctx.Stroke()
 
-	userAvatar := utils.GetImageFromURL(User.Avatar, 250, db)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 250, 250, db)
 
 	ctx.DrawCircle(193, 133, 125)
 	ctx.Clip()

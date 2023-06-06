@@ -19,7 +19,7 @@ func RenderWithoutSoul(User *utils.UserData, I18n *utils.I18n, db *database.Data
 	ctx.DrawRectangle(0, 0, 1080, 720)
 	ctx.Fill()
 
-	userAvatar := utils.GetImageFromURL(User.Avatar, 175, db)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 175, 175, db)
 
 	ctx.DrawImage(userAvatar, 85, 95)
 

@@ -19,7 +19,7 @@ func RenderWarrior(User *utils.UserData, I18n *utils.I18n, db *database.Database
 	ctx.DrawRectangle(0, 0, 1080, 720)
 	ctx.Fill()
 
-	userAvatar := utils.GetImageFromURL(User.Avatar, 226, db)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 226, 226, db)
 	ctx.DrawImage(userAvatar, 23, 0)
 
 	ctx.SetHexColor("#FFF")

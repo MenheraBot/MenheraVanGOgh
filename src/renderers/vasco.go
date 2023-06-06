@@ -21,7 +21,7 @@ func RenderVasco(data *VascoData, db *database.Database) image.Image {
 	ctx := gg.NewContext(800, 534)
 
 	vascoImage := utils.GetAsset("images/vasco_" + data.Quality + ".png")
-	userImage := utils.GetImageFromURL(data.User, 243, db)
+	userImage := utils.GetImageFromURL(data.User, 243, 243, db)
 
 	ctx.DrawImage(userImage, 65, 165)
 	ctx.DrawImage(vascoImage, 0, 0)

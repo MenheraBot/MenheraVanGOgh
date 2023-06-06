@@ -19,7 +19,7 @@ func RenderID03(User *utils.UserData, I18n *utils.I18n, db *database.Database) i
 	ctx.DrawRectangle(0, 0, 1080, 720)
 	ctx.Fill()
 
-	userAvatar := utils.GetImageFromURL(User.Avatar, 120, db)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 120, 120, db)
 
 	ctx.DrawImage(userAvatar, 225, 92)
 

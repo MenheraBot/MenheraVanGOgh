@@ -95,7 +95,7 @@ func GetAsset(path string) image.Image {
 	return img
 }
 
-func GetImageFromURL(url string, w int, db *database.Database) image.Image {
+func GetImageFromURL(url string, w int, h int, db *database.Database) image.Image {
 	var imagem image.Image = nil
 
 	if db.Client != nil {
@@ -127,7 +127,7 @@ func GetImageFromURL(url string, w int, db *database.Database) image.Image {
 		imagem = img
 	}
 
-	imagem = imaging.Fill(imagem, w, w, imaging.Center, imaging.NearestNeighbor)
+	imagem = imaging.Fill(imagem, w, h, imaging.Center, imaging.NearestNeighbor)
 
 	if db.Client != nil {
 		db.SetAvatar(url, w, imagem)

@@ -16,6 +16,7 @@ type MarryData struct {
 
 type UserData struct {
 	Color         string    `json:"color"`
+	Image         string    `json:"image"`
 	Id            string    `json:"id"`
 	Avatar        string    `json:"avatar"`
 	Votes         uint16    `json:"votes"`
@@ -39,10 +40,11 @@ type I18n struct {
 }
 
 type ProfileData struct {
-	User       UserData `json:"user"`
-	HashedData string   `json:"hashedData"`
-	I18n       I18n     `json:"i18n"`
-	Type       string   `json:"type"`
+	User        UserData `json:"user"`
+	HashedData  string   `json:"hashedData"`
+	I18n        I18n     `json:"i18n"`
+	Type        string   `json:"type"`
+	CustomEdits []string `json:"customEdits"`
 }
 
 const badgeSize = 64
@@ -73,6 +75,16 @@ func getUserBadges(user *UserData) []image.Image {
 	}
 
 	return images
+}
+
+func GetProfileCustomization(toSearch string, custom []string) bool {
+	for i, field := range custom {
+		if field == toSearch {
+			return custom[i+1] == "true"
+		}
+	}
+
+	return false
 }
 
 func DrawBadges(ctx *gg.Context, user *UserData, w, h int) {

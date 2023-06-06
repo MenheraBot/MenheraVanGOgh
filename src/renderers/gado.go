@@ -16,7 +16,7 @@ type GadoData struct {
 func RenderGado(data *GadoData, db *database.Database) image.Image {
 	ctx := gg.NewContext(1200, 526)
 
-	userImage := utils.GetImageFromURL(data.Image, 455, db)
+	userImage := utils.GetImageFromURL(data.Image, 455, 455, db)
 	gadoImage := utils.GetAsset("/images/gado.png")
 
 	ctx.DrawImage(userImage, 695, 0)

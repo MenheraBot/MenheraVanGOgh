@@ -14,7 +14,7 @@ func RenderGatito(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 
 	//
 
-	userAvatar := utils.GetImageFromURL(User.Avatar, 150, db)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 150, 150, db)
 
 	ctx.DrawImage(userAvatar, 540, 75)
 

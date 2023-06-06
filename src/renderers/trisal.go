@@ -18,9 +18,9 @@ type TrisalData struct {
 func RenderTrisal(data *TrisalData, db *database.Database) image.Image {
 	ctx := gg.NewContext(768, 256)
 
-	firstImage := utils.GetImageFromURL(data.UserOne, 256, db)
-	secondImage := utils.GetImageFromURL(data.UserTwo, 256, db)
-	thirdImage := utils.GetImageFromURL(data.UserThree, 256, db)
+	firstImage := utils.GetImageFromURL(data.UserOne, 256, 256, db)
+	secondImage := utils.GetImageFromURL(data.UserTwo, 256, 256, db)
+	thirdImage := utils.GetImageFromURL(data.UserThree, 256, 256, db)
 
 	ctx.DrawImage(firstImage, 0, 0)
 	ctx.DrawImage(secondImage, 256, 0)

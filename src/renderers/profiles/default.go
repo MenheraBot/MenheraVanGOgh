@@ -40,7 +40,7 @@ func RenderDefault(User *utils.UserData, I18n *utils.I18n, db *database.Database
 	ctx.SetHexColor("#000")
 	ctx.Stroke()
 
-	userAvatar := utils.GetImageFromURL(User.Avatar, 250, db)
+	userAvatar := utils.GetImageFromURL(User.Avatar, 250, 250, db)
 
 	ctx.SetHexColor("#000")
 	ctx.DrawCircle(120, 120, 130)
