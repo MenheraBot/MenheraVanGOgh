@@ -42,7 +42,7 @@ func (db *Database) SetCachedProfileImage(userId, profileString, image string) e
 		return err
 	}
 
-	err = db.Client.Set(ctx, "profile:"+userId+":hash", profileString, time.Second*10).Err()
+	err = db.Client.Set(ctx, "profile:"+userId+":hash", profileString, time.Minute*30).Err()
 
 	return err
 }
