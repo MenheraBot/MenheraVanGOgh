@@ -10,14 +10,20 @@ import (
 	"github.com/fogleman/gg"
 )
 
-func RenderFortification(User *utils.UserData, I18n *utils.I18n, db *database.Database) image.Image {
+func RenderFortification(User *utils.UserData, I18n *utils.I18n, customEdits []string, db *database.Database) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
 	baseColor := User.Color
 
-	ctx.SetHexColor(baseColor)
-	ctx.DrawRectangle(0, 0, 1080, 720)
-	ctx.Fill()
+	if utils.GetProfileCustomization("useImage", customEdits) {
+		backgroundImage := utils.GetImageFromURL(User.Image, 1080, 720, db)
+
+		ctx.DrawImage(backgroundImage, 0, 0)
+	} else {
+		ctx.SetHexColor(baseColor)
+		ctx.DrawRectangle(0, 0, 1080, 720)
+		ctx.Fill()
+	}
 
 	userAvatar := utils.GetImageFromURL(User.Avatar, 250, 250, db)
 	ctx.DrawCircle(200, 200, 125)
@@ -33,9 +39,12 @@ func RenderFortification(User *utils.UserData, I18n *utils.I18n, db *database.Da
 	ctx.DrawStringWrapped(User.Info, 50, 330, 0, 0, 800, 1, 0)
 
 	darkerColor := utils.ShadeColor(baseColor, -15)
-	ctx.SetHexColor(darkerColor)
-	ctx.DrawRectangle(0, 480, 1080, 720)
-	ctx.Fill()
+
+	if !utils.GetProfileCustomization("useImage", customEdits) {
+		ctx.SetHexColor(darkerColor)
+		ctx.DrawRectangle(0, 480, 1080, 720)
+		ctx.Fill()
+	}
 
 	backgroundImage := utils.GetAsset("/profiles/fortification.png")
 	ctx.DrawImage(backgroundImage, 0, 0)
@@ -56,11 +65,14 @@ func RenderFortification(User *utils.UserData, I18n *utils.I18n, db *database.Da
 	}
 
 	darkestThanTheDarkerColor := utils.ShadeColor(darkerColor, -10)
-	ctx.SetHexColor(darkestThanTheDarkerColor)
-	ctx.DrawRoundedRectangle(830, 270, 210, 200, 20)
-	ctx.FillPreserve()
-	ctx.SetHexColor("#000")
-	ctx.Stroke()
+
+	if !utils.GetProfileCustomization("useImage", customEdits) {
+		ctx.SetHexColor(darkestThanTheDarkerColor)
+		ctx.DrawRoundedRectangle(830, 270, 210, 200, 20)
+		ctx.FillPreserve()
+		ctx.SetHexColor("#000")
+		ctx.Stroke()
+	}
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 40))
 	ctx.SetHexColor(utils.GetCompatibleFontColor(darkestThanTheDarkerColor))

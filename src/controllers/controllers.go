@@ -225,11 +225,11 @@ func Profile(c *gin.Context, db *database.Database) {
 
 	switch data.Type {
 	case "fortification":
-		res = profiles.RenderFortification(&data.User, &data.I18n, db)
+		res = profiles.RenderFortification(&data.User, &data.I18n, data.CustomEdits, db)
 	case "warrior":
-		res = profiles.RenderWarrior(&data.User, &data.I18n, db)
+		res = profiles.RenderWarrior(&data.User, &data.I18n, data.CustomEdits, db)
 	case "christmas_2021":
-		res = profiles.RenderChristmas(&data.User, &data.I18n, db)
+		res = profiles.RenderChristmas(&data.User, &data.I18n, data.CustomEdits, db)
 	case "kawaii":
 		res = profiles.RenderKawaii(&data.User, &data.I18n, db)
 	case "id03":

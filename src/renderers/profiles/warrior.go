@@ -10,14 +10,20 @@ import (
 	"github.com/fogleman/gg"
 )
 
-func RenderWarrior(User *utils.UserData, I18n *utils.I18n, db *database.Database) image.Image {
+func RenderWarrior(User *utils.UserData, I18n *utils.I18n, customEdits []string, db *database.Database) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
 	baseColor := User.Color
 
-	ctx.SetHexColor(baseColor)
-	ctx.DrawRectangle(0, 0, 1080, 720)
-	ctx.Fill()
+	if utils.GetProfileCustomization("useImage", customEdits) {
+		backgroundImage := utils.GetImageFromURL(User.Image, 1080, 720, db)
+
+		ctx.DrawImage(backgroundImage, 0, 0)
+	} else {
+		ctx.SetHexColor(baseColor)
+		ctx.DrawRectangle(0, 0, 1080, 720)
+		ctx.Fill()
+	}
 
 	userAvatar := utils.GetImageFromURL(User.Avatar, 226, 226, db)
 	ctx.DrawImage(userAvatar, 23, 0)

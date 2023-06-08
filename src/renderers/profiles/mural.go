@@ -58,16 +58,14 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, customEdits []s
 	ctx.DrawRectangle(128, 635, 822, 66)
 	ctx.Fill()
 
-	if utils.GetProfileCustomization("forceWhiteInfo", customEdits) {
+	if utils.GetProfileCustomization("whiteUpperText", customEdits) {
 		ctx.SetHexColor("#FFF")
 	} else {
-		ctx.SetHexColor(utils.GetCompatibleFontColor(User.Color))
+		ctx.SetHexColor("#000")
 	}
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 38))
 	ctx.DrawStringWrapped(User.Info, 620, 220, 0.5, 0, 780, 1, 1)
-
-	ctx.SetHexColor(utils.GetCompatibleFontColor(User.Color))
 
 	if User.Married {
 		ctx.SetFontFace(*utils.GetFont("Sans", 42))
@@ -77,6 +75,12 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, customEdits []s
 	} else {
 		ctx.SetFontFace(*utils.GetFont("Sans", 50))
 		ctx.DrawStringWrapped(User.Tag, 260, 120, 0, 0.5, 750, 1, 0)
+	}
+
+	if utils.GetProfileCustomization("whiteBottomText", customEdits) {
+		ctx.SetHexColor("#FFF")
+	} else {
+		ctx.SetHexColor("#000")
 	}
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 34))

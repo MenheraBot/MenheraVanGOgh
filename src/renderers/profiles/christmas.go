@@ -10,24 +10,30 @@ import (
 	"github.com/fogleman/gg"
 )
 
-func RenderChristmas(User *utils.UserData, I18n *utils.I18n, db *database.Database) image.Image {
+func RenderChristmas(User *utils.UserData, I18n *utils.I18n, customEdits []string, db *database.Database) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
-	baseColor := User.Color
+	//baseColor :=
 
-	ctx.SetHexColor(baseColor)
-	ctx.DrawRectangle(67, 30, 950, 621)
-	ctx.Fill()
+	if utils.GetProfileCustomization("useImage", customEdits) {
+		backgroundImage := utils.GetImageFromURL(User.Image, 1080, 720, db)
 
-	darkerColor := utils.ShadeColor(baseColor, -15)
-	ctx.SetHexColor(darkerColor)
-	ctx.DrawRectangle(48, 465, 974, 187)
-	ctx.Fill()
+		ctx.DrawImage(backgroundImage, 0, 0)
+	} else {
+		ctx.SetHexColor(User.Color)
+		ctx.DrawRectangle(67, 30, 950, 621)
+		ctx.Fill()
 
-	ctx.DrawRoundedRectangle(370, 208, 557, 53, 20)
-	ctx.FillPreserve()
-	ctx.SetHexColor("#000")
-	ctx.Stroke()
+		darkerColor := utils.ShadeColor(User.Color, -15)
+		ctx.SetHexColor(darkerColor)
+		ctx.DrawRectangle(48, 465, 974, 187)
+		ctx.Fill()
+
+		ctx.DrawRoundedRectangle(370, 208, 557, 53, 20)
+		ctx.FillPreserve()
+		ctx.SetHexColor("#000")
+		ctx.Stroke()
+	}
 
 	userAvatar := utils.GetImageFromURL(User.Avatar, 250, 250, db)
 
@@ -55,7 +61,7 @@ func RenderChristmas(User *utils.UserData, I18n *utils.I18n, db *database.Databa
 	ctx.SetHexColor("#FF0000")
 	ctx.DrawStringAnchored(User.Username, 660, 100, 0.5, 0)
 
-	ctx.SetHexColor(utils.GetCompatibleFontColor(baseColor))
+	ctx.SetHexColor(utils.GetCompatibleFontColor(User.Color))
 	ctx.SetFontFace(*utils.GetFont("Impact", 32))
 	ctx.DrawStringWrapped(User.Info, 90, 540, 0, 1, 920, 1, 0)
 
