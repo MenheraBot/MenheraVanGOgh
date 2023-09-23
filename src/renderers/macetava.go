@@ -12,7 +12,6 @@ import (
 type MacetavaData struct {
 	Image               string `json:"image"` // 512
 	AuthorName          string `json:"authorName"`
-	AuthorDiscriminator string `json:"authorDiscriminator"`
 	AuthorImage         string `json:"authorImage"` // 128
 }
 
@@ -50,7 +49,7 @@ func RenderMacetava(data *MacetavaData, db *database.Database) image.Image {
 
 	ctx.SetFontFace(*utils.GetFont("Arial", 38))
 	ctx.SetHexColor("#86878C")
-	ctx.DrawString(data.AuthorName+"#"+data.AuthorDiscriminator, 250, 145)
+	ctx.DrawString(data.AuthorName, 250, 145)
 
 	return ctx.Image()
 }
