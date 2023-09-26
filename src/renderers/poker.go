@@ -132,15 +132,13 @@ func RenderPokerTable(data *PokerTableData, db *database.Database) image.Image {
 			ctx.Fill()
 		}
 
-		var anchorX float64 = 0
-		var toLeft uint16 = 75
+		var anchorX float64 = 0.5
 
 		if user.Seat == 1 && len(user.Name) > 15 {
 			anchorX = 0.3
 		}
 
 		if user.Seat == 6 {
-			toLeft = 70
 			if len(user.Name) > 15 {
 				anchorX = -0.3
 			}
@@ -160,7 +158,7 @@ func RenderPokerTable(data *PokerTableData, db *database.Database) image.Image {
 		}
 
 		ctx.SetColor(color.RGBA{R: 0, G: 0, B: 0, A: 180})
-		ctx.DrawRoundedRectangle(float64(avatarLocations[user.Seat][0])-textSize/2-10, float64(avatarLocations[user.Seat][1]-70), textSize+10, 36, 10)
+		ctx.DrawRoundedRectangle(float64(avatarLocations[user.Seat][0])-textSize/2-10, float64(avatarLocations[user.Seat][1]-70), textSize+20, 36, 10)
 		ctx.Fill()
 
 		if user.Fold {
@@ -169,9 +167,9 @@ func RenderPokerTable(data *PokerTableData, db *database.Database) image.Image {
 			ctx.SetHexColor("#FFF")
 		}
 
-		ctx.DrawStringWrapped(ctx.WordWrap(limitString(user.Name, 20), 140)[0], float64(avatarLocations[user.Seat][0]-toLeft), float64(avatarLocations[user.Seat][1]-70), anchorX, 0, 140, 1, 1)
+		ctx.DrawStringWrapped(ctx.WordWrap(limitString(user.Name, 20), 140)[0], float64(avatarLocations[user.Seat][0]), float64(avatarLocations[user.Seat][1]-70), anchorX, 0, 140, 1, 1)
 		ctx.SetHexColor("#FFFF00")
-		ctx.DrawStringWrapped(strconv.Itoa(user.Chips), float64(avatarLocations[user.Seat][0]-toLeft), float64(avatarLocations[user.Seat][1]-56), anchorX, 0, 140, 1, 1)
+		ctx.DrawStringWrapped(strconv.Itoa(user.Chips), float64(avatarLocations[user.Seat][0]), float64(avatarLocations[user.Seat][1]-56), anchorX, 0, 140, 1, 1)
 
 		if user.Dealer {
 			dealerBotton, _ := utils.GetResizedAsset("poker/dealer.png", 60, 60)

@@ -10,10 +10,10 @@ import (
 )
 
 type MacetavaData struct {
-	Image               string `json:"image"` // 512
-	AuthorName          string `json:"authorName"`
-	AuthorDisplayName	string `json:authorDisplayName`
-	AuthorImage         string `json:"authorImage"` // 128
+	Image             string `json:"image"` // 512
+	AuthorName        string `json:"authorName"`
+	AuthorDisplayName string `json:"authorDisplayName"`
+	AuthorImage       string `json:"authorImage"` // 128
 }
 
 func rgbaToGray(img image.Image) *image.Gray {
