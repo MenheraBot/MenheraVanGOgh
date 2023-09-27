@@ -171,7 +171,7 @@ func RenderPokerTable(data *PokerTableData, db *database.Database) image.Image {
 		ctx.SetHexColor("#FFFF00")
 		ctx.DrawStringWrapped(strconv.Itoa(user.Chips), float64(avatarLocations[user.Seat][0]), float64(avatarLocations[user.Seat][1]-56), anchorX, 0, 140, 1, 1)
 
-		if user.Dealer {
+		if user.Dealer && !data.Showdown {
 			dealerBotton, _ := utils.GetResizedAsset("poker/dealer.png", 60, 60)
 			ctx.DrawImageAnchored(dealerBotton, int(avatarLocations[user.Seat][0]-45), int(avatarLocations[user.Seat][1]+35), 0.5, 0.5)
 		}
