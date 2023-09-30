@@ -82,9 +82,9 @@ func getUserChipsImage(chips int) image.Image {
 
 	if chips < 10000 {
 		image, _ = utils.GetResizedAsset("poker/less_chips.png", 50, 50)
-	} else if chips < 100000 {
+	} else if chips < 50000 {
 		image, _ = utils.GetResizedAsset("poker/medium_chips.png", 60, 60)
-	} else if chips < 500000 {
+	} else if chips < 100000 {
 		image, _ = utils.GetResizedAsset("poker/lots_chips.png", 80, 80)
 	} else {
 		image, _ = utils.GetResizedAsset("poker/millions_chips.png", 80, 80)
@@ -115,6 +115,11 @@ func RenderPokerTable(data *PokerTableData, db *database.Database) image.Image {
 		userAvatar := utils.GetImageFromURL(user.Avatar, 120, 120, db)
 		drawAvatar(ctx, userAvatar, avatarLocations[user.Seat][0], avatarLocations[user.Seat][1], false)
 
+		if user.Won {
+			crownImage := utils.GetAsset("poker/crown.png")
+			ctx.DrawImageAnchored(crownImage, int(avatarLocations[user.Seat][0]), int(avatarLocations[user.Seat][1]-60), 0.5, 0.5)
+		}
+
 		if !user.Fold {
 			if data.Showdown {
 				for i, card := range user.Cards {
@@ -144,10 +149,11 @@ func RenderPokerTable(data *PokerTableData, db *database.Database) image.Image {
 			}
 		}
 
-		if !data.Showdown {
+		if !data.Showdown && user.Chips > 0 {
 			image := getUserChipsImage(user.Chips)
 			ctx.DrawImage(image, int(chipLocations[user.Seat][0]), int(chipLocations[user.Seat][1]))
 		}
+
 		nameSize, _ := ctx.MeasureString(limitString(user.Name, 20))
 		numberSize, _ := ctx.MeasureString(strconv.Itoa(user.Chips))
 
