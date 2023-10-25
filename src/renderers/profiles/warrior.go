@@ -45,8 +45,8 @@ func RenderWarrior(User *utils.UserData, I18n *utils.I18n, customEdits []string,
 	ctx.DrawStringWrapped(User.Marry.Username+" "+strings.Split(User.MarryDate, " ")[0], 380, 170, 0, 0.5, 600, 1, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 28))
-	ctx.DrawStringWrapped(I18n.Mamado+"\n"+strconv.Itoa(int(User.Mamou)), 940, 100, 0.5, 0.5, 600, 1, 1)
-	ctx.DrawStringWrapped(I18n.Mamou+"\n"+strconv.Itoa(int(User.Mamadas)), 940, 170, 0.5, 0.5, 600, 1, 1)
+	ctx.DrawStringWrapped(I18n.Mamado+"\n"+strconv.Itoa(int(User.Mamadas)), 940, 100, 0.5, 0.5, 600, 1, 1)
+	ctx.DrawStringWrapped(I18n.Mamou+"\n"+strconv.Itoa(int(User.Mamou)), 940, 170, 0.5, 0.5, 600, 1, 1)
 
 	utils.DrawBadges(ctx, User, 110, 620)
 
