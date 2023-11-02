@@ -36,19 +36,22 @@ func RenderWithoutSoul(User *utils.UserData, I18n *utils.I18n, db *database.Data
 		ctx.DrawStringWrapped(User.MarryUsername+" | "+strings.Split(User.MarryDate, " ")[0], 440, 325, 0, 1, 600, 1, 0)
 	}
 
-	fontSize := 30
+	ctx.SetFontFace(*utils.GetFont("Postamt", 30))
+
+	ctx.DrawStringAnchored(User.Title, 630, 73, 0.5, 0.5)
 
 	if len(User.Username) > 22 {
-		fontSize = 24
+		ctx.SetFontFace(*utils.GetFont("Postamt", 24))
 	}
 
-	ctx.SetFontFace(*utils.GetFont("Postamt", float64(fontSize)))
-	ctx.DrawStringWrapped(User.Username, 630, 127, 0.5, 0.5, 420, 1, 1)
+	ctx.DrawStringWrapped(User.Username, 630, 125, 0.5, 0.5, 420, 1, 1)
+
+	ctx.DrawStringAnchored(User.Title, 630, 73, 0.5, 0.5)
 
 	ctx.SetFontFace(*utils.GetFont("Postamt", 30))
 	ctx.DrawStringAnchored("Upvotes: "+strconv.Itoa(int(User.Votes)), 875, 620, 0.5, 0.5)
 
-	utils.DrawBadges(ctx, User, 135, 595)
+	utils.DrawBadges(ctx, User, 135, 590)
 
 	return ctx.Image()
 }
