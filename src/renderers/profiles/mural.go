@@ -17,6 +17,16 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, customEdits []s
 
 	ctx.DrawImage(backgroundImage, 0, 0)
 
+	ctx.SetHexColor(utils.ShadeColor(User.Color, 15))
+	ctx.DrawRectangle(182, 10, 580, 50)
+	ctx.Fill()
+
+	ctx.MoveTo(235, 60)
+	ctx.LineTo(892, 60)
+	ctx.LineTo(1030, 130)
+	ctx.LineTo(892, 202)
+	ctx.LineTo(235, 202)
+
 	ctx.SetHexColor(User.Color)
 	ctx.DrawCircle(131, 131, 130)
 	ctx.Fill()
@@ -24,12 +34,6 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, customEdits []s
 	ctx.Clip()
 	ctx.DrawImageAnchored(userAvatar, 131, 131, 0.5, 0.5)
 	ctx.ResetClip()
-
-	ctx.MoveTo(235, 60)
-	ctx.LineTo(892, 60)
-	ctx.LineTo(1030, 130)
-	ctx.LineTo(892, 202)
-	ctx.LineTo(235, 202)
 
 	ctx.SetLineWidth(15)
 
@@ -63,6 +67,9 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, customEdits []s
 	} else {
 		ctx.SetHexColor("#000")
 	}
+
+	ctx.SetFontFace(*utils.GetFont("Sans", 32))
+	ctx.DrawString(User.Title, 240, 48)
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 38))
 	ctx.DrawStringWrapped(User.Info, 620, 220, 0.5, 0, 780, 1, 1)
