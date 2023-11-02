@@ -19,7 +19,12 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, customEdits []s
 
 	ctx.SetHexColor(utils.ShadeColor(User.Color, 15))
 	ctx.DrawRectangle(182, 10, 580, 50)
-	ctx.Fill()
+
+	if utils.GetProfileCustomization("textBoxFilled", customEdits) {
+		ctx.Fill()
+	} else {
+		ctx.Stroke()
+	}
 
 	ctx.MoveTo(235, 60)
 	ctx.LineTo(892, 60)
