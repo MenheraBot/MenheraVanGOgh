@@ -31,14 +31,14 @@ func RenderID03(User *utils.UserData, I18n *utils.I18n, db *database.Database) i
 
 	ctx.SetHexColor("#FFF")
 	ctx.SetFontFace(*utils.GetFont("Pixellari", 32))
-	ctx.DrawStringWrapped(User.Tag, 425, 160, 0, 1, 420, 0, 0)
+	ctx.DrawStringWrapped(User.Username, 425, 160, 0, 1, 420, 0, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Pixellari", 24))
 	ctx.DrawStringWrapped(User.Info, 200, 540, 0, 0.5, 700, 1, 0)
 
 	if User.Married {
 		ctx.SetFontFace(*utils.GetFont("Pixellari", 20))
-		ctx.DrawStringWrapped(User.Marry.Username+" "+strings.Split(User.MarryDate, " ")[0], 445, 220, 0, 1, 600, 1, 0)
+		ctx.DrawStringWrapped(User.MarryUsername+" "+strings.Split(User.MarryDate, " ")[0], 445, 220, 0, 1, 600, 1, 0)
 	}
 
 	fontSize := 24

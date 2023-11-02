@@ -12,8 +12,6 @@ import (
 func RenderGatito(User *utils.UserData, I18n *utils.I18n, db *database.Database) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
-	//
-
 	userAvatar := utils.GetImageFromURL(User.Avatar, 150, 150, db)
 
 	ctx.DrawImage(userAvatar, 540, 75)
@@ -26,11 +24,11 @@ func RenderGatito(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 	ctx.SetFontFace(*utils.GetFont("Mustard", 36))
 	ctx.DrawStringWrapped("\u200e   "+User.Info, 827, 270, 0.5, 0, 455, 1, 0)
 
-	ctx.DrawStringWrapped(User.Tag, 610, 105, 0, 0, 455, 1, 1)
+	ctx.DrawStringWrapped(User.Username, 610, 105, 0, 0, 455, 1, 1)
 
 	if User.Married {
 		ctx.SetFontFace(*utils.GetFont("Mustard", 32))
-		ctx.DrawStringWrapped(User.Marry.Tag, 620, 140, 0, 0, 430, 1, 1)
+		ctx.DrawStringWrapped(User.MarryUsername, 620, 140, 0, 0, 430, 1, 1)
 	}
 
 	utils.DrawVerticalBadges(ctx, User, 52, 38)

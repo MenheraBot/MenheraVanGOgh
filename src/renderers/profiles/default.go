@@ -54,7 +54,7 @@ func RenderDefault(User *utils.UserData, I18n *utils.I18n, db *database.Database
 	ctx.SetHexColor(utils.GetCompatibleFontColor(darker))
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 50))
-	ctx.DrawStringWrapped(User.Tag, 255, 80, 0, 0.5, 650, 1, 0)
+	ctx.DrawStringWrapped(User.Username, 255, 80, 0, 0.5, 650, 1, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 45))
 	ctx.DrawStringAnchored("Upvotes", 860, 60, 0, 0)
@@ -78,7 +78,7 @@ func RenderDefault(User *utils.UserData, I18n *utils.I18n, db *database.Database
 	ctx.SetFontFace(*utils.GetFont("Sans", 40))
 	if User.Married {
 		ringEmoji, _ := utils.GetResizedAsset("badges/17.png", 64, 64)
-		ctx.DrawStringAnchored(User.Marry.Tag+" | "+User.MarryDate, 80, 535, 0, 0)
+		ctx.DrawStringAnchored(User.MarryUsername+" | "+User.MarryDate, 80, 535, 0, 0)
 		ctx.DrawImage(ringEmoji, 10, 490)
 	}
 

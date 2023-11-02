@@ -55,11 +55,11 @@ func RenderFortification(User *utils.UserData, I18n *utils.I18n, customEdits []s
 	ctx.DrawStringWrapped(I18n.Usages+" | "+strconv.Itoa(int(User.Votes))+" Upvotes", 50, 545, 0, 0.5, 970, 1, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 36))
-	ctx.DrawStringAnchored(User.Tag, 630, 170, 0.5, 0)
+	ctx.DrawStringAnchored(User.Username, 630, 170, 0.5, 0)
 
 	if User.Married {
 		ctx.SetFontFace(*utils.GetFont("Sans", 28))
-		ctx.DrawStringWrapped(User.Marry.Username+" | "+strings.Split(User.MarryDate, " ")[0], 400, 240, 0, 0.5, 600, 1, 0)
+		ctx.DrawStringWrapped(User.MarryUsername+" | "+strings.Split(User.MarryDate, " ")[0], 400, 240, 0, 0.5, 600, 1, 0)
 		ringEmoji, _ := utils.GetResizedAsset("badges/17.png", 42, 42)
 		ctx.DrawImage(ringEmoji, 360, 220)
 	}

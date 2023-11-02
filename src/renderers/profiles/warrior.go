@@ -39,10 +39,10 @@ func RenderWarrior(User *utils.UserData, I18n *utils.I18n, customEdits []string,
 	ctx.DrawImage(background, 0, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Warrior", 28))
-	ctx.DrawStringAnchored(User.Tag, 330, 140, 0, 0)
+	ctx.DrawStringAnchored(User.Username, 330, 140, 0, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Warrior", 16))
-	ctx.DrawStringWrapped(User.Marry.Username+" "+strings.Split(User.MarryDate, " ")[0], 380, 170, 0, 0.5, 600, 1, 0)
+	ctx.DrawStringWrapped(User.MarryUsername+" "+strings.Split(User.MarryDate, " ")[0], 380, 170, 0, 0.5, 600, 1, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 28))
 	ctx.DrawStringWrapped(I18n.Mamado+"\n"+strconv.Itoa(int(User.Mamadas)), 940, 100, 0.5, 0.5, 600, 1, 1)

@@ -69,12 +69,12 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, customEdits []s
 
 	if User.Married {
 		ctx.SetFontFace(*utils.GetFont("Sans", 42))
-		ctx.DrawStringWrapped(User.Tag, 260, 90, 0, 0.5, 750, 1, 0)
+		ctx.DrawStringWrapped(User.Username, 260, 90, 0, 0.5, 750, 1, 0)
 		ctx.SetFontFace(*utils.GetFont("Sans", 38))
-		ctx.DrawStringWrapped(User.Marry.Tag, 260, 150, 0, 0.5, 750, 1, 0)
+		ctx.DrawStringWrapped(User.MarryUsername, 260, 150, 0, 0.5, 750, 1, 0)
 	} else {
 		ctx.SetFontFace(*utils.GetFont("Sans", 50))
-		ctx.DrawStringWrapped(User.Tag, 260, 120, 0, 0.5, 750, 1, 0)
+		ctx.DrawStringWrapped(User.Username, 260, 120, 0, 0.5, 750, 1, 0)
 	}
 
 	if utils.GetProfileCustomization("whiteBottomText", customEdits) {

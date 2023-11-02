@@ -67,7 +67,7 @@ func RenderChristmas(User *utils.UserData, I18n *utils.I18n, customEdits []strin
 
 	if User.Married {
 		ctx.SetFontFace(*utils.GetFont("Sans", 24))
-		ctx.DrawStringWrapped(User.Marry.Username+" "+strings.Split(User.MarryDate, " ")[0], 400, 140, 0, 1, 600, 1, 0)
+		ctx.DrawStringWrapped(User.MarryUsername+" "+strings.Split(User.MarryDate, " ")[0], 400, 140, 0, 1, 600, 1, 0)
 	}
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 32))

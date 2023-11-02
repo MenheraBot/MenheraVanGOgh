@@ -246,6 +246,8 @@ func Profile(c *gin.Context, db *database.Database) {
 		res = profiles.RenderPersonalSpace(&data.User, &data.I18n, data.CustomEdits, db)
 	case "hello_kitty":
 		res = profiles.RenderHelloKitty(&data.User, &data.I18n, db)
+	case "sunflower":
+		res = profiles.RenderSunflower(&data.User, &data.I18n, db)
 	default:
 		res = profiles.RenderDefault(&data.User, &data.I18n, db)
 	}

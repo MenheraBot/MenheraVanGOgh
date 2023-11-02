@@ -11,25 +11,24 @@ import (
 
 type MarryData struct {
 	Username string `json:"username"`
-	Tag      string `json:"tag"`
 }
 
 type UserData struct {
-	Color         string    `json:"color"`
-	Image         string    `json:"image"`
-	Id            string    `json:"id"`
-	Avatar        string    `json:"avatar"`
-	Votes         uint16    `json:"votes"`
-	Info          string    `json:"info"`
-	Tag           string    `json:"tag"`
-	Badges        []uint8   `json:"badges"`
-	HiddingBadges []uint8   `json:"hiddingBadges"`
-	Username      string    `json:"username"`
-	Mamadas       int32     `json:"mamadas"`
-	Mamou         int32     `json:"mamou"`
-	MarryDate     string    `json:"marryDate"`
-	Marry         MarryData `json:"marry"`
-	Married       bool      `json:"married"`
+	Color         string  `json:"color"`
+	Image         string  `json:"image"`
+	Id            string  `json:"id"`
+	Avatar        string  `json:"avatar"`
+	Votes         uint16  `json:"votes"`
+	Info          string  `json:"info"`
+	Badges        []uint8 `json:"badges"`
+	HiddingBadges []uint8 `json:"hiddingBadges"`
+	Username      string  `json:"username"`
+	Mamadas       int32   `json:"mamadas"`
+	Mamou         int32   `json:"mamou"`
+	Title         string  `json:"title"`
+	MarryDate     string  `json:"marryDate"`
+	MarryUsername string  `json:"marryUsername"`
+	Married       bool    `json:"married"`
 }
 
 type I18n struct {

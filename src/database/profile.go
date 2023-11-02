@@ -9,7 +9,7 @@ import (
 func (db *Database) GetCachedProfileImage(userId, profileString string) (string, error) {
 	ctx, finishCtx := RedisContext()
 
-	res, err := db.Client.Get(ctx, "profile:"+userId+":hash").Result()
+	res, err := db.Client.Get(ctx, "profile:"+userId+":hashs").Result()
 	finishCtx()
 
 	if err != nil {

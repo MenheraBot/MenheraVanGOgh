@@ -33,7 +33,7 @@ func RenderWithoutSoul(User *utils.UserData, I18n *utils.I18n, db *database.Data
 
 	if User.Married {
 		ctx.SetFontFace(*utils.GetFont("Gabrielle", 32))
-		ctx.DrawStringWrapped(User.Marry.Username+" | "+strings.Split(User.MarryDate, " ")[0], 440, 325, 0, 1, 600, 1, 0)
+		ctx.DrawStringWrapped(User.MarryUsername+" | "+strings.Split(User.MarryDate, " ")[0], 440, 325, 0, 1, 600, 1, 0)
 	}
 
 	fontSize := 30
@@ -43,7 +43,7 @@ func RenderWithoutSoul(User *utils.UserData, I18n *utils.I18n, db *database.Data
 	}
 
 	ctx.SetFontFace(*utils.GetFont("Postamt", float64(fontSize)))
-	ctx.DrawStringWrapped(User.Tag, 630, 127, 0.5, 0.5, 420, 1, 1)
+	ctx.DrawStringWrapped(User.Username, 630, 127, 0.5, 0.5, 420, 1, 1)
 
 	ctx.SetFontFace(*utils.GetFont("Postamt", 30))
 	ctx.DrawStringAnchored("Upvotes: "+strconv.Itoa(int(User.Votes)), 875, 620, 0.5, 0.5)

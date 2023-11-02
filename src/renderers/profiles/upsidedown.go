@@ -49,7 +49,7 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, db *database.Datab
 
 	ctx.SetHexColor(utils.GetCompatibleFontColor(darkestThanTheDarkerColor))
 	ctx.SetFontFace(*utils.GetFont("Sans", 50))
-	ctx.DrawStringWrapped(User.Tag, 255, 635, 0, 0.5, 650, 1, 0)
+	ctx.DrawStringWrapped(User.Username, 255, 635, 0, 0.5, 650, 1, 0)
 
 	ctx.SetHexColor("#000")
 	ctx.DrawCircle(960, 600, 130)
@@ -79,7 +79,7 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, db *database.Datab
 
 	if User.Married {
 		ringEmoji, _ := utils.GetResizedAsset("badges/17.png", 64, 64)
-		ctx.DrawStringAnchored(User.Marry.Tag+" | "+User.MarryDate, 80, 210, 0, 0)
+		ctx.DrawStringAnchored(User.MarryUsername+" | "+User.MarryDate, 80, 210, 0, 0)
 		ctx.DrawImage(ringEmoji, 10, 165)
 	}
 
