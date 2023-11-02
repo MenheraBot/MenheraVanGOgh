@@ -19,18 +19,7 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, customEdits []s
 
 	ctx.SetHexColor(utils.ShadeColor(User.Color, 15))
 	ctx.DrawRectangle(182, 10, 580, 50)
-
-	if utils.GetProfileCustomization("textBoxFilled", customEdits) {
-		ctx.Fill()
-	} else {
-		ctx.Stroke()
-	}
-
-	ctx.MoveTo(235, 60)
-	ctx.LineTo(892, 60)
-	ctx.LineTo(1030, 130)
-	ctx.LineTo(892, 202)
-	ctx.LineTo(235, 202)
+	ctx.Fill()
 
 	ctx.SetHexColor(User.Color)
 	ctx.DrawCircle(131, 131, 130)
@@ -39,6 +28,12 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, customEdits []s
 	ctx.Clip()
 	ctx.DrawImageAnchored(userAvatar, 131, 131, 0.5, 0.5)
 	ctx.ResetClip()
+
+	ctx.MoveTo(235, 60)
+	ctx.LineTo(892, 60)
+	ctx.LineTo(1030, 130)
+	ctx.LineTo(892, 202)
+	ctx.LineTo(235, 202)
 
 	ctx.SetLineWidth(15)
 
