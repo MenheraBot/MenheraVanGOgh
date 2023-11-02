@@ -23,6 +23,9 @@ func RenderHelloKitty(User *utils.UserData, I18n *utils.I18n, db *database.Datab
 	ctx.SetFontFace(*utils.GetFont("Kawaii", 54))
 	ctx.DrawStringWrapped(User.Username, 355, 100, 0, 0.5, 750, 1, 0)
 
+	ctx.SetFontFace(*utils.GetFont("Kawaii", 48))
+	ctx.DrawStringAnchored(User.Title, 590, 10, 0.5, 0.5)
+
 	if User.Married {
 		ctx.SetFontFace(*utils.GetFont("Kawaii", 32))
 		ctx.DrawStringWrapped(User.MarryUsername, 355, 140, 0, 0.5, 750, 1, 0)
