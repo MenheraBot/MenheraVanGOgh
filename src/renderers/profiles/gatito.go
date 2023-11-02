@@ -26,6 +26,9 @@ func RenderGatito(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 
 	ctx.DrawStringWrapped(User.Username, 610, 105, 0, 0, 455, 1, 1)
 
+	ctx.SetFontFace(*utils.GetFont("Mustard", 42))
+	ctx.DrawStringAnchored(User.Title, 539, 20, 0.5, 0.5)
+
 	if User.Married {
 		ctx.SetFontFace(*utils.GetFont("Mustard", 32))
 		ctx.DrawStringWrapped(User.MarryUsername, 620, 140, 0, 0, 430, 1, 1)
