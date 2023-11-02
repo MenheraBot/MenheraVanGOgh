@@ -29,8 +29,12 @@ func RenderID03(User *utils.UserData, I18n *utils.I18n, db *database.Database) i
 
 	utils.DrawBadges(ctx, User, 408, 435)
 
-	ctx.SetHexColor("#FFF")
 	ctx.SetFontFace(*utils.GetFont("Pixellari", 32))
+
+	ctx.SetHexColor(utils.GetCompatibleFontColor(User.Color))
+	ctx.DrawStringAnchored(User.Title, 540, 10, 0.5, 0.5)
+
+	ctx.SetHexColor("#FFF")
 	ctx.DrawStringWrapped(User.Username, 425, 160, 0, 1, 420, 0, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Pixellari", 24))
