@@ -54,8 +54,14 @@ func RenderFortification(User *utils.UserData, I18n *utils.I18n, customEdits []s
 
 	ctx.DrawStringWrapped(I18n.Usages+" | "+strconv.Itoa(int(User.Votes))+" Upvotes", 50, 545, 0, 0.5, 970, 1, 0)
 
+	ctx.SetHexColor("#fff")
 	ctx.SetFontFace(*utils.GetFont("Sans", 36))
-	ctx.DrawStringAnchored(User.Username, 630, 170, 0.5, 0)
+	ctx.DrawStringAnchored(User.Username, 630, 140, 0.5, 0)
+
+	ctx.SetFontFace(*utils.GetFont("Arial", 36))
+	utils.StrokeText(ctx, User.Title, 630, 190, 2, 0.5, 0, "#000")
+	ctx.SetHexColor("#fff")
+	ctx.DrawStringAnchored(User.Title, 630, 190, 0.5, 0)
 
 	if User.Married {
 		ctx.SetFontFace(*utils.GetFont("Sans", 28))
