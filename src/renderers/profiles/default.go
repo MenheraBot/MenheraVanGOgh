@@ -54,7 +54,10 @@ func RenderDefault(User *utils.UserData, I18n *utils.I18n, db *database.Database
 	ctx.SetHexColor(utils.GetCompatibleFontColor(darker))
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 50))
-	ctx.DrawStringWrapped(User.Username, 255, 80, 0, 0.5, 650, 1, 0)
+	ctx.DrawStringWrapped(User.Username, 255, 100, 0, 0.5, 650, 1, 0)
+
+	ctx.SetFontFace(*utils.GetFont("Arial", 45))
+	ctx.DrawStringAnchored(User.Title, 530, 30, 0.5, 0.5)
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 45))
 	ctx.DrawStringAnchored("Upvotes", 860, 60, 0, 0)

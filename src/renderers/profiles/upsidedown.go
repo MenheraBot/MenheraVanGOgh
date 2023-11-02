@@ -49,7 +49,10 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, db *database.Datab
 
 	ctx.SetHexColor(utils.GetCompatibleFontColor(darkestThanTheDarkerColor))
 	ctx.SetFontFace(*utils.GetFont("Sans", 50))
-	ctx.DrawStringWrapped(User.Username, 255, 635, 0, 0.5, 650, 1, 0)
+	ctx.DrawStringWrapped(User.Username, 255, 590, 0, 0.5, 650, 1, 0)
+
+	ctx.SetFontFace(*utils.GetFont("Arial", 45))
+	ctx.DrawStringAnchored(User.Title, 530, 670, 0.5, 0.5)
 
 	ctx.SetHexColor("#000")
 	ctx.DrawCircle(960, 600, 130)
