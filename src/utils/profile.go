@@ -92,6 +92,12 @@ func DrawBadges(ctx *gg.Context, user *UserData, w, h int) {
 	}
 }
 
+func DrawBadgesWrapped(ctx *gg.Context, user *UserData, w, h int, limit uint8) {
+	for i, badge := range getUserBadges(user) {
+		ctx.DrawImage(badge, (i%int(limit))*badgeSize+w, int(i/int(limit))*badgeSize+h)
+	}
+}
+
 func DrawVerticalBadges(ctx *gg.Context, user *UserData, w, h int) {
 	for i, badge := range getUserBadges(user) {
 		ctx.DrawImage(badge, w, i*badgeSize+h)
