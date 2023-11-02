@@ -37,13 +37,15 @@ func RenderKawaii(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamadas)), 880, 620, 0.5, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Kawaii", 72))
-	ctx.DrawStringAnchored(User.Username, 420, 200, 0, 0)
+	ctx.DrawStringAnchored(User.Username, 420, 140, 0, 0.5)
+
+	ctx.DrawStringAnchored(User.Title, 695, 230, 0.5, 0.5)
 
 	if User.Married {
 		ctx.SetFontFace(*utils.GetFont("Kawaii", 36))
-		ctx.DrawStringWrapped(User.MarryUsername+" "+strings.Split(User.MarryDate, " ")[0], 460, 290, 0, 1, 600, 1, 0)
+		ctx.DrawStringWrapped(User.MarryUsername+" "+strings.Split(User.MarryDate, " ")[0], 460, 330, 0, 1, 600, 1, 0)
 		ringEmoji, _ := utils.GetResizedAsset("/badges/17.png", 42, 42)
-		ctx.DrawImage(ringEmoji, 415, 260)
+		ctx.DrawImage(ringEmoji, 415, 300)
 	}
 
 	ctx.SetFontFace(*utils.GetFont("Kawaii", 32))
