@@ -37,7 +37,7 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, customEdits []s
 
 	ctx.SetLineWidth(15)
 
-	if utils.GetProfileCustomization("textBoxFilled", customEdits) {
+	if utils.GetProfileCustomization("upperTextBoxFilled", customEdits) {
 		ctx.Fill()
 	} else {
 		ctx.Stroke()
@@ -51,7 +51,7 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, customEdits []s
 	ctx.LineTo(121, 574)
 	ctx.LineTo(47, 465)
 
-	if utils.GetProfileCustomization("textBoxFilled", customEdits) {
+	if utils.GetProfileCustomization("bottomTextBoxFilled", customEdits) {
 		ctx.Fill()
 	} else {
 		ctx.Stroke()
