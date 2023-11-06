@@ -51,7 +51,7 @@ func RenderSunflower(User *utils.UserData, I18n *utils.I18n, db *database.Databa
 
 	ctx.SetHexColor("#fff")
 	ctx.SetFontFace(*utils.GetFont("Arial", 38))
-	ctx.DrawStringAnchored(ctx.WordWrap(User.Title, 460)[0], 300, 660, 0.5, 0)
+	ctx.DrawStringAnchored(User.Title, 300, 660, 0.5, 0)
 
 	utils.DrawBadges(ctx, User, 270, 155)
 
