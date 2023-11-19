@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
 	"time"
@@ -33,6 +34,11 @@ func main() {
 
 	database := initializeDatabase()
 
+	router.HEAD("/ping", func(c *gin.Context) {
+		c.Header("Content-Type", "application/json; charset=utf-8")
+		c.Status(http.StatusOK)
+	})
+
 	router.GET("/ping", func(c *gin.Context) {
 		returnPing(c, httpStartTime, database)
 	})
@@ -41,7 +47,7 @@ func main() {
 		token := c.GetHeader("Authorization")
 
 		if token != os.Getenv("TOKEN") {
-			c.Status(401)
+			c.Status(http.StatusUnauthorized)
 			c.Abort()
 			return
 		}
@@ -123,7 +129,7 @@ func appendVanGOghRoutes(router *gin.Engine, db *database.Database) *gin.Engine 
 
 func returnPing(c *gin.Context, startTime time.Time, db *database.Database) {
 
-	http := HttpPing{
+	response := HttpPing{
 		Uptime: time.Since(startTime).Milliseconds(),
 	}
 
@@ -146,9 +152,9 @@ func returnPing(c *gin.Context, startTime time.Time, db *database.Database) {
 	}
 
 	returnData := PingStruct{
-		Http:  http,
+		Http:  response,
 		Redis: redisPing,
 	}
 
-	c.JSON(200, returnData)
+	c.JSON(http.StatusOK, returnData)
 }
