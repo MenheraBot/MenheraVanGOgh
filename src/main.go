@@ -10,8 +10,10 @@ import (
 
 	"github.com/MenheraBot/MenheraVanGOgh/src/controllers"
 	"github.com/MenheraBot/MenheraVanGOgh/src/database"
+	"github.com/MenheraBot/MenheraVanGOgh/src/middleware"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 type HttpPing struct {
@@ -29,6 +31,7 @@ func main() {
 	router := gin.New()
 	router.Use(gin.Recovery())
 	router.Use(cors.Default())
+	router.Use(middleware.MetricsMiddleware())
 
 	httpStartTime := time.Now()
 
@@ -42,6 +45,8 @@ func main() {
 	router.GET("/ping", func(c *gin.Context) {
 		returnPing(c, httpStartTime, database)
 	})
+
+	router.Any("/metrics", gin.WrapH(promhttp.HandlerFor(middleware.GetCustomRegistry(), promhttp.HandlerOpts{})))
 
 	router.Use(func(c *gin.Context) {
 		token := c.GetHeader("Authorization")
