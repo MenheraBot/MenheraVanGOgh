@@ -252,6 +252,8 @@ func Profile(c *gin.Context, db *database.Database) {
 		res = profiles.RenderGallery(&data.User, &data.I18n, db)
 	case "website":
 		res = profiles.RenderWebsite(&data.User, &data.I18n, db)
+	case "memories":
+		res = profiles.RenderMemories(&data.User, &data.I18n, data.CustomEdits, db)
 	default:
 		res = profiles.RenderDefault(&data.User, &data.I18n, db)
 	}

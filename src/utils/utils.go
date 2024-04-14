@@ -109,6 +109,7 @@ func GetImageFromURL(url string, w int, h int, db *database.Database) image.Imag
 	res, err := http.Get(url)
 
 	if err != nil {
+		log.Println(err)
 		return defaultImage()
 	}
 
@@ -119,6 +120,7 @@ func GetImageFromURL(url string, w int, h int, db *database.Database) image.Imag
 	if err != nil {
 		webpData, errr := webp.Decode(res.Body)
 		if errr != nil {
+			log.Println(err)
 			return defaultImage()
 		}
 		imagem = webpData
