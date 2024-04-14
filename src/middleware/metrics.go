@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -17,8 +16,7 @@ var (
 			Help:    "Duration of HTTP requests in milliseconds",
 			Buckets: []float64{50, 80, 100, 250, 500, 1000, 2000, 3000},
 		},
-		[]string{"route", "status_code"},
-	)
+		[]string{"route"})
 
 	requestsTotal = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
@@ -45,7 +43,7 @@ func MetricsMiddleware() gin.HandlerFunc {
 
 		if c.Request.Method == "POST" {
 			duration := time.Since(start).Milliseconds()
-			requestDuration.WithLabelValues(c.Request.URL.Path, strconv.Itoa(c.Writer.Status())).Observe(float64(duration))
+			requestDuration.WithLabelValues(c.Request.URL.Path).Observe(float64(duration))
 		}
 	}
 }

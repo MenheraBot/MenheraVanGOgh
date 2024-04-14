@@ -13,7 +13,7 @@ func (db *Database) GetCachedProfileImage(userId, profileString string) (string,
 	finishCtx()
 
 	if err != nil {
-		return "", err
+		return "", err 
 	}
 
 	if res == profileString {
