@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"strconv"
@@ -63,6 +64,26 @@ func main() {
 	})
 
 	router = appendVanGOghRoutes(router, database)
+
+	socketPath := os.Getenv("SOCKET_PATH")
+
+	if socketPath != "" {
+		go func() {
+			socket, err := net.Listen("unix", socketPath)
+
+			if err != nil {
+				log.Println("Error to setup unix socket")
+				log.Panic(err)
+			} else {
+				defer socket.Close()
+
+				log.Printf("Running unix socket on %s\n", socketPath)
+				http.Serve(socket, router.Handler())
+			}
+		}()
+	} else {
+		log.Println("No SOCKET_PATH defined to setup unix socket server")
+	}
 
 	log.Println("Listening and serving HTTP on :2080")
 
