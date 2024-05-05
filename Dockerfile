@@ -15,7 +15,7 @@ WORKDIR app
 COPY --from=builder /app/vangogh vangogh
 COPY assets assets
 
-USER vangogh
+USER root
 EXPOSE 2080
 
 ENTRYPOINT ["/app/vangogh"]
