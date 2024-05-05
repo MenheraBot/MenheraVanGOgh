@@ -1,8 +1,5 @@
 FROM golang:1.20-alpine AS builder
 
-ENV USER=appuser
-ENV UID=10001
-
 WORKDIR /app
 
 COPY . .
@@ -18,7 +15,7 @@ WORKDIR app
 COPY --from=builder /app/vangogh vangogh
 COPY assets assets
 
-USER root
+USER vangogh
 EXPOSE 2080
 
 ENTRYPOINT ["/app/vangogh"]
