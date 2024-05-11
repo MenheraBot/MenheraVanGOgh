@@ -6,7 +6,9 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"os/signal"
 	"strconv"
+	"syscall"
 	"time"
 
 	"github.com/MenheraBot/MenheraVanGOgh/src/controllers"
@@ -69,13 +71,21 @@ func main() {
 
 	if socketPath != "" {
 		go func() {
+			os.Remove(socketPath)
 			socket, err := net.Listen("unix", socketPath)
 
 			if err != nil {
-				log.Println("Error to setup unix socket")
-				log.Panic(err)
+				log.Println("Error to setup unix socket", err)
 			} else {
-				defer socket.Close()
+				sigc := make(chan os.Signal, 1)
+				signal.Notify(sigc, os.Interrupt, syscall.SIGTERM)
+
+				go func(c chan os.Signal) {
+					sig := <-c
+					log.Printf("Caught signal %s: Closing socket.", sig)
+					socket.Close()
+					os.Exit(0)
+				}(sigc)
 
 				log.Printf("Running unix socket on %s\n", socketPath)
 				http.Serve(socket, router.Handler())
