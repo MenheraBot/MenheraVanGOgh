@@ -51,6 +51,8 @@ func GetFontColorByTableTheme(theme string) string {
 		return "#a760e6"
 	case "hello_kitty":
 		return "#7529a8"
+	case "berserk":
+		return "#9e9e9e"
 	default:
 		return "#FFF"
 	}
