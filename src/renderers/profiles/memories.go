@@ -28,7 +28,7 @@ func RenderMemories(User *utils.UserData, I18n *utils.I18n, customEdits []string
 	ctx.DrawImageAnchored(userAvatar, 170, 155, 0.5, 0.5)
 	ctx.ResetClip()
 
-	backgroundImage := utils.GetAsset("/profiles/memories.png")
+	backgroundImage := utils.GetAsset("/profiles/memories.png", db.ImageCache)
 	ctx.DrawImage(backgroundImage, 0, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 56))
@@ -93,7 +93,7 @@ func RenderMemories(User *utils.UserData, I18n *utils.I18n, customEdits []string
 		ctx.DrawStringWrapped(splittedUsages[1], 600, 580, 0, 0, 430, 1, gg.AlignLeft)
 	}
 
-	utils.DrawBadges(ctx, User, 120, 271)
+	utils.DrawBadges(ctx, db.ImageCache, User, 120, 271)
 
 	return ctx.Image()
 }

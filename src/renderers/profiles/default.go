@@ -91,7 +91,7 @@ func RenderDefault(User *utils.UserData, I18n *utils.I18n, db *database.Database
 	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamadas)), 960, 335, 0.5, 0)
 	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamou)), 960, 425, 0.5, 0)
 
-	utils.DrawBadges(ctx, User, 230, 170)
+	utils.DrawBadges(ctx, db.ImageCache, User, 230, 170)
 
 	return ctx.Image()
 }

@@ -18,7 +18,7 @@ var encoder = png.Encoder{
 	CompressionLevel: png.BestSpeed,
 }
 
-func Astolfo(c *gin.Context) {
+func Astolfo(c *gin.Context, db *database.Cache) {
 	data := new(renderers.AstolfoData)
 
 	err := c.BindJSON(data)
@@ -27,7 +27,7 @@ func Astolfo(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderAstolfo(data)
+	res := renderers.RenderAstolfo(data, db)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
@@ -144,7 +144,7 @@ func Macetava(c *gin.Context, db *database.Database) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
-func Eightball(c *gin.Context) {
+func Eightball(c *gin.Context, db *database.Cache) {
 	data := new(renderers.EightballData)
 
 	err := c.BindJSON(data)
@@ -153,7 +153,7 @@ func Eightball(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderEightball(data)
+	res := renderers.RenderEightball(data, db)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
@@ -185,7 +185,7 @@ func Vasco(c *gin.Context, db *database.Database) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
-func Blackjack(c *gin.Context) {
+func Blackjack(c *gin.Context, db *database.Cache) {
 	data := new(renderers.BlackjackData)
 
 	err := c.BindJSON(data)
@@ -193,7 +193,7 @@ func Blackjack(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderBlackjack(data)
+	res := renderers.RenderBlackjack(data, db)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)
@@ -274,7 +274,7 @@ func Profile(c *gin.Context, db *database.Database) {
 	c.String(200, stringedImage)
 }
 
-func Preview(c *gin.Context) {
+func Preview(c *gin.Context, db *database.Cache) {
 	data := new(renderers.PreviewData)
 
 	err := c.BindJSON(data)
@@ -283,7 +283,7 @@ func Preview(c *gin.Context) {
 		log.Print(err)
 	}
 
-	res := renderers.RenderPreview(data)
+	res := renderers.RenderPreview(data, db)
 
 	buff := new(bytes.Buffer)
 	err = encoder.Encode(buff, res)

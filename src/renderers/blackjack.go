@@ -6,6 +6,7 @@ import (
 
 	"github.com/fogleman/gg"
 
+	"github.com/MenheraBot/MenheraVanGOgh/src/database"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 )
 
@@ -58,10 +59,10 @@ func GetFontColorByTableTheme(theme string) string {
 	}
 }
 
-func RenderBlackjack(data *BlackjackData) image.Image {
+func RenderBlackjack(data *BlackjackData, db *database.Cache) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
-	tableImage := utils.GetAsset("tables/" + data.TableTheme + ".png")
+	tableImage := utils.GetAsset("tables/"+data.TableTheme+".png", db)
 
 	ctx.DrawImage(tableImage, 0, 0)
 
@@ -92,15 +93,15 @@ func RenderBlackjack(data *BlackjackData) image.Image {
 	for i, card := range data.MenheraCards {
 		var cardImage image.Image
 		if card.Hidden {
-			cardImage = utils.GetAsset("card_backgrounds/" + data.BackgroundCardTheme + ".png")
+			cardImage = utils.GetAsset("card_backgrounds/"+data.BackgroundCardTheme+".png", db)
 		} else {
-			cardImage = utils.GetAsset("cards/" + data.CardTheme + "/" + strconv.Itoa(card.Id) + ".png")
+			cardImage = utils.GetAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", db)
 		}
 		ctx.DrawImage(cardImage, menheraStartW+(125*i), 160)
 	}
 
 	for i, card := range data.UserCards {
-		cardImage := utils.GetAsset("cards/" + data.CardTheme + "/" + strconv.Itoa(card.Id) + ".png")
+		cardImage := utils.GetAsset("cards/"+data.CardTheme+"/"+strconv.Itoa(card.Id)+".png", db)
 		ctx.DrawImage(cardImage, userStartW+(125*i), 555)
 	}
 

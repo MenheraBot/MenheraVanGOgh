@@ -71,7 +71,11 @@ func GetFont(font string, points float64) *font.Face {
 	return &face
 }
 
-func GetAsset(path string) image.Image {
+func GetAsset(path string, imageCache *database.Cache) image.Image {
+	if image, found := imageCache.Get(path); found {
+		return image
+	}
+
 	workdir, err := os.Getwd()
 	if err != nil {
 		log.Println(err)
@@ -91,6 +95,8 @@ func GetAsset(path string) image.Image {
 		log.Println(err)
 		return defaultImage()
 	}
+
+	imageCache.Set(path, img)
 
 	return img
 }

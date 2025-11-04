@@ -12,7 +12,7 @@ import (
 func RenderWebsite(User *utils.UserData, I18n *utils.I18n, db *database.Database) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
-	backgroundImage := utils.GetAsset("/profiles/website.png")
+	backgroundImage := utils.GetAsset("/profiles/website.png", db.ImageCache)
 	userAvatar := utils.GetImageFromURL(User.Avatar, 226, 226, db)
 
 	ctx.DrawImage(userAvatar, 23, 140)
@@ -58,7 +58,7 @@ func RenderWebsite(User *utils.UserData, I18n *utils.I18n, db *database.Database
 	ctx.SetFontFace(*utils.GetFont("Postamt", 38))
 	ctx.DrawStringAnchored(User.Title, 810, 613, 0.5, 0)
 
-	utils.DrawBadges(ctx, User, 0, 653)
+	utils.DrawBadges(ctx, db.ImageCache, User, 0, 653)
 
 	return ctx.Image()
 }

@@ -23,7 +23,7 @@ func RenderKawaii(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 
 	ctx.DrawImage(userAvatar, 55, 50)
 
-	backgroundImage := utils.GetAsset("/profiles/kawaii.png")
+	backgroundImage := utils.GetAsset("/profiles/kawaii.png", db.ImageCache)
 
 	ctx.DrawImage(backgroundImage, 0, 0)
 
@@ -54,7 +54,7 @@ func RenderKawaii(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 	ctx.SetFontFace(*utils.GetFont("Kawaii", 34))
 	ctx.DrawStringWrapped(I18n.Usages+"   | "+strconv.Itoa(int(User.Votes))+" Upvotes", 85, 580, 0, 0.5, 650, 1, 0)
 
-	utils.DrawBadges(ctx, User, 410, 40)
+	utils.DrawBadges(ctx, db.ImageCache, User, 410, 40)
 
 	return ctx.Image()
 }

@@ -8,6 +8,7 @@ import (
 
 	"github.com/fogleman/gg"
 
+	"github.com/MenheraBot/MenheraVanGOgh/src/database"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 )
 
@@ -74,13 +75,13 @@ func getFontFaceByTheme(theme string) string {
 	return "Sans"
 }
 
-func RenderEightball(data *EightballData) image.Image {
+func RenderEightball(data *EightballData, db *database.Cache) image.Image {
 	ctx := gg.NewContext(854, 456)
 
-	bedroomImage := utils.GetAsset("8ball/backgrounds/" + data.BackgroundTheme + ".png")
-	responseBoxImage := utils.GetAsset("8ball/response_boxes/" + data.BackgroundTheme + ".png")
-	textBoxImage := utils.GetAsset("8ball/text_boxes/" + data.TextBoxTheme + ".png")
-	menheraImage := utils.GetAsset(getRandomMenheraImage(data.Type, data.MenheraTheme))
+	bedroomImage := utils.GetAsset("8ball/backgrounds/"+data.BackgroundTheme+".png", db)
+	responseBoxImage := utils.GetAsset("8ball/response_boxes/"+data.BackgroundTheme+".png", db)
+	textBoxImage := utils.GetAsset("8ball/text_boxes/"+data.TextBoxTheme+".png", db)
+	menheraImage := utils.GetAsset(getRandomMenheraImage(data.Type, data.MenheraTheme), db)
 
 	ctx.DrawImage(bedroomImage, 0, 0)
 	ctx.DrawImage(menheraImage, 10, 10)

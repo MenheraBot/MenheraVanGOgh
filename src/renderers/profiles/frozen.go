@@ -13,7 +13,7 @@ func RenderFrozen(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 	ctx := gg.NewContext(1080, 720)
 
 	userAvatar := utils.GetImageFromURL(User.Avatar, 270, 260, db)
-	backgroundImage := utils.GetAsset("/profiles/frozen.png")
+	backgroundImage := utils.GetAsset("/profiles/frozen.png", db.ImageCache)
 	ctx.DrawImage(userAvatar, 34, 23)
 	ctx.DrawImage(backgroundImage, 0, 0)
 
@@ -46,7 +46,7 @@ func RenderFrozen(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 		ctx.DrawStringAnchored(User.MarryDate, 175, 410, 0.5, 0)
 	}
 
-	utils.DrawBadges(ctx, User, 370, 350)
+	utils.DrawBadges(ctx, db.ImageCache, User, 370, 350)
 
 	return ctx.Image()
 }

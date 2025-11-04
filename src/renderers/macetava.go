@@ -36,7 +36,7 @@ func RenderMacetava(data *MacetavaData, db *database.Database) image.Image {
 	userImage := utils.GetImageFromURL(data.Image, 573, 573, db)
 	userImageGayscale := rgbaToGray(userImage)
 	userAvatar := utils.GetImageFromURL(data.AuthorImage, 145, 145, db)
-	macetavaImage := utils.GetAsset("/images/macetava.png")
+	macetavaImage := utils.GetAsset("/images/macetava.png", db.ImageCache)
 
 	ctx.DrawImage(userAvatar, 30, 18)
 	ctx.DrawImage(userImage, 33, 305)

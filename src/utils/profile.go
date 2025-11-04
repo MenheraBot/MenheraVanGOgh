@@ -1,11 +1,13 @@
 package utils
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"math"
 	"strconv"
 
+	"github.com/MenheraBot/MenheraVanGOgh/src/database"
 	"github.com/fogleman/gg"
 )
 
@@ -61,14 +63,26 @@ func includes(arr []uint8, target uint8) bool {
 	return result
 }
 
-func getUserBadges(user *UserData) []image.Image {
+func getUserBadges(user *UserData, imageCache *database.Cache) []image.Image {
 	var images []image.Image
 
 	for _, badge := range user.Badges {
 		if !includes(user.HiddingBadges, badge) {
-			img, ok := GetResizedAsset("badges/"+strconv.Itoa(int(badge))+".png", badgeSize, badgeSize)
-			if ok {
-				images = append(images, img)
+			cacheKey := fmt.Sprintf("badge:%d:%d", badge, badgeSize)
+			var image image.Image
+
+			image, success := imageCache.Get(cacheKey)
+
+			if !success {
+				image, success = GetResizedAsset("badges/"+strconv.Itoa(int(badge))+".png", badgeSize, badgeSize)
+
+				if success {
+					imageCache.Set(cacheKey, image)
+				}
+			}
+
+			if success {
+				images = append(images, image)
 			}
 		}
 	}
@@ -86,20 +100,20 @@ func GetProfileCustomization(toSearch string, custom []string) bool {
 	return false
 }
 
-func DrawBadges(ctx *gg.Context, user *UserData, w, h int) {
-	for i, badge := range getUserBadges(user) {
+func DrawBadges(ctx *gg.Context, imageCache *database.Cache, user *UserData, w, h int) {
+	for i, badge := range getUserBadges(user, imageCache) {
 		ctx.DrawImage(badge, i*badgeSize+w, h)
 	}
 }
 
-func DrawBadgesWrapped(ctx *gg.Context, user *UserData, w, h int, limit uint8) {
-	for i, badge := range getUserBadges(user) {
+func DrawBadgesWrapped(ctx *gg.Context, imageCache *database.Cache, user *UserData, w, h int, limit uint8) {
+	for i, badge := range getUserBadges(user, imageCache) {
 		ctx.DrawImage(badge, (i%int(limit))*badgeSize+w, int(i/int(limit))*badgeSize+h)
 	}
 }
 
-func DrawVerticalBadges(ctx *gg.Context, user *UserData, w, h int) {
-	for i, badge := range getUserBadges(user) {
+func DrawVerticalBadges(ctx *gg.Context, imageCache *database.Cache, user *UserData, w, h int) {
+	for i, badge := range getUserBadges(user, imageCache) {
 		ctx.DrawImage(badge, w, i*badgeSize+h)
 	}
 }

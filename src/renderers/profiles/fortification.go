@@ -46,7 +46,7 @@ func RenderFortification(User *utils.UserData, I18n *utils.I18n, customEdits []s
 		ctx.Fill()
 	}
 
-	backgroundImage := utils.GetAsset("/profiles/fortification.png")
+	backgroundImage := utils.GetAsset("/profiles/fortification.png", db.ImageCache)
 	ctx.DrawImage(backgroundImage, 0, 0)
 
 	ctx.SetHexColor(utils.GetCompatibleFontColor(darkerColor))
@@ -87,7 +87,7 @@ func RenderFortification(User *utils.UserData, I18n *utils.I18n, customEdits []s
 	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamadas)), 935, 355, 0.5, 0)
 	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamou)), 935, 445, 0.5, 0)
 
-	utils.DrawBadges(ctx, User, 160, 5)
+	utils.DrawBadges(ctx, db.ImageCache, User, 160, 5)
 
 	return ctx.Image()
 }

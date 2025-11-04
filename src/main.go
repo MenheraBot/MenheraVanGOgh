@@ -126,11 +126,23 @@ func initializeDatabase() *database.Database {
 
 func appendVanGOghRoutes(router *gin.Engine, db *database.Database) *gin.Engine {
 
-	router.POST("/astolfo", controllers.Astolfo)
 	router.POST("/philo", controllers.Philo)
-	router.POST("/blackjack", controllers.Blackjack)
-	router.POST("/8ball", controllers.Eightball)
-	router.POST("/preview", controllers.Preview)
+
+	router.POST("/astolfo", func(c *gin.Context) {
+		controllers.Astolfo(c, db.ImageCache)
+	})
+
+	router.POST("/blackjack", func(c *gin.Context) {
+		controllers.Blackjack(c, db.ImageCache)
+	})
+
+	router.POST("/8ball", func(c *gin.Context) {
+		controllers.Eightball(c, db.ImageCache)
+	})
+
+	router.POST("/preview", func(c *gin.Context) {
+		controllers.Preview(c, db.ImageCache)
+	})
 
 	router.POST("/ship", func(c *gin.Context) {
 		controllers.Ship(c, db)

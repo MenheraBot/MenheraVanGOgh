@@ -23,11 +23,11 @@ func RenderID03(User *utils.UserData, I18n *utils.I18n, db *database.Database) i
 
 	ctx.DrawImage(userAvatar, 225, 92)
 
-	backgroundImage := utils.GetAsset("/profiles/iD03.png")
+	backgroundImage := utils.GetAsset("/profiles/iD03.png", db.ImageCache)
 
 	ctx.DrawImage(backgroundImage, 0, 0)
 
-	utils.DrawBadges(ctx, User, 408, 435)
+	utils.DrawBadges(ctx, db.ImageCache, User, 408, 435)
 
 	ctx.SetFontFace(*utils.GetFont("Pixellari", 32))
 

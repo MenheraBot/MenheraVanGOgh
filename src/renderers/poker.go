@@ -116,7 +116,7 @@ func RenderPokerTable(data *PokerTableData, db *database.Database) image.Image {
 		drawAvatar(ctx, userAvatar, avatarLocations[user.Seat][0], avatarLocations[user.Seat][1], false)
 
 		if user.Won {
-			crownImage := utils.GetAsset("poker/crown.png")
+			crownImage := utils.GetAsset("poker/crown.png", db.ImageCache)
 			ctx.DrawImageAnchored(crownImage, int(avatarLocations[user.Seat][0]), int(avatarLocations[user.Seat][1]-60), 0.5, 0.5)
 		}
 

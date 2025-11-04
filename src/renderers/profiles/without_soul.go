@@ -23,7 +23,7 @@ func RenderWithoutSoul(User *utils.UserData, I18n *utils.I18n, db *database.Data
 
 	ctx.DrawImage(userAvatar, 85, 95)
 
-	backgroundImage := utils.GetAsset("profiles/without_soul.png")
+	backgroundImage := utils.GetAsset("profiles/without_soul.png", db.ImageCache)
 
 	ctx.DrawImage(backgroundImage, 0, 0)
 
@@ -51,7 +51,7 @@ func RenderWithoutSoul(User *utils.UserData, I18n *utils.I18n, db *database.Data
 	ctx.SetFontFace(*utils.GetFont("Postamt", 30))
 	ctx.DrawStringAnchored("Upvotes: "+strconv.Itoa(int(User.Votes)), 875, 620, 0.5, 0.5)
 
-	utils.DrawBadges(ctx, User, 135, 590)
+	utils.DrawBadges(ctx, db.ImageCache, User, 135, 590)
 
 	return ctx.Image()
 }
