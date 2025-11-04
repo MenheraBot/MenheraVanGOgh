@@ -53,7 +53,7 @@ func RenderSunflower(User *utils.UserData, I18n *utils.I18n, db *database.Databa
 	ctx.SetFontFace(*utils.GetFont("Arial", 38))
 	ctx.DrawStringAnchored(User.Title, 300, 660, 0.5, 0)
 
-	utils.DrawBadges(ctx, User, 270, 155)
+	utils.DrawBadges(ctx, db.ImageCache, User, 270, 155)
 
 	return ctx.Image()
 }

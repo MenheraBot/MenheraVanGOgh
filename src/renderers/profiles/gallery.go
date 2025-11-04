@@ -48,7 +48,7 @@ func RenderGallery(User *utils.UserData, I18n *utils.I18n, db *database.Database
 	ctx.DrawStringAnchored(I18n.Mamou+" "+strconv.Itoa(int(User.Mamou)), 940, 140, 0.5, 0.5)
 	ctx.DrawStringAnchored(I18n.Mamado+" "+strconv.Itoa(int(User.Mamadas)), 940, 178, 0.5, 0.5)
 
-	utils.DrawBadgesWrapped(ctx, User, 100, 366, 3)
+	utils.DrawBadgesWrapped(ctx, db.ImageCache, User, 100, 366, 3)
 
 	return ctx.Image()
 }

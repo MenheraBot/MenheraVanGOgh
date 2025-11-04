@@ -67,7 +67,7 @@ func RenderChristmas(User *utils.UserData, I18n *utils.I18n, customEdits []strin
 
 	ctx.DrawStringWrapped(I18n.Usages+"   | "+strconv.Itoa(int(User.Votes))+" Upvotes", 90, 270, 0, 0, 920, 1, 0)
 
-	utils.DrawBadges(ctx, User, 80, 656)
+	utils.DrawBadges(ctx, db.ImageCache, User, 80, 656)
 
 	return ctx.Image()
 }

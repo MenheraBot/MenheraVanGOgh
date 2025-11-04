@@ -9,7 +9,8 @@ import (
 )
 
 type Database struct {
-	Client *redis.Client
+	Client     *redis.Client
+	ImageCache *Cache
 }
 
 func RedisContext() (context.Context, context.CancelFunc) {
@@ -40,7 +41,8 @@ func NewDatabase(address string, db int) (*Database, error) {
 	finishCtx()
 
 	return &Database{
-		Client: client,
+		Client:     client,
+		ImageCache: NewCache(),
 	}, nil
 
 }

@@ -51,7 +51,7 @@ func RenderWarrior(User *utils.UserData, I18n *utils.I18n, customEdits []string,
 	ctx.DrawStringWrapped(I18n.Mamado+"\n"+strconv.Itoa(int(User.Mamadas)), 940, 100, 0.5, 0.5, 600, 1, 1)
 	ctx.DrawStringWrapped(I18n.Mamou+"\n"+strconv.Itoa(int(User.Mamou)), 940, 170, 0.5, 0.5, 600, 1, 1)
 
-	utils.DrawBadges(ctx, User, 110, 620)
+	utils.DrawBadges(ctx, db.ImageCache, User, 110, 620)
 
 	return ctx.Image()
 }

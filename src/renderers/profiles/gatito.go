@@ -34,7 +34,7 @@ func RenderGatito(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 		ctx.DrawStringWrapped(User.MarryUsername, 620, 140, 0, 0, 430, 1, 1)
 	}
 
-	utils.DrawVerticalBadges(ctx, User, 52, 38)
+	utils.DrawVerticalBadges(ctx, db.ImageCache, User, 52, 38)
 
 	ctx.SetFontFace(*utils.GetFont("Mustard", 32))
 	ctx.DrawStringWrapped(I18n.Usages+". "+strconv.Itoa(int(User.Votes))+" upvotes", 610, 480, 0, 0, 460, 1, 0)

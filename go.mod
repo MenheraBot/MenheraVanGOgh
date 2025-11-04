@@ -1,6 +1,8 @@
 module github.com/MenheraBot/MenheraVanGOgh
 
-go 1.20
+go 1.23.0
+
+toolchain go1.23.3
 
 require (
 	github.com/disintegration/imaging v1.6.2

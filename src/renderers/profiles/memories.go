@@ -93,7 +93,7 @@ func RenderMemories(User *utils.UserData, I18n *utils.I18n, customEdits []string
 		ctx.DrawStringWrapped(splittedUsages[1], 600, 580, 0, 0, 430, 1, gg.AlignLeft)
 	}
 
-	utils.DrawBadges(ctx, User, 120, 271)
+	utils.DrawBadges(ctx, db.ImageCache, User, 120, 271)
 
 	return ctx.Image()
 }

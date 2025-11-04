@@ -93,7 +93,7 @@ func RenderPersonalSpace(User *utils.UserData, I18n *utils.I18n, customEdits []s
 	ctx.SetFontFace(*utils.GetFont("Sans", 34))
 	ctx.DrawStringWrapped(I18n.Usages+"\n"+strconv.Itoa(int(User.Votes))+" Upvotes || "+I18n.Mamado+" "+strconv.Itoa(int(User.Mamadas))+" || "+I18n.Mamou+" "+strconv.Itoa(int(User.Mamou)), 550, 480, 0.5, 0, 920, 1, 1)
 
-	utils.DrawBadges(ctx, User, 125, 637)
+	utils.DrawBadges(ctx, db.ImageCache, User, 125, 637)
 
 	return ctx.Image()
 }

@@ -94,7 +94,7 @@ func RenderUpsideDown(User *utils.UserData, I18n *utils.I18n, db *database.Datab
 	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamadas)), 965, 335, 0.5, 0)
 	ctx.DrawStringAnchored(strconv.Itoa(int(User.Mamou)), 965, 425, 0.5, 0)
 
-	utils.DrawBadges(ctx, User, 10, 485)
+	utils.DrawBadges(ctx, db.ImageCache, User, 10, 485)
 
 	return ctx.Image()
 }
