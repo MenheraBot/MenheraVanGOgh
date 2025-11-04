@@ -33,7 +33,7 @@ func RenderChristmas(User *utils.UserData, I18n *utils.I18n, customEdits []strin
 		ctx.Stroke()
 	}
 
-	backgroundImage := utils.GetAsset("/profiles/christmas.png")
+	backgroundImage := utils.GetAsset("/profiles/christmas.png", db.ImageCache)
 
 	ctx.DrawImage(backgroundImage, 0, 0)
 

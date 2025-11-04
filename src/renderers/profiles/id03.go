@@ -23,7 +23,7 @@ func RenderID03(User *utils.UserData, I18n *utils.I18n, db *database.Database) i
 
 	ctx.DrawImage(userAvatar, 225, 92)
 
-	backgroundImage := utils.GetAsset("/profiles/iD03.png")
+	backgroundImage := utils.GetAsset("/profiles/iD03.png", db.ImageCache)
 
 	ctx.DrawImage(backgroundImage, 0, 0)
 

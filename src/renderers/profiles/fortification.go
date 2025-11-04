@@ -46,7 +46,7 @@ func RenderFortification(User *utils.UserData, I18n *utils.I18n, customEdits []s
 		ctx.Fill()
 	}
 
-	backgroundImage := utils.GetAsset("/profiles/fortification.png")
+	backgroundImage := utils.GetAsset("/profiles/fortification.png", db.ImageCache)
 	ctx.DrawImage(backgroundImage, 0, 0)
 
 	ctx.SetHexColor(utils.GetCompatibleFontColor(darkerColor))

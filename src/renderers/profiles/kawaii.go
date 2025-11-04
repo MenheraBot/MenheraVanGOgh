@@ -23,7 +23,7 @@ func RenderKawaii(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 
 	ctx.DrawImage(userAvatar, 55, 50)
 
-	backgroundImage := utils.GetAsset("/profiles/kawaii.png")
+	backgroundImage := utils.GetAsset("/profiles/kawaii.png", db.ImageCache)
 
 	ctx.DrawImage(backgroundImage, 0, 0)
 

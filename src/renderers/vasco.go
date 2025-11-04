@@ -20,7 +20,7 @@ type VascoData struct {
 func RenderVasco(data *VascoData, db *database.Database) image.Image {
 	ctx := gg.NewContext(800, 534)
 
-	vascoImage := utils.GetAsset("images/vasco_" + data.Quality + ".png")
+	vascoImage := utils.GetAsset("images/vasco_" + data.Quality + ".png", db.ImageCache)
 	userImage := utils.GetImageFromURL(data.User, 243, 243, db)
 
 	ctx.DrawImage(userImage, 65, 165)

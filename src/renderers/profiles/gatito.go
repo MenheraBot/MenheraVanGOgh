@@ -16,7 +16,7 @@ func RenderGatito(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 
 	ctx.DrawImage(userAvatar, 540, 75)
 
-	backgroundImage := utils.GetAsset("/profiles/gatito.png")
+	backgroundImage := utils.GetAsset("/profiles/gatito.png", db.ImageCache)
 
 	ctx.DrawImage(backgroundImage, 0, 0)
 

@@ -35,7 +35,7 @@ func RenderWarrior(User *utils.UserData, I18n *utils.I18n, customEdits []string,
 
 	ctx.DrawStringWrapped(I18n.Usages+"   | "+strconv.Itoa(int(User.Votes))+" Upvotes", 50, 275, 0, 0.5, 970, 1, 0)
 
-	background := utils.GetAsset("profiles/guerreiro.png")
+	background := utils.GetAsset("profiles/guerreiro.png", db.ImageCache)
 	ctx.DrawImage(background, 0, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Warrior", 28))

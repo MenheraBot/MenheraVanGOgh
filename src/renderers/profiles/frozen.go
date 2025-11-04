@@ -13,7 +13,7 @@ func RenderFrozen(User *utils.UserData, I18n *utils.I18n, db *database.Database)
 	ctx := gg.NewContext(1080, 720)
 
 	userAvatar := utils.GetImageFromURL(User.Avatar, 270, 260, db)
-	backgroundImage := utils.GetAsset("/profiles/frozen.png")
+	backgroundImage := utils.GetAsset("/profiles/frozen.png", db.ImageCache)
 	ctx.DrawImage(userAvatar, 34, 23)
 	ctx.DrawImage(backgroundImage, 0, 0)
 

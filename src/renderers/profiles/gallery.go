@@ -22,7 +22,7 @@ func RenderGallery(User *utils.UserData, I18n *utils.I18n, db *database.Database
 	ctx.DrawImageAnchored(userAvatar, 170, 160, 0.5, 0.5)
 	ctx.ResetClip()
 
-	backgroundImage := utils.GetAsset("/profiles/gallery.png")
+	backgroundImage := utils.GetAsset("/profiles/gallery.png", db.ImageCache)
 	ctx.DrawImage(backgroundImage, 0, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Arial", 36))

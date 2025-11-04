@@ -13,7 +13,7 @@ func RenderHelloKitty(User *utils.UserData, I18n *utils.I18n, db *database.Datab
 	ctx := gg.NewContext(1080, 720)
 
 	userAvatar := utils.GetImageFromURL(User.Avatar, 200, 200, db)
-	backgroundImage := utils.GetAsset("/profiles/hello_kitty.png")
+	backgroundImage := utils.GetAsset("/profiles/hello_kitty.png", db.ImageCache)
 
 	ctx.DrawImage(userAvatar, 20, 0)
 	ctx.DrawImage(backgroundImage, 0, 0)

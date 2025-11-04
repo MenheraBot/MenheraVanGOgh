@@ -23,7 +23,7 @@ func RenderWithoutSoul(User *utils.UserData, I18n *utils.I18n, db *database.Data
 
 	ctx.DrawImage(userAvatar, 85, 95)
 
-	backgroundImage := utils.GetAsset("profiles/without_soul.png")
+	backgroundImage := utils.GetAsset("profiles/without_soul.png", db.ImageCache)
 
 	ctx.DrawImage(backgroundImage, 0, 0)
 

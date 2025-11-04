@@ -17,7 +17,7 @@ func RenderGado(data *GadoData, db *database.Database) image.Image {
 	ctx := gg.NewContext(1200, 526)
 
 	userImage := utils.GetImageFromURL(data.Image, 455, 455, db)
-	gadoImage := utils.GetAsset("/images/gado.png")
+	gadoImage := utils.GetAsset("/images/gado.png", db.ImageCache)
 
 	ctx.DrawImage(userImage, 695, 0)
 	ctx.DrawImage(gadoImage, 0, 0)

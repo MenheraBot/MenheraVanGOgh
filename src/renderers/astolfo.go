@@ -5,6 +5,7 @@ import (
 
 	"github.com/fogleman/gg"
 
+	"github.com/MenheraBot/MenheraVanGOgh/src/database"
 	"github.com/MenheraBot/MenheraVanGOgh/src/utils"
 )
 
@@ -12,10 +13,10 @@ type AstolfoData struct {
 	Text string `json:"text"`
 }
 
-func RenderAstolfo(data *AstolfoData) image.Image {
+func RenderAstolfo(data *AstolfoData, db *database.Cache) image.Image {
 	ctx := gg.NewContext(253, 330)
 
-	astolfoImage := utils.GetAsset("images/astolfo.png")
+	astolfoImage := utils.GetAsset("images/astolfo.png", db)
 
 	ctx.DrawImage(astolfoImage, 0, 0)
 

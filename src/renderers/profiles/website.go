@@ -12,7 +12,7 @@ import (
 func RenderWebsite(User *utils.UserData, I18n *utils.I18n, db *database.Database) image.Image {
 	ctx := gg.NewContext(1080, 720)
 
-	backgroundImage := utils.GetAsset("/profiles/website.png")
+	backgroundImage := utils.GetAsset("/profiles/website.png", db.ImageCache)
 	userAvatar := utils.GetImageFromURL(User.Avatar, 226, 226, db)
 
 	ctx.DrawImage(userAvatar, 23, 140)

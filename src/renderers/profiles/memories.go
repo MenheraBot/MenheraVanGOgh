@@ -28,7 +28,7 @@ func RenderMemories(User *utils.UserData, I18n *utils.I18n, customEdits []string
 	ctx.DrawImageAnchored(userAvatar, 170, 155, 0.5, 0.5)
 	ctx.ResetClip()
 
-	backgroundImage := utils.GetAsset("/profiles/memories.png")
+	backgroundImage := utils.GetAsset("/profiles/memories.png", db.ImageCache)
 	ctx.DrawImage(backgroundImage, 0, 0)
 
 	ctx.SetFontFace(*utils.GetFont("Sans", 56))
