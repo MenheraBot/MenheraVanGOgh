@@ -256,6 +256,8 @@ func Profile(c *gin.Context, db *database.Database) {
 		res = profiles.RenderMemories(&data.User, &data.I18n, data.CustomEdits, db)
 	case "frozen":
 		res = profiles.RenderFrozen(&data.User, &data.I18n, db)
+	case "notes":
+		res = profiles.RenderNotes(&data.User, &data.I18n, db)
 	default:
 		res = profiles.RenderDefault(&data.User, &data.I18n, db)
 	}

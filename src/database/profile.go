@@ -35,14 +35,15 @@ func (db *Database) GetCachedProfileImage(userId, profileString string) (string,
 func (db *Database) SetCachedProfileImage(userId, profileString, image string) error {
 	ctx := BackgroundContext()
 
-	err := db.Client.Set(ctx, "profile:"+userId+":image", image, time.Minute*30).Err()
+	// FIXME REMNOVE 67
+	err := db.Client.Set(ctx, "profile:"+userId+":image67", image, time.Minute*30).Err()
 
 	if err != nil {
 		log.Print(err)
 		return err
 	}
 
-	err = db.Client.Set(ctx, "profile:"+userId+":hash", profileString, time.Minute*30).Err()
+	err = db.Client.Set(ctx, "profile:"+userId+":hash67", profileString, time.Minute*30).Err()
 
 	return err
 }
