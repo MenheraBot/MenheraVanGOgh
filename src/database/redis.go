@@ -22,6 +22,13 @@ func BackgroundContext() context.Context {
 }
 
 func NewDatabase(address string, db int) (*Database, error) {
+	if address == "" || db == -1 {
+		return &Database{
+			Client:     nil,
+			ImageCache: NewCache(),
+		}, nil
+	}
+
 	client := redis.NewClient(&redis.Options{
 		Addr:         address,
 		Password:     "",

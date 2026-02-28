@@ -60,6 +60,27 @@ func Philo(c *gin.Context) {
 	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
 }
 
+func Roulette(c *gin.Context, db *database.Database) {
+	data := new(renderers.RouletteData)
+
+	err := c.BindJSON(data)
+
+	if err != nil {
+		log.Print(err)
+	}
+
+	res := renderers.RenderRoulette(data, db.ImageCache)
+
+	buff := new(bytes.Buffer)
+	err = encoder.Encode(buff, res)
+
+	if err != nil {
+		log.Print(err)
+	}
+
+	c.String(200, base64.StdEncoding.EncodeToString(buff.Bytes()))
+}
+
 func Trisal(c *gin.Context, db *database.Database) {
 	data := new(renderers.TrisalData)
 

@@ -38,7 +38,11 @@ func main() {
 
 	httpStartTime := time.Now()
 
-	database := initializeDatabase()
+	database, err := initializeDatabase()
+
+	if err != nil {
+		log.Panicf("Database error %s", err.Error())
+	}
 
 	router.HEAD("/ping", func(c *gin.Context) {
 		c.Header("Content-Type", "application/json; charset=utf-8")
@@ -54,14 +58,15 @@ func main() {
 	router.Use(func(c *gin.Context) {
 		token := c.GetHeader("Authorization")
 
-		if token != os.Getenv("TOKEN") {
+		expectedToken := os.Getenv("TOKEN")
+
+		if expectedToken != "" && token != os.Getenv("TOKEN") {
 			c.Status(http.StatusUnauthorized)
 			c.Abort()
 			return
 		}
 
 		c.Header("Content-Type", "text/plain")
-
 		c.Next()
 	})
 
@@ -100,28 +105,21 @@ func main() {
 	log.Fatal(router.Run(":2080"))
 }
 
-func initializeDatabase() *database.Database {
+func initializeDatabase() (*database.Database, error) {
 	databaseNumber, err := strconv.Atoi(os.Getenv("REDIS_DB"))
 
 	if err != nil {
 		log.Print(err)
-		return &database.Database{Client: nil}
+		databaseNumber = -1
 	}
 
-	if os.Getenv("REDIS_ADDRESS") == "" {
+	address := os.Getenv("REDIS_ADDRESS")
+
+	if address == "" {
 		log.Print(errors.New("REDIS_ADDRESS is not set"))
-		return &database.Database{Client: nil}
 	}
 
-	redis, err := database.NewDatabase(os.Getenv("REDIS_ADDRESS"), databaseNumber)
-
-	if err != nil {
-		log.Print(err)
-		return &database.Database{Client: nil}
-	}
-
-	return redis
-
+	return database.NewDatabase(address, databaseNumber)
 }
 
 func appendVanGOghRoutes(router *gin.Engine, db *database.Database) *gin.Engine {
@@ -150,6 +148,10 @@ func appendVanGOghRoutes(router *gin.Engine, db *database.Database) *gin.Engine 
 
 	router.POST("/trisal", func(c *gin.Context) {
 		controllers.Trisal(c, db)
+	})
+
+	router.POST("/roulette", func(c *gin.Context) {
+		controllers.Roulette(c, db)
 	})
 
 	router.POST("/gado", func(c *gin.Context) {
