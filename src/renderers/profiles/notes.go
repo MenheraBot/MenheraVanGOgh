@@ -40,7 +40,6 @@ func RenderNotes(User *utils.UserData, I18n *utils.I18n, db *database.Database) 
 	ctx.SetHexColor("#000")
 	ctx.DrawStringWrapped(User.Info, 550, 480, 0.5, 1, 450, 1, gg.AlignCenter)
 
-	User.Votes = 6666
 	upvotesText := "Upvotes:" + strconv.Itoa(int(User.Votes))
 
 	for i, char := range strings.Split(upvotesText, "") {
