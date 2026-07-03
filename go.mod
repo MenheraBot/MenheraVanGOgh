@@ -9,7 +9,7 @@ require (
 	github.com/gin-gonic/gin v1.12.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/prometheus/client_golang v1.23.2
-	golang.org/x/image v0.38.0
+	golang.org/x/image v0.41.0
 )
 
 require (
